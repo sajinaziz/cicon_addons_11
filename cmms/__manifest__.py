@@ -1,5 +1,5 @@
 {
-    "name": "CMMS V8",
+    "name": "CMMS",
     "version": "0.1",
     'summary': 'Maintenance, Repair and Operation',
     'description': """
