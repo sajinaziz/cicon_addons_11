@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+
+
+        <record model="ir.actions.act_window" id="action_tech_submittal_revision_form_site">
+            <field name="name">Submittal</field>
+            <field name="res_model">tech.submittal.revision</field>
+            <field name="domain">[('state','!=','resubmitted')]</field>
+            <field name="context">{"search_default_job_site_id":active_id}</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="cic_job_site_tree_view">
+            <field name="name">cic.job.site.tree</field>
+            <field name="model">cic.job.site</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Manage Projects">
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                    <field name="site_ref_no"/>
+                    <field name="coordinator_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="cic_job_site_form_view" model="ir.ui.view">
+            <field name="name">cic.job.site.form</field>
+            <field name="model">cic.job.site</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                    <form string="Project Details" >
+                        <sheet>
+                            <div class="oe_button_box" name="button_box">
+                                <button name="%(action_tech_submittal_revision_form_site)d" type="action" class="oe_inline oe_stat_button" icon="fa-book">
+                                    <field name="submittal_count" widget="statinfo" string="Submittal" />
+                                </button>
+                            </div>
+                            <group >
+                                <field name="partner_id" options="{'no_create':True,'no_open': True}" />
+                                <field name="name"  placeholder="Job Site" />
+                            </group>
+                            <group>
+                                <field name="project_id"/>
+                            </group>
+                        </sheet>
+                    </form>
+            </field>
+         </record>
+
+
+
+        <record id="cic_job_site_tech_form" model="ir.ui.view">
+            <field name="name">cic.job.site.tech.form</field>
+            <field name="model">cic.job.site</field>
+            <field name="inherit_id" ref="cic_job_site_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="inside">
+                <group col="4">
+                    <field name="site_ref_no" />
+                    <field name="last_site_ref"/>
+                    <field name="coordinator_id" />
+                    <field name="po_box" />
+                    <field name="telephone"/>
+                    <field name="fax"/>
+                </group>
+                    <field name="site_contact_ids">
+                        <tree string="Project Contacts" editable="bottom">
+                            <field name="salutation"/>
+                            <field name="name"/>
+                            <field name="designation"/>
+                            <field name="email"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+
+
+
+
+  <!--<record id="view_company_form_tech" model="ir.ui.view">-->
+        <!--<field name="name">res.company.form.tech</field>-->
+        <!--<field name="model">res.company</field>-->
+        <!--<field name="inherit_id" ref="base.view_company_form"/>-->
+        <!--<field name="arch" type="xml">-->
+            <!--<group name="account_grp" position="after">-->
+                <!--<group name="tech_submittal" string="Submittal">-->
+                    <!--<field name="submittal_prefix"/>-->
+                <!--</group>-->
+            <!--</group>-->
+        <!--</field>-->
+        <!--</record>-->
+
+
+   </data>
+
+</odoo>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="cicon_qc_observation_tree_view">
+			<field name="name">cicon.qc.observation.tree</field>
+			<field name="model">cicon.qc.observation</field>
+			<field name="arch" type="xml" >
+				<tree string="QC Observation">
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="category_id" />
+                    <field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+
+        <record model="ir.ui.view" id="cicon_qc_observation_form">
+		<field name="name">cicon.qc.observation.form</field>
+        <field name="model">cicon.qc.observation</field>
+			<field name="arch" type="xml">
+                <form string="QC Observation">
+                    <header>
+                        <button name="re_open_action" states="new" string="In Progress" type="object" class="oe_highlight" />
+                        <button name="close_action" confirm="Confirm Change Status of report to Closed ? "  states="open" string="Close" type="object" />
+                        <button name="re_open_action" states="close" string="Re Open" type="object" />
+                        <field name="state"  widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                          <h2>  <field name="name" /> </h2>
+                        </div>
+                        <group>
+                            <field name="reference"/>
+                            <field name="category_id" options="{'no_create': True, 'no_open': True}" />
+                            <field name="report_type" widget="radio"/>
+                            <field name="qc_check_ids" widget="many2many_tags" domain="[('state','=','fail')]" />
+                        </group>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="work_shift" widget="radio"/>
+                                <field name="location"/>
+                            </group>
+                            <group>
+                                <field name="user_id" options="{'no_create': True,'no_open': True}" />
+                                <field name="reported_by" options="{'no_create': True,'no_open': True}" />
+                                <field name="company_id" options="{'no_create': True,'no_open': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" />
+                        </group>
+                        <notebook>
+                            <page string="Reference">
+                                 <group>
+                                    <field name="procedure_ref" />
+                                </group>
+                                <group col="4">
+                                    <field name="resp_employee" options="{'no_create': True,'no_open': True}"/>
+                                    <field name="resp_manager" options="{'no_create': True,'no_open': True}"/>
+                                </group>
+                            </page>
+                            <page string="Cause">
+                                <group>
+                                    <field name="root_cause" />
+                                </group>
+                            </page>
+                            <page string="Action">
+                                <group>
+                                    <field name="corr_act" />
+                                    <field name="prev_act" />
+                                </group>
+
+                            </page>
+                            <page string="Condition">
+                                <group>
+                                    <field name="condition"  widget="radio" />
+                                    <field name="condition_text" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                      <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+
+        <!--TODO: Kanban View for QC Observation & add to menu action-->
+        <record model="ir.ui.view" id="cicon_qc_observation_kanban_view">
+			<field name="name">cicon.qc.observation.tree</field>
+			<field name="model">cicon.qc.observation</field>
+			<field name="arch" type="xml" >
+				<kanban string="QC Observation">
+
+				</kanban>
+			</field>
+		</record>
+
+
+         <record model="ir.ui.view" id="cicon_qc_observation_categ_tree">
+			<field name="name">cicon.qc.observation.category.tree</field>
+			<field name="model">cicon.qc.observation.category</field>
+			<field name="arch" type="xml" >
+				<tree string="Observation Category">
+                    <field name="name" />
+                    <field name="parent_id"/>
+				</tree>
+			</field>
+		</record>
+
+
+        <record model="ir.ui.view" id="cicon_qc_observation_categ_form">
+		<field name="name">cicon.qc.observation.categ.form</field>
+        <field name="model">cicon.qc.observation.category</field>
+			<field name="arch" type="xml">
+                <form string="Observation Category">
+                    <sheet>
+                        <group>
+                             <field name="name" />
+                            <field name="parent_id" options="{'no_create':True}" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="cicon_qc_observation_action">
+                <field name="name" >QC Observation Report</field>
+                <field name="res_model">cicon.qc.observation</field>
+         </record>
+
+        <record model="ir.actions.act_window" id="cicon_qc_observation_categ_action">
+                <field name="name" >Observation Category</field>
+                <field name="res_model">cicon.qc.observation.category</field>
+         </record>
+
+
+        <menuitem  name="QC Observation" parent="cicon_menu_qa_qc" id="cic_qc_observation_root" sequence="40" />
+        <menuitem  parent="cic_qc_observation_root" id="cic_qc_observation_menu" action="cicon_qc_observation_action" sequence="20" />
+        <menuitem  parent="cic_qc_observation_root" id="cic_qc_observation_categ_menu" action="cicon_qc_observation_categ_action" sequence="30" />
+
+
+    </data>
+</odoo>

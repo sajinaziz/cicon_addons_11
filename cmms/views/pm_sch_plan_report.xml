@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <template id="cmms_pm_plan_report_template">
+            <t t-call="report.html_container">
+            <t t-call="cmms.cmms_external_layout"/>
+            <div style="font-family: Ubuntu;" class="page">
+                <table class="table table-bordered">
+                    <caption class="text-uppercase"> <strong> <span t-esc="heading"/> </strong>  </caption>
+                    <thead>
+                        <th class="text-center">SUN</th>
+                        <th class="text-center">MON</th>
+                        <th class="text-center">TUE</th>
+                        <th class="text-center">WED</th>
+                        <th class="text-center">THU</th>
+                        <th class="text-center">FRI</th>
+                        <th class="text-center">SAT</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <t t-foreach="docs" t-as="o">
+                            <td >
+                                <div class="text-center" style="min-height:100px;">
+                                <span t-esc="o.strftime('%d-%b-%Y')"/>
+                                    <t t-set="pm_list" t-value="get_pm_detail(o.strftime('%Y-%m-%d'))"/>
+                                    <t t-foreach="pm_list" t-as="intv">
+                                        <p> <u> <span t-esc="intv"/> </u>
+                                            <ul class="list-unstyled">
+                                                <t t-set="mach_task" t-value="pm_list[intv]"/>
+                                                  <t t-foreach="mach_task" t-as="k">
+                                                    <li> <span t-esc="k"/> : <span t-esc="mach_task[k]"/> </li>
+                                              </t>
+                                            </ul>
+                                        </p>
+
+                                    </t>
+                                </div>
+                            </td>
+                            <t t-if="int(o_index+1)%7 == 0">
+                                  &lt;/tr &gt;
+                                  &lt;tr &gt;
+                            </t>
+                        </t>
+                     </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </t>
+    </template>
+
+    </data>
+</openerp>

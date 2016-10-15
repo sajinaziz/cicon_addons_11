@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_cmms_machine"
+            string="Machine Status"
+            model="cmms.machine"
+            report_type="qweb-pdf"
+            file="cmms.report_machine_status"
+            name="cmms.report_machine_status_template"
+        />
+
+     <report
+            id="report_pm_plan_cmms"
+            string="PM Plan"
+            model="cmms.pm.sch.plan.report.wizard"
+            report_type="qweb-pdf"
+            file="cmms.pm_sch_plan_report"
+            name="cmms.cmms_pm_plan_report_template"
+    />
+
+     <report
+            id="report_job_order_cmms"
+            string="Job Order"
+            model="cmms.job.order"
+            report_type="qweb-pdf"
+            file="cmms.job_order_form_view"
+            name="cmms.cmms_job_order_template"
+    />
+
+     <report
+            id="report_job_order_blank_cmms"
+            string="Job Order Form"
+            model="cmms.job.order.code"
+            report_type="qweb-pdf"
+            file="cmms.job_order_form_view"
+            name="cmms.cmms_job_order_blank_template"
+     />
+
+     <report
+       id="report_inventory_expense_summary"
+       string="Expense Summary"
+       model="cmms.common.report.wizard"
+       report_type="qweb-pdf"
+       file="cmms.inventory_expense_reports"
+       name="cmms.cmms_inventory_expense_report_summary"
+     />
+
+
+     <report
+       id="report_job_order_detail"
+       string="Job Order Report"
+       model="cmms.job.order"
+       report_type="qweb-pdf"
+       file="cmms.job_order_report.xml"
+       name="cmms.job_order_report_template"
+     />
+
+     <report
+        id="report_cmms_machine_summary"
+        string="Machine Summary"
+        model="cmms.machine"
+        report_type="qweb-pdf"
+        file="cmms.report_machine_summary"
+        name="cmms.report_machine_summary_template"
+    />
+
+         <report
+        id="report_cmms_pratsby_producttype_summary"
+        string="Parts By Product Type Summary"
+        model="cmms.common.report.wizard"
+        report_type="qweb-pdf"
+        file="cmms.report_partsby_producttype_summary"
+        name="cmms.report_partsby_producttype_summary_template"
+    />
+
+       <report
+        id="report_cmms_machine_breakdown_analysis"
+        string="Machine Breakdown Analysis"
+        model="cmms.common.report.wizard"
+        report_type="qweb-pdf"
+        file="cmms.report_machine_analysis_summary"
+        name="cmms.report_machine_analysis_summary_template"
+    />
+    </data>
+</odoo>

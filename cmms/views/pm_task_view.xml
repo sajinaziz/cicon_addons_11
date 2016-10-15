@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="cmms_pm_task_sch_master_form">
+            <field name="name">cmms.pm.schedule.master.form</field>
+            <field name="model">cmms.pm.schedule.master</field>
+            <field name="arch" type="xml" >
+                <form string="Schedule" >
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="pm_scheme_id"/>
+                            <h3>
+                                <field name="pm_scheme_id"/>
+                            </h3>
+                             <label for="interval_id" />
+                            <h4>
+                               <field name="interval_id" />
+                            </h4>
+                            <label for="machine_ids"/>
+                            <h4>
+                                <field name="machine_ids" widget="many2many_tags"/> <!--on_change="onchange_machine_list(machine_ids)" -->
+                            </h4>
+
+                        </div>
+
+                        <notebook>
+                            <page string="Tasks ">
+                                 <field name="pm_task_ids"/>
+                            </page>
+                            <page string="Schedule Details">
+                             <group>
+                                <field name="company_id" invisible="1"/>
+                                <field name="rrule_str"/>
+                                <field name="date" string="Starting at" />
+                             </group>
+                                <group>
+                                    <group col="1">
+                                        <group>
+                                            <field name="recurrency" invisible="1"/>
+                                        </group>
+                                        <group attrs="{'invisible': [('recurrency','=',False)]}">
+                                            <label for="interval"/>
+                                            <div>
+                                                <field name="interval" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                                <field name="rrule_type" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                            </div>
+                                            <label string="Until" for="end_type"/>
+                                            <div>
+                                                <field name="end_type" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                                <field name="count" attrs="{'invisible': [('end_type', '!=', 'count')], 'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                                <field name="end_date" attrs="{'invisible': [('end_type', '!=', 'end_date')], 'required': [('end_type', '=', 'end_date')]}" class="oe_inline"/>
+                                            </div>
+                                            <label string="Select Weekday" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}"/>
+                                             <group col="2" colspan="1" name="weekday" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}">
+                                                <field name="week_day" nolabel="1" attrs="{'required': [('rrule_type', '=', 'weekly')]}"/>
+                                            </group>
+                                            <label string="Day of Month"
+                                                   attrs="{'invisible': [('rrule_type','!=','monthly')]}"/>
+                                            <div class="oe_left" attrs="{'invisible': [('rrule_type','!=','monthly')]}">
+                                                <field name="select1" attrs="{'required': [('rrule_type','=','monthly')]}" />
+                                                <field name="day"
+                                                       attrs="{'required': [('select1','=','date'), ('rrule_type','=','monthly')],
+                                                'invisible': [('select1','=','day')]}"/>
+                                                <field name="byday" string="The"
+                                                       attrs="{'required': [('select1','=','day'), ('rrule_type','=','monthly')], 'invisible': [('select1','=','date')]}"/>
+                                                <field name="week_list" nolabel="1"
+                                                       attrs="{'required': [('select1','=','day'), ('rrule_type','=','monthly')], 'invisible': [('select1','=','date')]}"/>
+                                            </div>
+
+                                        </group>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.ui.view" id="cmms_pm_task_sch_master_tree">
+            <field name="name">cmms.pm.schedule.master.tree</field>
+            <field name="model">cmms.pm.schedule.master</field>
+            <field name="arch" type="xml" >
+                <tree string="Schedule">
+                    <field name="pm_scheme_id"/>
+                    <field name="interval_id"/>
+                    <field name="machine_ids"/>
+                    <field name="next_date"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+
+
+        <record model="ir.ui.view" id="cmms_pm_interval_tree_view">
+            <field name="name">cmms.pm.interval.tree</field>
+            <field name="model">cmms.pm.interval</field>
+            <field name="arch" type="xml" >
+                <tree string="PM Interval" editable="bottom">
+                    <field name="name" />
+                    <field name="rrule_type"/>
+                    <field name="count"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+        <record model="ir.actions.act_window" id="action_cmms_pm_schedule_master">
+            <field name="name" >PM Schedule</field>
+            <field name="res_model">cmms.pm.schedule.master</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cmms_pm_scheme_view">
+            <field name="name" >PM Scheme</field>
+            <field name="res_model">cmms.pm.scheme</field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_cmms_pm_task_view">
+            <field name="name" >PM Task</field>
+            <field name="res_model">cmms.pm.task.master</field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_interval_view">
+            <field name="name" >PM Interval</field>
+            <field name="res_model">cmms.pm.interval</field>
+        </record>
+
+
+        <menuitem name="Preventive Tasks" parent="cmms_menu" id="menu_pm_task" sequence="3"/>
+        <menuitem name="PM Scheme" parent="menu_pm_task" id="pm_scheme" action ="action_cmms_pm_scheme_view" />
+        <menuitem name="PM Tasks" parent="menu_pm_task" id="pm_task" action ="action_cmms_pm_task_view" />
+
+        <menuitem name="PM Interval" parent="menu_pm_task" id="pm_interval" action ="action_interval_view" />
+        <menuitem name="Schedule" parent="menu_pm_task" id="pm_schedule" action="action_cmms_pm_schedule_master"/>
+
+    </data>
+</openerp>

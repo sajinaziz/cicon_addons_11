@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+
+        <record model="ir.ui.view" id="cicon_qc_check_tree_view">
+            <field name="name">cicon_qc_check.tree</field>
+            <field name="model">cicon.qc.check</field>
+            <field name="arch" type="xml">
+                <tree string="QC Checks" decoration-danger="state == 'fail'">
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="prod_order_id"/>
+                    <field name="operation_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+         <record id="cicon_qc_check_form_view" model="ir.ui.view">
+            <field name="name">cicon_qc_check.form</field>
+            <field name="model">cicon.qc.check</field>
+            <field name="arch" type="xml">
+                    <form string="QC Check">
+                        <header>
+                            <button string="To Do"   name="set_todo" type="object"/>
+                            <button string="PASS" states="new" class="oe_highlight" name="set_pass" type="object"/>
+                            <button string="FAIL" states="new" class="oe_highlight" name="set_fail" type="object"/>
+                            <field name="state" widget="statusbar"/>
+                        </header>
+                        <sheet>
+                             <div class="oe_title">
+                                <h2>  <field name="name" /> </h2>
+                             </div>
+                            <group>
+                                <group>
+                                    <field name="date"/>
+                                    <field name="user_id"/>
+                                </group>
+                                <group>
+                                     <field name="prod_order_id"/>
+                                     <field name="operation_id"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="note"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+            </field>
+         </record>
+
+
+
+
+
+        <record model="ir.ui.view" id="cicon_qc_check_operation_tree_view">
+			<field name="name">cicon_qc_check_operation_tree</field>
+			<field name="model">cicon.qc.check.operation</field>
+			<field name="arch" type="xml" >
+				<tree string="QC Check">
+                    <field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+
+        <record model="ir.ui.view" id="cicon_qc_check_operation_form_view">
+			<field name="name">cicon_qc_check_operation_form</field>
+			<field name="model">cicon.qc.check.operation</field>
+			<field name="arch" type="xml" >
+				<form string="QC Check">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+
+
+
+
+       <record model="ir.actions.act_window" id="action_cicon_qc_check">
+            <field name="name" >Qc Check</field>
+            <field name="res_model">cicon.qc.check</field>
+           <field name="view_mode">tree,form</field>
+       </record>
+
+
+            <record model="ir.actions.act_window" id="action_cicon_qc_check_prod_order">
+            <field name="name" >QC Check</field>
+            <field name="res_model">cicon.qc.check</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'default_prod_order_id': active_id}</field>
+
+       </record>
+
+
+
+       <record model="ir.actions.act_window" id="action_cicon_qc_check_operation">
+            <field name="name" >QC Check Opertations</field>
+            <field name="res_model">cicon.qc.check.operation</field>
+       </record>
+
+
+        <menuitem  name="QC Checks" parent="cicon_menu_qa_qc" id="cic_qc_check_root" sequence="60" />
+        <menuitem  parent="cic_qc_check_root" id="cic_qc_check_menu" action="action_cicon_qc_check" sequence="10" />
+        <menuitem  parent="cic_qc_check_root" id="cic_qc_check_opreation_menu" action="action_cicon_qc_check_operation" sequence="20" />
+
+
+        <record model="ir.ui.view" id="cicon_prod_order_form_view_qc_etxn">
+            <field name="name">cicon.prod.order.qc.extn.form</field>
+            <field name="model">cicon.prod.order</field>
+            <field name="inherit_id" ref="cicon_prod.cicon_prod_order_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/field[@name='state']" position="before">
+                    <button name="%(action_cicon_qc_check_prod_order)d" states="pending,progress"  string="Quality Check"  class="oe_highlight"  type="action"  icon="fa-check-circle-o"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+
+
+
+
+        </data>
+    </odoo>

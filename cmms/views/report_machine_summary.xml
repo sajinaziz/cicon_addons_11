@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="report_machine_summary_template">
+    <style type="text/css">
+         .col-xs-2  text-left,col-xs-4  text-left{
+            border: 1px solid;
+        }
+    </style>
+     <t t-call="report.html_container">
+         <t t-foreach="docs" t-as="o">
+             <t t-call="cmms.cmms_internal_layout"/>
+                <div class="page">
+                    <h3 class="text-center" style="color:red;">Machine History Card</h3>
+                     <div class="row" style="outline: 1px solid;">
+                         <div class="col-xs-2 text-left">Name:</div>
+                         <div class="col-xs-4 text-left"><span t-field="o.name"/></div>
+                         <div class="col-xs-2 text-left">Supplier:</div>
+                         <div class="col-xs-4 text-left"><span t-field="o.supplier_id" /></div>
+                     </div>
+                     <div class="row" style="outline: 1px solid;">
+                         <div class="col-xs-2  text-left">Machine No.:</div>
+                         <div class="col-xs-4  text-left"><span t-field="o.code"/></div>
+                         <div class="col-xs-2  text-left">Mfg Year:</div>
+                         <div class="col-xs-4  text-left"><span t-field="o.mfg_year" /></div>
+                     </div>
+                      <div class="row" style="outline: 1px solid;">
+                           <div class="col-xs-2  text-left">Model.:</div>
+                           <div class="col-xs-4  text-left"><span t-field="o.model"/></div>
+                           <div class="col-xs-2  text-left">Serial No.:</div>
+                           <div class="col-xs-4  text-left"><span t-field="o.serial_no" /></div>
+
+                      </div>
+                <div class="row"  style="margin-top:15px;"/>
+
+                <div class="row">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr><th colspan="8" style="text-align:right;margin-right:50px;">PARTS USED</th></tr>
+                            <tr>
+                                <th> Code</th>
+                                <th> Date </th>
+                                <th> Cause/reason </th>
+                                <th> Work Done </th>
+                                <th> Category</th>
+                                <th> Type </th>
+                                <th> Description</th>
+                                <th> Quantity </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <t t-foreach="o.job_order_ids" t-as="r">
+                               <t t-if="r.job_order_type == 'breakdown' or len(r.spare_part_ids) >0">
+                                   <tr style="page-break-inside:avoid;page-break-after:auto">
+                                        <td><span t-field="r.name" /> </td>
+                                        <td><span t-field="r.job_order_date" /></td>
+                                        <td style="max-width:250px;"><span t-field="r.reason" /></td>
+                                        <td style="max-width:250px;"><span t-field="r.corrective_action" /></td>
+                                        <td><span t-field="r.job_category_id" /></td>
+                                        <td><span t-field="r.priority" /></td>
+                                        <td colspan="2">
+                                            <table class="table">
+                                                <tbody>
+                                                      <t t-foreach="r.spare_part_ids" t-as="d">
+                                                           <tr>
+                                                               <td><span t-field="d.product_desc" /></td>
+                                                               <td><span t-field="d.quantity" /></td>
+                                                           </tr>
+                                                      </t>
+                                                </tbody>
+                                            </table>
+                                       </td>
+                                   </tr>
+                               </t>
+                           </t>
+                        </tbody>
+                    </table>
+                </div>
+             </div>
+      </t>
+     </t>
+</template>
+</data>
+</odoo>

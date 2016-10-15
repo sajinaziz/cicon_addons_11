@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_rfi_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="cicon_tech.tech_cicon_external_layout"/>
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <h3 class="text-center" >REQUEST FOR INFORMATION[RFI]</h3>
+                        <div class="row" style="outline: 1px solid;min-height:40px" >
+                            <div class="col-xs-2" > PROJECT : </div>
+                            <div class="col-xs-5"> <span t-field="o.job_site_id.name"/> </div>
+                            <div class="col-xs-2"> DATE : </div>
+                            <div class="col-xs-3"> <span t-field="o.rfi_date"/>  </div>
+                        </div>
+
+                        <div class="row" style="outline: 1px solid;min-height:40px" >
+                            <div class="col-xs-2"> CONTRACTOR : </div>
+                            <div class="col-xs-5"> <span t-field="o.partner_id.name"/> </div>
+                            <div class="col-xs-2"> RFI NO : </div>
+                            <div class="col-xs-3"> <strong t-field="o.name"/>  </div>
+                        </div>
+
+                        <div class="row" style="outline: 1px solid;min-height:40px" >
+                            <div class="col-xs-2"> CONSULTANT : </div>
+                            <div class="col-xs-5"> </div>
+                            <div class="col-xs-5 text-center"> ATTENTION  </div>
+                        </div>
+
+                        <div class="row" style="outline: 1px solid;min-height:40px">
+                            <div class="col-xs-2"> ELEMENT : </div>
+                            <div class="col-xs-6"> <span t-field="o.element"/> </div>
+                            <div class="col-xs-4">
+                                <span  t-esc="','.join(i.display_name for i in o.site_contact_ids)"/>
+                            </div>
+                        </div>
+                        <div class="row" style="outline: 1px solid;min-height:40px" >
+                            <div class="col-xs-2"> LEVELS : </div>
+                            <div class="col-xs-10"> <span t-field="o.level"/> </div>
+
+                        </div>
+
+                        <h4 class="text-center">INFORMATION REQUIRED</h4>
+
+                        <div class="row" style="outline: 1px solid;min-height:300px" >
+                            <div class="col-xs-2"> <u> SUBJECT :</u> </div>
+                            <div class="col-xs-10"> <u t-field="o.subject" /> </div>
+                            <br/>
+                            <br/>
+                            <div class="col-xs-12" style="margin-left:25px">
+                                <span t-field="o.description"/>
+                            </div>
+                        </div>
+                        <div class="row" style="outline: 1px solid;min-height:40px">
+                            <div class="col-xs-4"> NO OF ATTACHMENTS : </div>
+                            <div class="col-xs-8"> <span t-field="o.attachment_count"/> </div>
+                        </div>
+                        <div class="row" style="outline: 1px solid;min-height:40px">
+                            <div class="col-xs-5"> RESPONSE REQUIRED ON (OR) BEFORE : </div>
+                            <div class="col-xs-7"> <span t-field="o.response_last_date"/> </div>
+                        </div>
+
+                         <div class="row" style="outline: 1px solid;min-height:40px">
+                            <div class="col-xs-4"> RAISED BY : </div>
+                            <div class="col-xs-8"> <span t-field="o.created_by.name"/> </div>
+                        </div>
+                         <div class="row" style="outline: 1px solid;min-height:40px">
+                            <div class="col-xs-4"> COORDINATED BY : </div>
+                            <div class="col-xs-8"> <span t-field="o.job_site_id.coordinator_id"/> </div>
+                        </div>
+                         <div class="row" style="outline: 1px solid;min-height:40px">
+                            <div class="col-xs-4"> SIGNATURE: </div>
+                            <div class="col-xs-8">   </div>
+                        </div>
+
+                         <div class="row" style="outline: 1px solid;min-height:40px">
+                            <div class="col-xs-4"> CONTRACTOR RESPONSE : </div>
+                        </div>
+
+                        <div class="row"  style="outline: 1px solid;min-height:125px">
+                            <u> SUBJECT :</u>
+                        </div>
+
+                        <div class="row" style="outline: 1px solid;min-height:125px">
+                            <u> REMARKS :</u>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

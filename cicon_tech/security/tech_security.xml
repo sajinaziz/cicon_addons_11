@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <record model="ir.module.category" id="module_cicon_tech">
+            <field name="name">CICON Technical</field>
+            <field name="description">Helps you to manage Technical Submittal.</field>
+            <field name="sequence">7</field>
+        </record>
+
+        <record id="group_tech_user" model="res.groups">
+            <field name="name">Technical / User</field>
+            <field name="category_id" ref="module_cicon_tech"/>
+        </record>
+
+         <record id="group_tech_approval" model="res.groups">
+            <field name="name">Technical / Approval </field>
+            <field name="implied_ids" eval="[(4, ref('group_tech_user'))]"/>
+            <field name="category_id" ref="module_cicon_tech"/>
+        </record>
+
+        <record id="group_tech_admin" model="res.groups">
+            <field name="name">Technical / Admin </field>
+              <field name="implied_ids" eval="[(4, ref('group_tech_approval'))]"/>
+              <field name="category_id" ref="module_cicon_tech"/>
+        </record>
+
+    </data>
+
+
+     <!--<data noupdate="1">-->
+        <!--<record model="ir.rule" id="tech_multi_company">-->
+            <!--<field name="name">CICON Technical Multi Company</field>-->
+            <!--<field name="model_id" ref="model_tech_submittal"/>-->
+            <!--<field name="groups" eval="[(4, ref('cicon_tech.group_tech_user'))]"/>-->
+            <!--<field name="domain_force">[('company_id','child_of',[user.company_id.id])]</field>-->
+        <!--</record>-->
+    <!--</data>-->
+
+</odoo>

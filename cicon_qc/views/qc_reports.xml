@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!--<report id="report_qc_summary"-->
+            <!--name="report_qc_summary_webkit"-->
+            <!--auto="False"-->
+            <!--model="cic.qc.summary"-->
+            <!--file="cicon_qc/report/qc_summary_sheet_report.mako"-->
+            <!--string="Summary Sheet"-->
+            <!--report_type="webkit"/>-->
+          <report id="report_qc_summary"
+            name="cicon_qc.qc_summary_sheet_template"
+            model="cic.qc.summary"
+            file="cicon_qc.qc_summary_sheet_report"
+            string="Summary Sheet"
+            report_type="qweb-pdf"/>
+
+
+    </data>
+ </odoo>

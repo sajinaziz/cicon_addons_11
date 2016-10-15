@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tech_rfi_user,Tech.RFI User,model_cicon_tech_rfi,cicon_tech.group_tech_user,1,1,1,0
+

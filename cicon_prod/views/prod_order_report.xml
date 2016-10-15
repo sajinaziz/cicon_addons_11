@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<template id="cicon_prod_external_layout">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="cicon_prod.cicon_external_layout_header" />
+    <t t-raw="0" />
+    <t t-call="cicon_prod.cicon_external_layout_footer" />
+</template>
+
+<template id="cicon_external_layout_header">
+    <div class="header">
+        <div class="row">
+            <div class="col-xs-2">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+            </div>
+            <div class="col-xs-8 text-left" style="margin-top:25px;padding-left:25px;" t-field="company.rml_header1"/>
+            <div class="col-xs-2">
+                <!--<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>-->
+                <t t-if="doc_model != 'cicon.customer.order'" >
+                 <span t-esc="formatLang(time.strftime('%Y-%m-%d %H:%M:%S'),date_time=True)"/>
+                </t>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p>Tel: <span t-field="company.phone"/> ,Fax: <span t-field="company.fax"/>
+                    ,E-mail: <span t-field="company.email"/> ,P.O Box: <span t-field="company.zip" />
+                    , <span t-field="company.state_id.name" /> - <span t-field="company.country_id.name" />
+                </p>
+            </div>
+        </div>
+        <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template id="cicon_external_layout_footer">
+    <div class="footer">
+        <div class="text-right" style="border-top: 1px solid black;">
+             <ul class="list-inline">
+                <li>Page:</li>
+                <li><span class="page"/></li>
+                <li>/</li>
+                <li><span class="topage"/></li>
+            </ul>
+        </div>
+    </div>
+</template>
+
+
+
+<template id="cicon_prod_order_report_template">
+    <t t-call="report.html_container">
+        <t t-call="cicon_prod.cicon_prod_external_layout"/>
+        <div class="page">
+              <div class="oe_structure"/>
+              <table class="table table-bordered">
+                  <caption> <h3>  <span t-esc="heading" /> </h3>  </caption>
+                  <thead>
+                      <th style="width:20%;">Customer</th>
+                      <th style="width:20%;">Project</th>
+
+                      <t t-foreach="docs['diameters']" t-as="dia">
+                          <th> <span t-field="dia.name"/>   </th>
+                      </t>
+                      <th>Total</th>
+                  </thead>
+                  <t t-set="r_count" t-value="0"/>
+                  <tbody>
+                 <t t-foreach="docs['records']" t-as="o">
+                    <tr>
+                        <t t-if="r_count == 0">
+                            <t t-set="r_count" t-value="len([a for a in docs['records'] if a['partner_id'].id == o['partner_id'].id])"/>
+                            <td   t-att-rowspan="r_count">
+                                <span t-field="o['partner_id'].name"/>
+                            </td>
+                        </t>
+                        <t t-set="r_count" t-value="r_count - 1"/>
+                        <td> <span t-field="o['project_id'].name"/> </td>
+                        <t t-foreach="docs['diameters']" t-as="dia">
+                            <td class="text-right"  >
+                            <t t-if="o['quantity'].get(dia.name,false)">
+                                <span t-esc="formatLang(o['quantity'].get(dia.name),digits=digit)"/>
+                            </t>
+                            </td>
+                        </t>
+                        <td class="text-right">  <span t-esc="formatLang(sum(o['quantity'].itervalues()),digits=digit)"/> </td>
+
+                    </tr>
+                 </t>
+                  <tr>
+                          <td colspan="2" class="text-right" > <b> Total </b> </td>
+                          <t t-foreach="docs['diameters']" t-as="dia">
+                            <td class="text-right">
+                            <t t-if="docs['grand_total'].get(dia.name,false)">
+                               <b>  <span t-esc="formatLang(docs['grand_total'].get(dia.name),digits=digit)"/> </b>
+                            </t>
+                            </td>
+
+                        </t>
+                       <td class="text-right">
+                               <b> <span t-esc="formatLang(sum(docs['grand_total'].itervalues()),digits=digit)"/> </b>
+                            </td>
+
+                      </tr>
+                  </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+
+
+    </t>
+</template>
+
+
+</data>
+</odoo>

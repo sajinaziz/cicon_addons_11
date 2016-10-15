@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <report
+        id="report_submittal_qweb"
+        string="Submittal Print"
+        model="tech.submittal.revision"
+        report_type="qweb-pdf"
+        file="cicon_tech.submittal_print_view"
+        name="cicon_tech.report_submittal_template"
+    />
+
+  </data>
+</odoo>

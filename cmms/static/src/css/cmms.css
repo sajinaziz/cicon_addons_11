@@ -1,0 +1,8 @@
+th, td
+{
+    border: 1px solid black;
+}
+td
+{
+    height:25px;
+}

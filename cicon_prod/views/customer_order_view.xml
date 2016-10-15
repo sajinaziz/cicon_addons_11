@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem name="Production"  id="cicon_menu" sequence="50" groups="cicon_prod.group_prod_user" />
+        <menuitem name="Call Off Order"  parent="cicon_menu" id="cicon_menu_order" sequence="1"  groups="cicon_prod.group_prod_user" />
+
+        <record model="ir.ui.view" id="cicon_customer_order_tree_view">
+			<field name="name">cicon.customer.order.tree</field>
+			<field name="model">cicon.customer.order</field>
+			<field name="arch" type="xml">
+				<tree string="CICON Orders">
+					<field name="partner_id"/>
+                    <field name="project_id"/>
+                    <field name="name" />
+                    <field name="title"/>
+                    <field name="order_date"/>
+                    <field name="required_date"/>
+                    <field name="created_by"/>
+                    <field name="bbs_weight"/>
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cicon_customer_order_form_view">
+			<field name="name">cicon.customer.order.form</field>
+			<field name="model">cicon.customer.order</field>
+			<field name="arch" type="xml">
+				<form string="Customer Order">
+				 <header>
+				 	<button name="order_reopen" string="Re-Open" state="confirmed,close" type="object" states="confirmed" />
+				 	<button name="order_confirm" string="Confirm" type="object" states="new" class="oe_highlight"/>
+                     <!--<button name="order_close" string="Close" type="object" states="confirmed,progress" class="oe_highlight" groups="cicon_prod.group_prod_admin"/>-->
+				 	<button name="print_order" string="Print" type="object"  class="oe_highlight"/>
+                     <button name="order_cancel" string="Cancel" type="object" states="new,confirmed" />
+				 	<field name="state" widget="statusbar" statusbar_visible="new,confirmed,close"/>
+				 </header>
+				  <sheet>
+
+                        <group>
+                             <field name="partner_id" options="{'no_create':True,'no_open':True}"/>
+                             <field name="project_id" options="{'no_create':True,'no_open':True}"/>
+                        </group>
+                        <div class="oe_title">
+                            <label for="name"  class="oe_edit_only"/>
+                            <h1> <field name="name"/> </h1>
+                            <label for="title"  class="oe_edit_only"/>
+                            <h2><field name="title"/></h2>
+                            <label for="subtitle" class="oe_edit_only" />
+                            <h2><field name="subtitle"/></h2>
+                         </div>
+                      <group>
+
+                      </group>
+                        <group>
+                            <group string="Order Details">
+                                <field name="order_date"/>
+                                <field name="page_info"/>
+                                <field name="required_date"/>
+                                <field name="material_type" />
+                                <field name="bbs_weight"/>
+                           </group>
+                           <group  string="Additional Information">
+                                <field name="received_datetime" />
+                                <field name="project_engineer" />
+                                <field name="created_by" />
+                            </group>
+                        </group>
+                        <group>
+                            <notebook>
+                            <page string="Notes">
+                                <group>
+                                    <field name="production_note"/>
+                                    <field name="technical_note"/>
+                                </group>
+                            </page>
+                            <page string="Contact">
+                            <field name="contact_detail" string="Contact"/>
+                            </page>
+                             <page string="Production Orders"  >
+                                 <field name="id" invisible="1"/>
+                                <field name="prod_order_ids" context="{'default_customer_order_id': active_id}"  attrs="{'invisible':[('id','=',False)],'readonly': [('state','in',('cancel','close'))]}">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="description"/>
+                                        <field name="remarks"/>
+                                        <field name="required_date"/>
+                                        <field name="template_ids"/>
+                                        <field name="total_tonnage" sum="Total"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                             </page>
+
+                            </notebook>
+
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_cicon_res_partners">
+            <field name="name" >Customers </field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('customer','=',True)]</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="customer_order_calendar_view">
+			<field name="name">cicon.customer.order.calendar</field>
+			<field name="model">cicon.customer.order</field>
+			<field name="arch" type="xml">
+                <calendar color="project_id" date_start="required_date" string="Orders">
+                    <field name="name"/>
+                    <!--<field name="project_id"/>-->
+                </calendar>
+            </field>
+        </record>
+
+
+        <record id="customer_order_search_form" model="ir.ui.view">
+        <field name="name">cicon.customer.order.search.form</field>
+        <field name="model">cicon.customer.order</field>
+        <field name="arch" type="xml">
+            <search string="Order">
+                <filter name="current_month" string="This Month" domain="[('order_date','&gt;=',time.strftime('%%Y-%%m-01'))]" help="Current Month Order" icon="terp-project"/>
+                <group expand="0" string="Group By...">
+                    <filter string="Customer" name="group_customer_id" icon="terp-folder-violet" domain="[]" context="{'group_by':'partner_id'}"/>
+                    <filter string="Project" name="group_project_id" icon="terp-folder-violet" domain="[]" context="{'group_by':'project_id'}"/>
+                </group>
+                <field name="partner_id" select="1" widget="selection"/>
+                <field name="project_id" select="1" widget="selection"/>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+          <record model="ir.actions.act_window" id="action_cicon_customer_order">
+            <field name="name" >Customer Order</field>
+            <field name="res_model">cicon.customer.order</field>
+             <!--<field name="view_mode">tree,form,calendar</field>-->
+            <!--<field name="context">{}</field>-->
+              <field name="context">{'search_default_current_month':1}</field>
+       </record>
+
+
+
+        <menuitem  parent="cicon_menu_order" id="cicon_customer" action="action_cicon_res_partners" sequence="1"  groups="cicon_prod.group_prod_user" />
+        <menuitem name="Customer Order" parent="cicon_menu_order" id="cicon_menu_customer_orders" action="action_cicon_customer_order" sequence="3" />
+        <menuitem id="res_partner_project_prod_menu" name="Project" sequence="2"  parent="cicon_menu_order" action="action_cicon_project"/>
+
+
+    </data>
+</odoo>

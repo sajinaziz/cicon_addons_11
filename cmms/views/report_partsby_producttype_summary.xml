@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <template id="report_partsby_producttype_summary_template">
+         <t t-call="report.html_container">
+           <t t-call="cmms.cmms_internal_layout"/>
+            <div class="page">
+                 <div class="row">
+                     <div class="col-xs-4"/>
+                     <div class="col-xs-6 text-left"><h5><span t-esc="heading"/></h5></div>
+                 </div>
+                 <t t-foreach="docs" t-as="o">
+                     <div class="row">
+                         <div class="col-xs-4  text-left"><h3><span t-esc="o.name"/></h3></div>
+                         <div class="col-xs-8  text-left"><h3><span t-esc="get_total(o.id)"/></h3></div>
+                           <div class="col-xs-12  text-left" style="border-bottom:1px solid thick;"></div>
+                     </div>
+                     <table class="table table-condensed">
+                           <thead>
+                                <th> Job Order </th>
+                                <th> Invoice </th>
+                                <th> Invoice Date </th>
+                                <th> Item Name </th>
+                                <th> Quantity </th>
+                                <th> Rate </th>
+                                <th> Amount </th>
+                            </thead>
+                             <tbody>
+                                 <t t-set="categs" t-value="get_category(o.id)"/>
+                                 <t t-foreach="categs" t-as="c">
+                                     <t t-if="len(c) >0">
+                                         <t t-set="macs" t-value="get_machine(o.id, c)"/>
+                                             <tr>
+                                                <th class="text-left" colspan="7" font-size="14px">Machine Category: <span t-field="c.name" /> </th>
+                                             </tr>
+                                             <t t-foreach="macs" t-as="m">
+                                                 <tr>
+                                                     <th><h5><span t-field="m.code" /></h5></th>
+                                                     <th colspan="6"> <span t-field="m.name" /> </th>
+                                                 </tr>
+                                                 <t t-set="invoices" t-value="get_invoice(m)"/>
+                                                     <tr t-foreach="invoices" t-as="i">
+                                                         <td> <span t-field="i.job_order_id.name"/> </td>
+                                                         <td> <span t-field="i.invoice_id.qb_inv_ref"/> </td>
+                                                         <td> <span t-field="i.invoice_id.invoice_date"/> </td>
+                                                         <td> <span t-field="i.product_desc"/> </td>
+                                                         <td  class="text-right"> <span t-esc="int(i.quantity)"/> </td>
+                                                         <td  class="text-right"> <span t-esc="i.unit_price"  t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}' /> </td>
+                                                         <td  class="text-right"> <span t-esc="i.amount" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}' />  </td>
+                                                     </tr>
+
+                                             </t>
+                                     </t>
+                                 </t>
+                             </tbody>
+                         </table>
+
+                 </t>
+
+            </div>
+         </t>
+    </template>
+
+
+    </data>
+</odoo>

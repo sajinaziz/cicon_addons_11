@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record model="ir.ui.view" id="cmms_store_invoice_tree">
+            <field name="name">cmms.store.invoice.tree</field>
+            <field name="model">cmms.store.invoice</field>
+           <field name="arch" type="xml" >
+                <tree string="Store Invoice">
+                    <field name="name" />
+                    <field name="invoice_date"/>
+                    <field name="qb_ref"/>
+                    <field name="qb_inv_name"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+    </record>
+
+
+     <record model="ir.ui.view" id="cmms_store_invoice_form">
+        <field name="name">cmms.store.invoice.form</field>
+        <field name="model">cmms.store.invoice</field>
+        <field name="arch" type="xml" >
+            <form string="Store Invoice">
+                <header>
+                    <button name="set_confirm"  icon="fa-check-circle" class="oe_highlight" string="Confirm" states="draft" type="object"/>
+                    <button name="set_draft"  icon="fa-check-circle" string="Set Draft" states="confirmed,done" groups="cmms.group_cmms_supervisor" type="object"/>
+                    <button name="move_consume" icon="fa-forward" class="oe_highlight" string="Post" states="confirmed" type="object" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"   />
+                </header>
+                <sheet>
+                    <div class="oe_title oe_left">
+                        <field name="name" readonly="1"/>
+                    </div>
+                    <div class="oe_right or_button_box">
+
+                        <!--<button name="post_move_view" type="object" string="Post"/>-->
+                    </div>
+                 <group>
+                     <group>
+                         <field name="is_qb_invoice" readonly="1"/>
+                         <field name="invoice_date"/>
+                         <field name="machine_id" domain="[('company_id','=', company_id)]"  attrs="{'required':[('is_qb_invoice','=',False)]}" />
+                     </group>
+                     <group>
+                         <field name="company_id"/>
+                         <field name="user_id"/>
+                     </group>
+                 </group>
+                    <notebook>
+                        <page string="Invoice Items">
+                            <field name="invoice_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="product_desc"/>
+                                    <field name="unit_price"/>
+                                    <field name="quantity"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="job_code" />
+                                    <field name="job_order_id"/>
+                                    <field name="move_state"/>
+                                    <field name="qb_line_ref" invisible="1" />
+                                    <field name="qb_prod_desc" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <button name="move_consume" icon="fa-forward"  states="confirmed" type="object"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Inventory">
+                            <group>
+                                <group>
+                                    <field name="warehouse_id" domain="[('company_id','=', company_id)]"/>
+                                    <field name="picking_type_id" />
+                                </group>
+                                <group>
+                                    <field name="src_location_id"/>
+                                    <field name="consu_location_id"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="QB Details">
+                            <group string="Quick books" col="4">
+                                 <field name="qb_inv_name"/>
+                                 <field name="qb_inv_ref"/>
+                                 <field name="qb_ref"/>
+                                 <field name="qb_inv_id"/>
+                                 <field name="qb_last_updated"/>
+                             </group>
+                        </page>
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+
+
+        <record model="ir.ui.view" id="cmms_store_invoice_line_tree">
+            <field name="name">cmms.store.invoice.line.tree</field>
+            <field name="model">cmms.store.invoice.line</field>
+           <field name="arch" type="xml" >
+                <tree string="Store Invoice Line">
+                     <field name="invoice_id"/>
+                     <field name="product_id" invisible="1"/>
+                     <field name="invoice_date"/>
+                     <field name="product_desc"/>
+                     <field name="qb_prod_desc" invisible="1"/>
+                     <field name="job_order_id"/>
+                     <field name="machine_id"/>
+                     <field name="unit_price"/>
+                     <field name="quantity"/>
+                     <field name="amount" sum="Total"/>
+                     <field name="spare_part_type_id"/>
+                     <field name="qb_line_ref" invisible="1" />
+                     <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="cmms_store_invoice_line_form">
+            <field name="name">cmms.store.invoice.line.form</field>
+            <field name="model">cmms.store.invoice.line</field>
+           <field name="arch" type="xml" >
+                <form string="Store Invoice Line form">
+                    <sheet>
+                        <group col="4">
+                            <field name="invoice_id"/>
+                            <field name="invoice_date"/>
+                            <field name="product_id" invisible="1"/>
+                            <field name="product_desc"/>
+                            <field name="unit_price"/>
+                             <field name="quantity"/>
+                            <field name="amount" />
+                        </group>
+                        <group col="4">
+                             <field name="qb_prod_desc" invisible="1"/>
+                             <field name="job_order_id"/>
+                             <field name="machine_id"/>
+                             <field name="spare_part_type_id"/>
+                             <field name="qb_line_ref" invisible="1" />
+                             <field name="state" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+         <record model="ir.ui.view" id="cmms_store_invoice_line_pivot">
+            <field name="name">CMMS Expense</field>
+            <field name="model">cmms.store.invoice.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Invoice Line">
+                    <field name="machine_id" type="row"/>
+                    <field name="spare_part_type_id" type="col"/>
+                    <field name="amount"  type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="cmms_store_invoice_line_graph">
+            <field name="name"> Expense Graph</field>
+            <field name="model">cmms.store.invoice.line</field>
+            <field name="arch" type="xml">
+                <graph string="Expense" type="bar">
+                    <field name="spare_part_type_id" type="row"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+
+          <record model="ir.ui.view" id="cmms_store_invoice_line_search">
+			  <field name="name">cmms.store.invoice.line.search</field>
+            <field name="model">cmms.store.invoice.line</field>
+			<field name="arch" type="xml" >
+                <search string="Store Invoice Line" >
+                    <field name="invoice_id"/>
+                    <field name="job_order_id"/>
+                    <field name="machine_id"/>
+                    <filter name="last_month" string="Last Month" domain="[('invoice_id.invoice_date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('invoice_id.invoice_date','&lt;',time.strftime('%%Y-%%m-01'))]" />
+                    <seperator/>
+                    <filter name="this_month" string="This Month" domain="[('invoice_id.invoice_date','&gt;=',(context_today()).strftime('%%Y-%%m-01')),('invoice_id.invoice_date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01'))]" />
+                    <seperator/>
+                    <filter name="pending" string="Without Job Order" domain="[('job_order_id','=',False)]" help="Not Mapped To any Job Order" />
+                    <seperator/>
+                    <filter name="part_type" string="Part Type- Un-Assigned" domain="[('spare_part_type_id','=',False)]" help="Not Assigned to Part Type" />
+
+
+                </search>
+
+			</field>
+        </record>
+
+
+
+          <!--<record id="action_recon_job_order" model="ir.actions.server">-->
+            <!--<field name="name">Re-Check Job Order</field>-->
+            <!--<field name="model_id" ref="model_cmms_store_invoice_line"/>-->
+            <!--<field name="state">code</field>-->
+            <!--<field name="code">-->
+                <!--self.set_job_order(cr,uid,context.get('active_ids'),context=context)-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.values" id="action_recon_job_order_key">-->
+            <!--<field name="name">Re-Calculate - Job Order</field>-->
+            <!--<field name="action_id" ref="action_recon_job_order" />-->
+            <!--<field name="value" eval="'ir.actions.server,' + str(ref('action_recon_job_order'))" />-->
+            <!--<field name="key">action</field>-->
+            <!--<field name="model">cmms.store.invoice.line</field>-->
+            <!--<field name="key2">client_action_multi</field>-->
+        <!--</record>-->
+
+
+
+
+        <record model="ir.actions.act_window" id="action_cmms_store_invoice">
+            <field name="name" >Store Invoice</field>
+            <field name="res_model">cmms.store.invoice</field>
+        </record>
+
+         <record model="ir.actions.act_window" id="action_cmms_store_invoice_line">
+            <field name="name" >Store Invoice Line</field>
+            <field name="res_model">cmms.store.invoice.line</field>
+             <field name="view_mode">tree,form,pivot,graph</field>
+             <field name="context">{'search_default_this_month': 1}</field>
+
+        </record>
+
+
+
+        <record model="ir.ui.view" id="cmms_machine_form_view_extn">
+            <field name="name">cmms.machine.form.extn</field>
+            <field name="model">cmms.machine</field>
+            <field name="inherit_id" ref="cmms.cmms_machine_form_view"/>
+            <field name="arch" type="xml" >
+
+                <xpath expr="//form/sheet/div[@name='btn_box']" position="inside">
+                    <button name="%(action_cmms_store_invoice_line)d"
+                            type="action"
+                            class="oe_inline oe_stat_button"
+                            icon="fa-money"
+                            widget="statinfo"
+                            context="{'search_default_machine_id': active_ids}"
+                            help="Parts Cost">
+                        <field name="parts_cost" widget="statinfo"/>
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+
+
+         <record model="ir.ui.view" id="cmms_spare_part_type_tree">
+            <field name="name">cmms.spare.part.type.tree</field>
+            <field name="model">cmms.spare.part.type</field>
+           <field name="arch" type="xml" >
+                <tree string="Parts Type" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+         <record model="ir.actions.act_window" id="action_cmms_spare_part_type">
+            <field name="name" >Spare Part Type</field>
+            <field name="res_model">cmms.spare.part.type</field>
+        </record>
+
+
+
+
+        <menuitem name="Store" parent="cmms_menu" id="cmms_machine_store_menu" sequence="50"/>
+        <menuitem  parent="cmms_machine_store_menu" id="cmms_store_invoice_menu" sequence="10" action="action_cmms_store_invoice"/>
+
+        <menuitem  parent="cmms_machine_store_menu" id="cmms_store_invoice_line_menu" sequence="20" action="action_cmms_store_invoice_line"  />
+
+        <menuitem name="Store Config" parent="cmms_config_menu" id="cmms_store_config_menu" sequence="40"/>
+        <menuitem parent="cmms_store_config_menu" id="cmms_part_type_menu" action="action_cmms_spare_part_type"/>
+
+    </data>
+</openerp>
+
+
+
+

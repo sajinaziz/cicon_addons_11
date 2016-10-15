@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="cmms_pm_gen_wizard" model="ir.ui.view">
+            <field name="name">PM Generator</field>
+            <field name="model">cmms.pm.generate.wizard</field>
+            <field name="arch" type="xml">
+            <form string="PM Generate">
+                <group>
+                    <field name="pm_date" />
+                    <field name="pm_schedule_ids">
+                        <tree string="PM Schedule">
+                          <field name="pm_scheme_id"/>
+                            <field name="interval_id"/>
+                            <field name="machine_ids"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                	<button name="generate_pm_job" string="Generate" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_pm_generate" model="ir.actions.act_window">
+            <field name="name" >Job Order</field>
+            <field name="res_model">cmms.pm.generate.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Generate PM" parent="cmms_job_order_pm" id="cmms_pm_generate_job" action="action_pm_generate"/>
+
+    </data>
+</openerp>
+
+

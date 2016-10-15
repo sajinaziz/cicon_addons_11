@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+          <record id="cicon_prod_group_tmpl_tree" model="ir.ui.view">
+           <field name="name">cicon.prod.group.tmpl.tree</field>
+           <field name="model">cicon.product.group.template</field>
+                <field name="arch" type="xml">
+                    <tree string="Product Group Template">
+                        <field name="name"/>
+                    </tree>
+                </field>
+          </record>
+
+
+           <record id="cicon_prod_group_tmpl_form_2" model="ir.ui.view">
+           <field name="name">cicon.prod.group.tmpl.form2</field>
+           <field name="model">cicon.product.group.template</field>
+                <field name="arch" type="xml">
+                    <form string="Product Group Template">
+                        <sheet>
+                            <group>
+                                <field name="name" />
+                                <field name="code"/>
+                                <field name="description"/>
+                                <field name="unit_id"/>
+                                <field name="template_ids" widget="many2many_tags" domain="[('uom_id','=',unit_id)]"/>
+                                <field name="attributes_ids">
+                                    <tree editable="bottom">
+                                        <field name="attribute_id"/>
+                                        <field name="attr_value_ids" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <notebook>
+                                <page string="Products">
+                                    <field name="product_ids" domain="[('uom_id','=',unit_id)]">
+                                        <tree>
+                                               <field name="default_code"/>
+                                                <field name="name"/>
+                                                <field name="attribute_value_ids" widget="many2many_tags"/>
+                                                <field name="uom_id"/>
+                                               <!-- <field name="state" invisible="1"/>-->
+                                                <field name="product_tmpl_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+
+
+
+       <record id="cicon_prod_grp_tmpl_action" model="ir.actions.act_window">
+            <field name="name">Product Group Template</field>
+            <field name="res_model">cicon.product.group.template</field>
+             <field name="view_mode">tree,form</field>
+       </record>
+
+        <!--<menuitem action="cicon_prod_grp_tmpl_action" id="cicon_prod_grp_tmpl_menu_1" sequence="99" parent="base.menu_product"/>-->
+
+
+    </data>
+</odoo>

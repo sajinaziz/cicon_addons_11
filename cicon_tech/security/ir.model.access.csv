@@ -1,0 +1,24 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tech_sub_user,Tech.Submittal User,model_tech_submittal,group_tech_user,1,1,1,0
+access_tech_sub_admin,Tech.Submittal Admin,model_tech_submittal,group_tech_admin,1,1,1,1
+access_tech_rev_user,Tech.Submittal.Rev User,model_tech_submittal_revision,group_tech_user,1,1,1,0
+access_tech_rev_admin,Tech.Submittal.Rev Admin,model_tech_submittal_revision,group_tech_admin,1,1,1,1
+access_tech_doc_user,Tech.Submittal.Rev.Doc User,model_tech_submittal_revision_document,group_tech_user,1,1,1,1
+access_tech_doc_rev_user,Tech.Submittal.Rev.Doc.Rev User,model_tech_submittal_document_revision,group_tech_user,1,1,1,1
+access_tech_doc_admin,Tech.Submittal.Rev.Doc Admin,model_tech_submittal_revision_document,group_tech_admin,1,1,1,1
+access_tech_job_site_user,tech.job.site user,model_cic_job_site,group_tech_user,1,0,0,0
+access_tech_job_site_admin,tech.job.site admin,model_cic_job_site,group_tech_admin,1,1,1,1
+access_tech_project_contact_user,tech.project.contact user,model_tech_project_contact,group_tech_user,1,1,1,0
+access_tech_project_contact_admin,tech.project.contact admin,model_tech_project_contact,group_tech_admin,1,1,1,1
+access_tech_doc_type_user,tech.doc.type user,model_tech_document_type,group_tech_user,1,0,0,0
+access_tech_doc_type_admin,tech.doc.type admin,model_tech_document_type,group_tech_admin,1,1,1,1
+access_tech_dwg_creator_user,tech.dwg.creator user,model_tech_drawing_creator,group_tech_user,1,0,1,1
+access_tech_dwg_creator_admin,tech.dwg.creator admin,model_tech_drawing_creator,group_tech_admin,1,1,1,1
+access_tech_delivery_admin,tech.delivery admin,model_tech_delivery_details,group_tech_admin,1,1,1,1
+access_tech_delivery_user,tech.delivery user,model_tech_delivery_details,group_tech_user,1,1,1,1
+access_tech_drawing_register_user,tech.drawing.register user,model_tech_drawing_register,group_tech_user,1,0,0,0
+access_tech_drawing_register_admin,tech.drawing.register admin,model_tech_drawing_register,group_tech_admin,1,0,0,0
+access_res_partner_user,res.partner.tech user,base.model_res_partner,group_tech_user,1,0,0,0
+access_revision_reason_user,revision.reason User,model_tech_submittal_revision_reason,group_tech_user,1,0,0,0
+access_revision_reason_admin,revision.reason Admin,model_tech_submittal_revision_reason,group_tech_admin,1,1,1,0
+

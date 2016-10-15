@@ -1,0 +1,23 @@
+/*.oe_order_vignette {*/
+  /*padding: 8px 8px;*/
+  /*min-height: 100px;*/
+  /*width: auto;*/
+  /*float: none;*/
+/*}*/
+
+
+/*.oe_prod_order_details {*/
+  /*display: inline-block;*/
+  /*vertical-align: top;*/
+  /*width: 180px;*/
+  /*font-size: 13px;*/
+  /*padding: 2px 5px;*/
+  /*color: #000000;*/
+  /*min-height: 80px;*/
+  /*background-color: #ffffff;*/
+/*}*/
+
+.oe_prod_order_details {
+  width: 400px;
+  min-height: 200px;
+}

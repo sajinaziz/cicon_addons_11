@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+          <report id="report_cust_requisition"
+            name="cicon_prod.customer_requisition_template"
+            model="cicon.customer.order"
+            file="cicon_prod.customer_requisition"
+            string="Cover Sheet"
+            report_type="qweb-pdf" />
+
+
+        <report
+            id="report_order_in_hand_qweb"
+            string="Order In Hand"
+            model="cicon.order.analysis.report"
+            report_type="qweb-pdf"
+            file="cicon_prod.steel_order_in_hand"
+            name="cicon_prod.cicon_steel_order_in_hand_template"
+        />
+
+
+        <report
+            id="report_prod_plan"
+            string="Production Plan"
+            model="cicon.prod.plan"
+            report_type="qweb-pdf"
+            file="cicon_prod.prod_plan_report"
+            name="cicon_prod.cic_prod_plan_report_template"
+        />
+
+
+
+
+
+
+  </data>
+
+
+</odoo>

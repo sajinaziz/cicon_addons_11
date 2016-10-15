@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="cmms_job_gen_wizard" model="ir.ui.view">
+            <field name="name">Job Order Generator</field>
+            <field name="model">cmms.job.order.master.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Job Order Generate" >
+                    <group>
+
+                        <field name="job_order_type" />
+                        <field name="last_code"/>
+                        <field name="to_number"/>
+                    </group>
+                    <footer>
+                        <button name="generate_job_order" string="Generate" type="object" class="oe_highlight" />
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_job_order_code_generate" model="ir.actions.act_window">
+            <field name="name" >Generate Form</field>
+            <field name="res_model">cmms.job.order.master.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+
+        <menuitem  parent="cmms_job_form_list" id="cmms_job_order_code_menu" sequence="1" action="action_job_order_code_generate"/>
+
+         <!--<record id="action_cmms_job_master_wizard" model="ir.actions.act_window">-->
+            <!--<field name="name">Generate Job</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">cmms.job.order.master.wizard</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">form</field>-->
+            <!--<field name="view_id" ref="cmms_job_gen_wizard"/>-->
+            <!--<field name="context">{'active_ids':active_ids}</field>-->
+            <!--<field name="target">new</field>-->
+            <!--<field name="multi">True</field>-->
+        <!--</record>-->
+
+
+
+         <!--<record model="ir.values" id="cmms_job_order_master_value">-->
+            <!--<field name="model_id" ref="cmms.model_cmms_job_order_master" />-->
+            <!--<field name="name">Generate Job</field>-->
+            <!--<field name="key2">client_action_multi</field>-->
+            <!--<field name="value" eval="'ir.actions.act_window,' + str(ref('action_cmms_job_master_wizard'))" />-->
+            <!--<field name="key">action</field>-->
+            <!--<field name="model">cmms.job.order.master</field>-->
+        <!--</record>-->
+
+
+    </data>
+</openerp>

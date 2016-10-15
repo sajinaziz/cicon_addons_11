@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+          <record id="cic_order_analysis_pivot" model="ir.ui.view">
+            <field name="name">order.analysis.report.pivot</field>
+            <field name="model">cicon.order.analysis.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Order Analysis">
+                    <field name="partner_id" type="row"/>
+                    <field name="project_id" type="row"/>
+                    <field name="product_tmpl_id" type="col"/>
+                    <field name="quantity" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+          <record id="cic_order_analysis_graph" model="ir.ui.view">
+            <field name="name">order.analysis.report.graph</field>
+            <field name="model">cicon.order.analysis.report</field>
+            <field name="arch" type="xml">
+                <graph string="Order Analysis" stacked="False">
+                    <field name="partner_id" type="row" />
+                    <!--<field name="project_id" type="row"/>-->
+                    <field name="product_tmpl_id" type="col"/>
+                    <field name="quantity" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="cic_order_analysis_search" model="ir.ui.view">
+        <field name="name">rder.analysis.report.search</field>
+        <field name="model">cicon.order.analysis.report</field>
+        <field name="arch" type="xml">
+            <search string="Order Analysis">
+                <field name="categ_id" widget="selection"/>
+                <field name="product_tmpl_id" widget="selection"/>
+                <filter name="pending_order" string="Pending Order" domain="[('prod_order_id.state','not in',['delivered','cancel','transfer'])]"/>
+                <!--<filter name="steel_order" string="Steel Order" domain="[('product_id.categ_id.name','not in',['delivered','cancel'])]"/>-->
+            </search>
+        </field>
+    </record>
+
+
+
+
+        <record model="ir.actions.act_window" id="action_order_analysis_report">
+            <field name="name" >Order Report</field>
+            <field name="res_model">cicon.order.analysis.report</field>
+            <field name="view_mode">pivot,graph</field>
+            <!--<field name="view_type">form</field>-->
+            <field name="context">{'search_default_pending_order':1}</field>
+       </record>
+
+
+
+        <menuitem id="menu_order_analysis_rpt" parent="cicon_menu_report" action="action_order_analysis_report" />
+
+    </data>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="cic_order_state_wizard" model="ir.ui.view">
+            <field name="name">cic.order.state.wizard.form</field>
+            <field name="model">cic.order.state.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Order State" version="7.0">
+                    <group>
+                        <field name="state"/>
+                        <field name="prod_order_ids" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="change_state" confirm="Confirm Status Change ?" string="Change State" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+       <record model="ir.actions.act_window" id="action_cic_order_state_wizard">
+            <field name="name" >Change Status</field>
+            <field name="res_model">cic.order.state.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+       </record>
+
+
+           <act_window name="Change Status"
+            src_model="cicon.prod.order"
+            res_model="cic.order.state.wizard"
+            view_mode="form"
+            view_type="form"
+            multi="True"
+            key2="client_action_multi"
+            context="{'default_prod_order_ids':active_ids}"
+            id="action_cic_order_state_wizard" />
+
+</data>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="cic_prod_plan_wizard" model="ir.ui.view">
+            <field name="name">cic.prod.plan.wizard.form</field>
+            <field name="model">cic.prod.plan.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Order State" version="7.0">
+                    <group>
+                        <field name="prod_plan_id" domain="[('state','=', 'pending')]"/>
+                        <field name="load"/>
+                        <field name="remarks"/>
+                    </group>
+                    <notebook>
+                        <page string="Orders">
+                            <field name="prod_order_ids">
+                                <tree create="false" edit="false">
+                                    <field name="partner_id" />
+                                    <field name="project_id"/>
+                                    <field name="customer_order_id"/>
+                                    <field name="name" />
+                                    <field name="description" />
+                                    <field name="required_date" />
+                                    <field name="total_tonnage" />
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="update_plan" confirm="Confirm Update !" string="Update Plan" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+       <record model="ir.actions.act_window" id="action_cic_prod_plan_wizard">
+            <field name="name" >Production Plan</field>
+            <field name="res_model">cic.prod.plan.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+       </record>
+
+
+           <act_window name="Update Planning"
+            src_model="cicon.prod.order"
+            res_model="cic.prod.plan.wizard"
+            view_mode="form"
+            view_type="form"
+            multi="True"
+            key2="client_action_multi"
+            context="{'default_prod_order_ids':active_ids}"
+            id="action_cic_prod_plan_wizard" />
+
+</data>
+</odoo>

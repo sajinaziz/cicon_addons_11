@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <!--<record id="view_stock_consume_wizard" model="ir.ui.view">-->
+            <!--<field name="name">Consume Product</field>-->
+            <!--<field name="model">consume.product.wizard</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Scrap Products">-->
+                    <!--<group>-->
+                        <!--&lt;!&ndash;<field name="restrict_lot_id" domain="[('product_id','=',product_id)]" groups="stock.group_production_lot"&ndash;&gt;-->
+                            <!--&lt;!&ndash;context="{'default_product_id': product_id}"/>&ndash;&gt;-->
+                        <!--<group>-->
+                            <!--<field name="name"/>-->
+                            <!--<field name="company_id" />-->
+                            <!--<field name="warehouse_id" />-->
+                        <!--</group>-->
+                        <!--<group>-->
+                            <!--<field name="picking_type_id" domain="[('warehouse_id', '=', warehouse_id)]"/>-->
+                            <!--<field name="src_location_id" domain="[('usage','!=','view'),('scrap_location','!=',True)]" />-->
+                            <!--<field name="consu_location_id"  domain="[('usage','!=','view'),('scrap_location','=',True)]" />-->
+                        <!--</group>-->
+                    <!--</group>-->
+                    <!--<notebook>-->
+                        <!--<page string="Items">-->
+                            <!--<field name="consu_line_ids">-->
+                                <!--<tree create="false" edit="false">-->
+                                    <!--<field name="store_line_id"/>-->
+                                    <!--<field name="product_id"/>-->
+                                    <!--<field name="product_uom"/>-->
+                                    <!--<field name="product_qty"/>-->
+                                <!--</tree>-->
+                            <!--</field>-->
+                        <!--</page>-->
+                    <!--</notebook>-->
+                    <!--<footer>-->
+                        <!--<button name="move_scrap" string="Scrap" type="object" class="oe_highlight"  />-->
+                        <!--or-->
+                        <!--<button string="Cancel" class="oe_link" special="cancel" />-->
+                    <!--</footer>-->
+                <!--</form>-->
+            <!--</field>-->
+
+        <!--</record>-->
+      <!--<record id="consume_product_action" model="ir.actions.act_window">-->
+            <!--<field name="name">Consume Products</field>-->
+            <!--<field name="res_model">consume.product.wizard</field>-->
+            <!--<field name="view_id" ref="view_stock_consume_wizard"/>-->
+            <!--<field name="target">new</field>-->
+            <!--<field name="context">{'form_view_ref': False}</field>-->
+        <!--</record>-->
+
+
+    </data>
+</odoo>

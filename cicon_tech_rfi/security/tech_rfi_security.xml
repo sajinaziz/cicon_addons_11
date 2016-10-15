@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!--Record Rule-->
+     <data noupdate="1">
+        <record model="ir.rule" id="tech_rfi_user_restrict">
+            <field name="name">CICON RFI User Restrict</field>
+            <field name="model_id" ref="model_cicon_tech_rfi"/>
+            <field name="groups" eval="[(4, ref('cicon_tech.group_tech_user'))]"/>
+            <field name="domain_force">[('created_by','=',user.id)]</field>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+
+
+</odoo>

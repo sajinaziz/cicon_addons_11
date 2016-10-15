@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="cmms_common_report_wizard_form_view" model="ir.ui.view">
+            <field name="name">CMMS Report</field>
+            <field name="model">cmms.common.report.wizard</field>
+            <field name="arch" type="xml">
+            <form string="CMMS Report">
+                <group>
+                    <field name="report_list"/>
+                    <field name="job_order_type" attrs="{'invisible': [('report_list','!=','job_order_report')]}"/>
+                    <field name="report_by" attrs="{'invisible': ['|',('report_list','=','machine_analysis_report'),('report_list','=','machine_status_report')]}" />
+                </group>
+                <group>
+                    <field name="report_year"  attrs="{'invisible': [('report_list','!=','machine_analysis_report')],'required':[('report_list','==','machine_analysis_report')]}" />
+                </group>
+                <group col="4">
+                    <field name="start_date" attrs="{'invisible': ['|',('report_list','=','machine_analysis_report'),('report_list','=','machine_status_report')]}"/>
+                    <field name="end_date" attrs="{'invisible': ['|',('report_list','=','machine_analysis_report'),('report_list','=','machine_status_report')]}" />
+                </group>
+                <group>
+                    <field name="company_id" options="{'no_create':True, 'no_open': True}"/>
+                </group>
+                <footer>
+                	<button name="show_report" string="Show Report" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+
+        <record id="action_expense_summary_report" model="ir.actions.act_window">
+            <field name="name" >Expense Report</field>
+            <field name="res_model">cmms.common.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'default_report_list': 'expense_report'}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Inventory Reports" parent="cmms_report_menu" id="cmms_menu_inventory_report" />
+        <menuitem parent="cmms_menu_inventory_report" id="cmms_menu_expense_summary" action="action_expense_summary_report"/>
+        <!-- <menuitem name="Job Order Reports" parent="cmms_report_menu" id="cmms_menu_Job Order_report" />-->
+
+    </data>
+</odoo>
+
+

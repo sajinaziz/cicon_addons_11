@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+"access_cicon_prod_group_temp_user","cicon.prod.group.temp user","model_cicon_product_group_template",base.group_user,1,0,0,0
+access_cicon_prod_group_temp_admin,cicon.prod.group.temp admin,model_cicon_product_group_template,base.group_no_one,1,1,1,1
+access_cicon_prod_group_attr_user,cicon.prod.group.attr user,model_cicon_product_group_attribute,base.group_user,1,0,0,0
+access_cicon_prod_group_attr_admin,cicon.prod.group.attr admin,model_cicon_product_group_attribute,base.group_no_one,1,1,1,1

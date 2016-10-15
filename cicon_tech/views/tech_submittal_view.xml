@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.actions.act_window" id="action_tech_submittal_revision_form">
+            <field name="name">Submittals</field>
+            <field name="res_model">tech.submittal.revision</field>
+            <field name="view_mode">form,tree,pivot</field>
+            <field name="domain">[('state','not in', ('resubmitted','cancel'))]</field>
+            <field name="limit">20</field>
+            <field name="context">{"search_default_current_month":1}</field>
+        </record>
+
+        <menuitem name="Technical" id="tech_menu" groups="group_tech_user,base.group_no_one"/>
+        <menuitem name="Technical Submittals" parent="tech_menu" id="tech_menu_submittal"/>
+
+
+        <menuitem name="Submittal Revision" parent="tech_menu_submittal" id="tech_menu_submittal_revision_list"
+                  action="action_tech_submittal_revision_form" sequence="10" />
+
+        <record model="ir.actions.act_window" id="action_project_tree_view">
+            <field name="name">Manage Customer Projects</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cic.job.site</field>
+            <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="cic_job_site_tree_view"/>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_res_partners_tech">
+            <field name="name" >Customers </field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('customer','=',True)]</field>
+        </record>
+
+        <menuitem id="res_partner_tech_menu" name="Customers" parent="tech_menu_submittal" action="action_res_partners_tech" sequence="80"/>
+        <menuitem id="res_partner_project_tech_menu" name="Job Sites" parent="tech_menu_submittal" action="action_project_tree_view" sequence="90"/>
+
+    </data>
+</odoo>

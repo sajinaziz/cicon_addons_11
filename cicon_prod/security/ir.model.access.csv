@@ -1,0 +1,30 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_order_prod_user,cicon.customer.order prod_user,model_cicon_customer_order,group_prod_user,1,1,1,0
+access_project_prod_user,res.partner.project prod_user,model_res_partner_project,group_prod_user,1,0,0,0
+access_partner_prod_user,res.partner prod_user,base.model_res_partner,group_prod_user,1,0,0,0
+access_project_prod_admin,res.partner.project prod_admin,model_res_partner_project,group_prod_admin,1,1,1,0
+access_partner_prod_admin,res.partner prod_admin,base.model_res_partner,group_prod_admin,1,1,1,0
+access_prod_order_user,cicon.prod.order prod_user,model_cicon_prod_order,group_prod_user,1,1,1,0
+access_prod_order_line_user,cicon.prod.order.line prod_user,model_cicon_prod_order_line,group_prod_user,1,1,1,1
+access_prod_order_analysis_user,cicon.prod.order.analysis prod_user,model_cicon_order_analysis_report,group_prod_user,1,0,0,0
+access_prod_report_template,cicon.prod.report.template prod_user,model_cicon_prod_report_template,group_prod_user,1,0,0,0
+access_prod_plan_admin,cicon.prod.plan_admin,model_cicon_prod_plan,group_prod_admin,1,1,1,1
+access_prod_plan_user,cicon.prod.plan_user,model_cicon_prod_plan,group_prod_user,1,0,0,0
+acc_cic_steel_weight_type,cic.steel.weight.type_user,model_cicon_steel_weight_type,group_prod_user,1,0,0,0
+acc_cic_contract,cic.contract_user,model_cicon_contract,group_prod_user,1,0,0,0
+acc_cic_contract_weight.type,cic.contract.weight.type_user,model_cicon_contract_weight_type,group_prod_user,1,0,0,0
+acc_cic_contract_line,cic.contract.line_user,model_cicon_contract_line,group_prod_user,1,0,0,0
+acc_cic_steel_weight_type_admin,cic.steel.weight.type_admin,model_cicon_steel_weight_type,group_prod_admin,1,1,1,1
+acc_cic_contract_admin,cic.contract_admin,model_cicon_contract,group_prod_admin,1,1,1,1
+acc_cic_contract_weight_type_admin,cic.contract.weight.type_admin,model_cicon_contract_weight_type,group_prod_admin,1,1,1,1
+acc_cic_contract_line_admin,cic.contract.line_admin,model_cicon_contract_line,group_prod_admin,1,1,1,1
+access_cic_prod_group_temp_admin,cicon.prod.group.temp admin,cicon_product_group_template.model_cicon_product_group_template,group_prod_admin,1,1,1,1
+access_cic_prod_group_attr_admin,cicon.prod.group.attr admin,cicon_product_group_template.model_cicon_product_group_attribute,group_prod_admin,1,1,1,1
+acc_cic_prod_plan_wizard,cic.prod.plan.wizard_admin,model_cic_prod_plan_wizard,group_prod_admin,1,1,1,1
+acc_cic_prod_del_order_user,cicon.prod.delivery.order_user,model_cicon_prod_delivery_order,group_prod_user,1,0,0,0
+acc_cic_prod_del_order_admin,cicon.prod.delivery.order_admin,model_cicon_prod_delivery_order,group_prod_admin,1,1,1,0
+acc_cic_prod_del_order_line_user,cicon.prod.delivery.order.line_user,model_cicon_prod_delivery_order_line,group_prod_user,1,0,0,0
+acc_cic_prod_del_order_line_admin,cicon.prod.delivery.order.line_admin,model_cicon_prod_delivery_order_line,group_prod_admin,1,1,1,0
+acc_cic_prod_del_product_line_user,cicon.prod.delivery.product.line_user,model_cicon_prod_delivery_product_line_view,group_prod_user,1,0,0,0
+
+
