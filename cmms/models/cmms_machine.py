@@ -218,9 +218,10 @@ class CmmsMachineTaskView(models.Model):
         group_by_str = """ORDER BY T.interval_id """
         return group_by_str
 
-    def init(self, cr):
-        tools.drop_view_if_exists(cr, self._table)
-        cr.execute("""CREATE or REPLACE VIEW %s as (
+    @api.model_cr
+    def init(self):
+        tools.drop_view_if_exists(self.env.cr, self._table)
+        self.env.cr.execute("""CREATE or REPLACE VIEW %s as (
             %s
             FROM ( %s )
             %s
