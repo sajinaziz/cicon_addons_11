@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="cicon_hr_internal_layout">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="cicon_hr.cicon_internal_layout_header" />
+    <t t-raw="0" />
+    <t t-call="cicon_hr.cicon_internal_layout_footer" />
+</template>
+
+<template id="cicon_internal_layout_header">
+    <div class="header">
+            <!--<div class="col-xs-2">-->
+                <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 30px;"/>-->
+            <!--</div>-->
+            <!--<div class="col-xs-7 text-left" style="margin-top:20px;padding-left:25px;" t-field="company.rml_header1"/>-->
+            <div class="col-xs-4">
+               <strong>  <span t-field="company.name"/> </strong>
+            </div>
+            <div class="col-xs-5">
+                <t t-if="o and 'attendance_date' in o">
+                    <h4 class="text-center"> Attendance Date: <span t-esc="time.strftime('%d-%m-%Y, %A',time.strptime(o.attendance_date,'%Y-%m-%d'))"/> </h4>
+                </t>
+            </div>
+            <div class="col-xs-3" >
+                <!--<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>-->
+                 <span t-esc="formatLang(time.strftime('%Y-%m-%d %H:%M:%S'),date_time=True)"/>
+
+            </div>
+        <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template id="cicon_internal_layout_footer">
+    <div class="footer">
+        <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <small>system generated machine punch log for attendance. (Not related with any salary calculation process) </small>
+            </div>
+       <div class="col-xs-4 text-right">
+             <ul class="list-inline">
+                <li>Page:</li>
+                <li><span class="page"/></li>
+                <li>/</li>
+                <li><span class="topage"/></li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</template>
+
+
+<template id="cicon_hr_daily_attendance_template">
+    <t t-call="report.html_container">
+    <t t-foreach="docs" t-as="o">
+        <t t-call="cicon_hr.cicon_hr_internal_layout">
+        <div class="page">
+                <t t-set="w_shifts" t-value="getWorkShift()"/>
+                  <t t-foreach="getDepartments()" t-as="d">
+                    <t t-foreach="w_shifts" t-as="ws">
+                    <t t-set="attendance_ids" t-value="[t for t in o.filtered_ids if t.employee_id.department_id.id == d.id and t.employee_id.work_shift.id == ws.id]"/>
+                      <t t-if="len(attendance_ids) > 0">
+                        <table class="table table-condensed">
+                             <thead>
+                                <th> SNo </th>
+                                <th> ID </th>
+                                <th> Name </th>
+                                <th> Sign In </th>
+                                <th> Sign Out </th>
+                                <th> Work Hour </th>
+                                <th> Leave </th>
+                                 <th> Log Count </th>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td colspan="8"> <h5> <span t-esc="d.name" /> / <span t-esc="ws.name" /> </h5>  </td>
+                                </tr>
+                                <tr t-foreach="attendance_ids" t-as="a">
+                                <td> <span t-esc="a_index + 1"/> </td>
+                                <td > <span t-field="a.employee_id.cicon_employee_id"/> </td>
+                                <td > <span t-field="a.employee_id.name"/> </td>
+                                <td > <span t-field="a.sign_in.utc_datetime"/> </td>
+                                <td > <span t-field="a.sign_out.utc_datetime"/> </td>
+                                <td>
+                                <t t-if="a.work_hour > 0">
+                                    <span t-esc="str(a.work_hour).replace('.',':')"/>
+                                </t>
+                                </td>
+                                <td>
+                                <t t-if="a.leave_id">
+                                    <span t-field="a.leave_id.leave_type"/> </t>
+                                </td>
+                                <td>
+                                   <span t-esc="a.punch_log_count"/>
+                                </td>
+                                    </tr>
+
+                            </tbody>
+                      </table>
+                          <p style="page-break-before:always;"> </p>
+                      </t>
+                        <p style="page-break-before:always;"> </p>
+                    </t>
+                 </t>
+
+        </div>
+       </t>
+
+    </t>
+    </t>
+</template>
+
+    </data>
+</openerp>
+
+

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+
+<template id="employee_attendance_report_template">
+    <t t-call="report.html_container">
+        <t t-call="cicon_hr.cicon_hr_internal_layout">
+        <div class="page">
+                  <t t-foreach="docs['employees']" t-as="e">
+                      <div class="row mb16">
+                          <div class="col-xs-2"> Employee : </div>
+                          <div class="col-xs-8">
+                              <strong> [ <span t-field="e.cicon_employee_id"/> ] - <span t-field="e.name"/> </strong> </div>
+                      </div>
+                      <div class="row mb16">
+                          <div class="col-xs-3"> Department / Shift : </div>
+                          <div class="col-xs-8">
+                           <span t-field="e.department_id.name"/> / <span t-esc="e.work_shift.name or ''"/> </div>
+                      </div>
+                        <table class="table table-condensed">
+                             <thead>
+                                 <tr>
+                                   <th colspan="3" class="text-left" >  <small> Period ( <span  t-esc="fromDate"/> - <span  t-esc="toDate"/> )</small> </th>
+                                   <th colspan="4" class="text-right" >  <small> Employee ID : <span  t-field="e.cicon_employee_id"/> </small> </th>
+                                 </tr>
+                                <tr>
+                                <th> SNo </th>
+                                 <th> Date</th>
+                                <th> Sign In </th>
+                                <th> Sign Out </th>
+                                <th> Work Hour </th>
+                                <th> Leave </th>
+                                 <th> Log Count </th>
+                                 </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="attendance" t-value="get_employee_attendance(e.id)"/>
+                                <t t-set="days" t-value="attendance.keys()"/>
+                                <t t-set="days1" t-value="days.sort()"/>
+                                <tr t-foreach="days" t-as="d">
+                                <td> <span t-esc="d_index + 1"/> </td>
+                                    <t t-set="val" t-value="attendance.get(d,False)"/>
+                                    <t t-set="a" t-value="False"/>
+                                    <t t-if="val">
+                                        <td> <span t-esc="val['att_day']"/> </td>
+                                        <t t-set="a" t-value="val['attendance']"/>
+                                    </t>
+                                    <td>
+                                        <t t-if="a and a.sign_in">
+                                            <span t-field="a.sign_in.utc_datetime" t-field-options='{"format": "dd-MM-yyyy hh:mm"}'/>
+                                        </t>
+                                    </td>
+                                 <td >
+                                     <t t-if="a and a.sign_out">
+                                            <span t-field="a.sign_out.utc_datetime" t-field-options='{"format": "dd-MM-yyyy hh:mm"}'/>
+                                        </t>
+                                 </td>
+                                <td>
+                                    <t t-if="a and a.work_hour > 0" >
+                                        <span t-esc="str(a.work_hour).replace('.',':')"/>
+                                    </t>
+                                </td>
+                                <td>
+                                <t t-if="a and a.leave_id">
+                                    <span t-field="a.leave_id.leave_type"/> </t>
+                                </td>
+                                    <td>
+                                <t t-if="a and a.punch_log_count">
+                                    <span t-esc="a.punch_log_count"/> </t>
+                                </td>
+                                </tr>
+
+                            </tbody>
+                      </table>
+                     <p style="page-break-before:always;"> </p>
+                </t>
+        </div>
+        </t>
+    </t>
+</template>
+
+
+    </data>
+</openerp>

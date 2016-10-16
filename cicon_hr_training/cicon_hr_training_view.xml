@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="cicon_hr_training_emp_tree">
+            <field name="name">cicon.hr.training.tree</field>
+            <field name="model">cicon.hr.employee.training</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name="name"/>
+                    <field name="certificate_no"/>
+                    <field name="employee_id" />
+                    <field name="job_id"/>
+                    <field name="title_id" />
+                    <field name="training_date"/>
+                    <field name="expiry_date"/>
+                    <field name="grade"/>
+                    <field name="score_percent" widget="progressbar"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cicon_hr_training_emp_form">
+            <field name="name">cicon.hr.training.form</field>
+            <field name="model">cicon.hr.employee.training</field>
+            <field name="arch" type="xml">
+                <form string="Training">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="certificate_no"/>
+                            <field name="employee_id" options="{'no_create':True}"/>
+                            <field name="job_id"/>
+                            <field name="title_id"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="training_date"/>
+                                <field name="expiry_date"/>
+                            </group>
+                            <group>
+                                <field name="department_id" />
+                            </group>
+                        </group>
+                        <div class="oe_inline">
+                            <label for="achieved_score"/>
+                                <field name="achieved_score" class="oe_inline" /> /<field name="score" class="oe_inline"/>
+                        </div>
+                        <group>
+                            <field name="file_name" invisible="1"/>
+                            <field name="certificate_file"  filename="file_name" />
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+
+
+
+          <record model="ir.ui.view" id="cicon_hr_training_title_tree">
+            <field name="name">cicon.hr.training.title.tree</field>
+            <field name="model">cicon.hr.training.title</field>
+            <field name="arch" type="xml">
+                <tree string="Training Title">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="coordinator_id" domain="[('department_id','=',department_id)]" />
+                    <field name="score"/>
+                </tree>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="cicon_hr_training_title_form">
+            <field name="name">cicon.hr.training.title.form</field>
+            <field name="model">cicon.hr.training.title</field>
+            <field name="arch" type="xml">
+                <form string="Training Title">
+                    <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description" />
+                        <field name="department_id"/>
+                        <field name="coordinator_id"/>
+                        <field name="score"/>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+         <record id="cicon_training_title_action" model="ir.actions.act_window">
+            <field name="name">Training Topic</field>
+            <field name="res_model">cicon.hr.training.title</field>
+       </record>
+
+
+        <record id="view_employee_form_cicon_training" model="ir.ui.view">
+            <field name="name">hr.employee.form.cicon.ext</field>
+             <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="cicon_hr.view_employee_form_cicon_ext"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[last()]" position="after">
+                    <page string="Trainings">
+                        <field name="training_ids" context="{'default_employee_id': active_id}">
+                             <tree string="Training">
+                                    <field name="name"/>
+                                    <field name="certificate_no"/>
+                                    <field name="title_id" />
+                                    <field name="training_date"/>
+                                    <field name="expiry_date" count="Count"/>
+                                    <field name="score_percent" widget="progressbar"/>
+                             </tree>
+                        </field>
+                    </page>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="cicon_hr_training_emp_graph">
+            <field name="name">cicon.hr.training.graph</field>
+            <field name="model">cicon.hr.employee.training</field>
+            <field name="arch" type="xml">
+                  <graph string="Training Analysis" type="pivot" stacked="True">
+                    <field name="employee_id" type="row"/>
+                      <field name="title_id" type="col"/>
+                      <field name="training_date" type="col"/>
+                    <field name="achieved_score" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+         <record model="ir.ui.view" id="cicon_hr_training_emp_search">
+            <field name="name">cicon.hr.training.search</field>
+            <field name="model">cicon.hr.employee.training</field>
+            <field name="arch" type="xml">
+                  <search>
+                    <field name="employee_id" widget="selection"/>
+                      <field name="title_id" widget="selection"/>
+                    <filter name="this_month" string="This Month" domain="[('training_date','>=',time.strftime('%%Y-%%m-01'))]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="cicon_emp_training_action" model="ir.actions.act_window">
+            <field name="name">Employee Training</field>
+            <field name="res_model">cicon.hr.employee.training</field>
+            <field name="view_mode">tree,form,graph</field>
+       </record>
+
+
+
+
+        <menuitem name="Employee Training" id="menu_cicon_hr_training_root" groups="base.group_hr_training_user" parent="hr.menu_hr_root" sequence="70"/>
+        <menuitem action="cicon_emp_training_action" id="menu_cicon_hr_training" parent="menu_cicon_hr_training_root" sequence="10"/>
+        <menuitem action="cicon_training_title_action" id="menu_cicon_hr_training_title" parent="menu_cicon_hr_training_root" sequence="20"/>
+
+    </data>
+
+ </openerp>

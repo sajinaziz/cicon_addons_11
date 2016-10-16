@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+
+<template id="employee_leave_report_weekly">
+    <t t-call="report.html_container">
+
+        <div class="header">
+
+                  <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"></t>
+                  </t>
+                  <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"></t>
+                  </t>
+            <div class="col-xs-4">
+                    <strong>  <span t-field="company.name"/> </strong>
+                </div>
+            <div class="col-xs-5">
+                <h5 class="text-center"> Employee Leave : ( <span t-esc="fromDate"/> - <span t-esc="toDate"/> )</h5>
+            </div>
+            <div class="col-xs-3" >
+                <!--<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>-->
+                 <span t-esc="formatLang(time.strftime('%Y-%m-%d %H:%M:%S'),date_time=True)"/>
+
+            </div>
+        <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+        </div>
+        </div>
+        <div class="page">
+
+            <t t-set="period" t-value="docs['period']"/>
+            <t t-set="data" t-value="docs['data']"/>
+
+            <table class="table table-bordered">
+                <thead>
+                    <th style="width:3%"> SN</th>
+                    <th style="width:20%"> Employee</th>
+                    <t t-foreach="period" t-as="p">
+                        <th>
+                            <span t-esc="p.strftime('%d')"/> <br/>
+                            <span t-esc="p.strftime('%a')"/>
+                        </th>
+                    </t>
+                    <th>
+                        Total Days
+                    </th>
+                </thead>
+                <tbody>
+                    <tr t-foreach="data" t-as="d" >
+                        <td> <span t-esc="d_index+1"/>    </td>
+                        <td> [ <span t-esc="d['employee'].cicon_employee_id"/> ] <span t-esc="d['employee'].name"/>    </td>
+                        <t t-foreach="period" t-as="pr">
+                           <td> <span t-esc="d['leaves'].get(pr.strftime('%Y-%m-%d'),False)"/> </td>
+                        </t>
+                        <td>
+                            <span t-esc="len(d['leaves'])"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+               <!--<t t-foreach="docs" t-as="o">-->
+                   <!--<p t-field="o['employee'].name"/>-->
+                   <!--<t t-foreach="o['leaves']" t-as="d">-->
+                        <!--<ul>-->
+                           <!--<li> <span t-esc="d"/> </li>-->
+                            <!--<li t-esc="o['leaves'].get(d)"/>-->
+                        <!--</ul>-->
+                   <!--</t>-->
+               <!--</t>-->
+
+        </div>
+        <div class="footer">
+        <div class="row zero_min_height">
+            <div class="col-xs-12">
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <small>
+                 <ul class="list-inline">
+                    <li>AB:Absent</li>
+                    <li>ME:Medical Leave</li>
+                    <li>AN:Annual Leave</li>
+                     <li>EM:Emergency Leave</li>
+                     <li>LA:Late Resume</li>
+                 </ul>
+                </small>
+            </div>
+       <div class="col-xs-4 text-right">
+             <ul class="list-inline">
+                <li>Page:</li>
+                <li><span class="page"/></li>
+                <li>/</li>
+                <li><span class="topage"/></li>
+            </ul>
+        </div>
+        </div>
+        </div>
+    </t>
+
+
+</template>
+
+
+    </data>
+</openerp>

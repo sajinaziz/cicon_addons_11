@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="cicon_hr_employee_attendance_wizard" model="ir.ui.view">
+            <field name="name">cicon.hr.emp.attendance.wizard</field>
+             <field name="model">cicon.emp.attendance.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Attendance">
+                    <group>
+                        <field name="report_type" invisible="1" />
+                        <field name="employee_tags" attrs="{'required':[('report_type','=','employee_tag'),('work_shift','=',False)],'invisible': [('report_type','in',('employee_leave','employee_attendance'))] }"  widget="many2many_tags" options="{'no_create':True,'no_open':True}"/>
+                        <field name="work_shift" attrs="{'invisible': [('report_type','in',('employee_leave','employee_attendance'))] }"   options="{'no_create':True,'no_open':True}"/>
+                        <field name="employee_ids" attrs="{'required':[('report_type','=','employee_attendance')],'invisible': [('report_type','in',('employee_leave','employee_tag'))] }"   widget="many2many_tags" options="{'no_create':True,'no_open':True}"/>
+                        <field name="leave_type"  attrs="{'invisible': [('report_type','in',('employee_attendance','employee_tag'))] }" />
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+
+                    </group>
+                    <footer>
+                        <button name="show_report" string="Show" type="object"  class="oe_highlight"/>
+                        or
+                        <button string="Cancel" special="cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+       <record id="emp_attendance_wizard_action" model="ir.actions.act_window">
+            <field name="name">Employee Attendance</field>
+            <field name="res_model">cicon.emp.attendance.wizard</field>
+             <field name="view_mode">form</field>
+            <field name="target">new</field>
+           <field name="context">{'default_report_type':'employee_attendance'}</field>
+        </record>
+
+
+          <record id="emp_attendance_wizard_tag_action" model="ir.actions.act_window">
+            <field name="name">Employee Attendance By Tag</field>
+            <field name="res_model">cicon.emp.attendance.wizard</field>
+             <field name="view_mode">form</field>
+            <field name="target">new</field>
+           <field name="context">{'default_report_type':'employee_tag'}</field>
+        </record>
+
+        <record id="emp_attendance_wizard_action_leave" model="ir.actions.act_window">
+            <field name="name">Employee Leave</field>
+            <field name="res_model">cicon.emp.attendance.wizard</field>
+             <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'default_report_type':'employee_leave'}</field>
+        </record>
+
+      <menuitem id="cicon_report_menu" name="Reports" parent="menu_cicon_hr_root" sequence="50" />
+      <menuitem action="emp_attendance_wizard_action" id="cicon_emp_attendance_wziard_menu"  groups="base.group_hr_user" parent="cicon_report_menu" sequence="10" />
+        <menuitem action="emp_attendance_wizard_tag_action" id="cicon_emp_attendance_wziard_tag_menu"  groups="base.group_hr_user" parent="cicon_report_menu" sequence="20" />
+      <menuitem action="emp_attendance_wizard_action_leave" id="cicon_emp_attendance_wziard_leave_menu" parent="cicon_report_menu" groups="base.group_hr_user,base.group_hr_hse_user" sequence="30" />
+    </data>
+
+
+</openerp>

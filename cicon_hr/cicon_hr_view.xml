@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <record id="view_employee_form_cicon_ext" model="ir.ui.view">
+            <field name="name">hr.employee.form.cicon.ext</field>
+         <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//form/sheet/div/h1" position="after">
+                   <label for="cicon_employee_id" class="oe_edit_only"/>
+                   <h2>
+                       <field name="cicon_employee_id" />
+                   </h2>
+                   <label for="work_shift" class="oe_edit_only"/>
+                   <h4>
+                       <field name="work_shift" />
+                   </h4>
+
+               </xpath>
+
+
+                <label for="work_email" class="oe_edit_only" position="replace"/>
+                <field name="work_email" widget="email" position="replace"/>
+                <label for="work_phone" class="oe_edit_only" position="replace"/>
+                <field name="work_phone" position="replace"/>
+
+                <field name="work_location" position="after">
+                    <field name="work_email" widget="email" />
+                    <field name="work_phone" />
+                </field>
+
+
+             </field>
+     </record>
+
+        <record id="view_employee_filter_ext" model="ir.ui.view">
+            <field name="name">Employees</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="cicon_employee_id"/>
+                    <field name="work_shift" />
+                </field>
+
+            </field>
+       </record>
+
+
+        <record id="view_employee_tree_ext" model="ir.ui.view">
+            <field name="name">hr.employee.tree.ext</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                        <field name="cicon_employee_id"/>
+                </field>
+                <field name="name" position="after">
+                    <field name="work_shift"/>
+                </field>
+           </field>
+        </record>
+
+         <record model="ir.ui.view" id="hr_kanban_view_employees_ext">
+        <field name="name">HR - Employess Kanban</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_employee_details']/h4" position="after">
+                <h5>
+                    <field name="cicon_employee_id"/>
+                </h5>
+
+            </xpath>
+
+        </field>
+        </record>
+    </data>
+</openerp>

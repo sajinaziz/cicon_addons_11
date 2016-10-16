@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record id="cicon_hr_attendance_log_view" model="ir.ui.view">
+       <field name="name">cicon.hr.attendance.log.view</field>
+         <field name="model">cicon.hr.attendance.log</field>
+         <field name="arch" type="xml">
+             <tree string="Attendance Logs">
+                 <field name="utc_datetime" />
+                 <field name="employee_id" />
+                 <field name="date" />
+                 <field name="hour" />
+                 <field name="minute" />
+                 <field name="second" />
+                 <field name="type" />
+             </tree>
+         </field>
+    </record>
+
+
+        <record id="cicon_attendance_log_action" model="ir.actions.act_window">
+            <field name="name">Attendance Logs</field>
+            <field name="res_model">cicon.hr.attendance.log</field>
+             <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+    <record id="cicon_hr_attendance_sheet_view" model="ir.ui.view">
+       <field name="name">cicon.hr.attendance.sheet.view</field>
+         <field name="model">cicon.hr.attendance.sheet</field>
+         <field name="arch" type="xml">
+             <tree string="Attendance Sheet">
+                <field name="attendance_date"/>
+             </tree>
+         </field>
+    </record>
+
+     <record id="cicon_hr_attendance_sheet_form" model="ir.ui.view">
+       <field name="name">cicon.hr.attendance.sheet.form</field>
+         <field name="model">cicon.hr.attendance.sheet</field>
+         <field name="arch" type="xml">
+             <form string="Attendance Sheet">
+                 <sheet>
+                     <group>
+                        <field name="attendance_date"/>
+                         <button name="fill_log" string="Fill Attendance" type="object" class="oe_link"/>
+                        <!--Sample Report Excel-->
+                         <!--<button name="export_to_excel" string="Export To Excel" type="object" class="oe_link"/>-->
+                    </group>
+                     <group>
+                         <!--<field name="employee_type" widget="radio"/>-->
+                     </group>
+                    <notebook>
+                        <page string="Attendance">
+                             <field name="filtered_ids" >
+                                 <tree editable="bottom">
+                                    <field name="cicon_employee_id"  />
+                                    <field name="employee_id" options="{'no_create':True,'no_open':True}" />
+                                    <field name="date_value" invisible="1" />
+                                     <field name="work_shift"/>
+                                    <field name="date" invisible="1" />
+                                    <field name="sign_in" domain="[('date', '&lt;=', date_value), ('date', '&gt;=', date_value),('type','=',1),('employee_id','=',cicon_employee_id)]"  options="{'no_create':True,'no_open':True}" />
+                                    <field name="sign_out" domain="[('date', '&lt;=', date_value), ('date', '&gt;=', date_value),('type','in',(3,4)),('employee_id','=',cicon_employee_id)]" options="{'no_create':True,'no_open':True}" />
+                                    <field name="work_hour" widget="float_time"/>
+                                    <field name="leave_id"/>
+                                     <field name="punch_log_count"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Missing /Absent">
+                            <field name="missing_log_ids">
+                                 <tree editable="bottom">
+                                    <field name="cicon_employee_id" />
+                                    <field name="employee_id" options="{'no_create':True,'no_open':True}" />
+                                    <field name="date_value" invisible="1" />
+                                     <field name="work_shift"/>
+                                    <field name="date" invisible="1" />
+                                    <field name="sign_in" domain="[('date', '&lt;=', date_value), ('date', '&gt;=', date_value),('type','=',1),('employee_id','=',cicon_employee_id)]" options="{'no_create':True,'no_open':True}" />
+                                    <field name="sign_out" domain="[('date', '&lt;=', date_value), ('date', '&gt;=', date_value),('type','in',(3,4)),('employee_id','=',cicon_employee_id)]" options="{'no_create':True,'no_open':True}"/>
+                                    <field name="work_hour" widget="float_time"/>
+                                    <field name="leave_id"/>
+                                    <field name="punch_log_count"/>
+                                     <button name="show_employee_leave_form" attrs="{'invisible':[('leave_id','!=',False)]}" string="Absent" type="object"  icon="gtk-execute"/>
+                                 </tree>
+                             </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+             </form>
+         </field>
+    </record>
+
+
+        <record id="cicon_attendance_sheet_action" model="ir.actions.act_window">
+            <field name="name">Attendance Sheet</field>
+            <field name="res_model">cicon.hr.attendance.sheet</field>
+             <field name="view_mode">tree,form</field>
+        </record>
+
+
+       <record id="cicon_hr_attendance_view" model="ir.ui.view">
+       <field name="name">cicon.hr.attendance.tree</field>
+         <field name="model">cicon.hr.attendance</field>
+         <field name="arch" type="xml">
+            <tree string="Attendance" editable="bottom" create="false">
+                <field name="cicon_employee_id" />
+                <field name="employee_id" />
+                <field name="date_value" invisible="1" />
+                <field name="date"  />
+                <field name="sign_in" domain="[('date', '&lt;=', date_value), ('date', '&gt;=', date_value),('type','=',1),('employee_id','=',cicon_employee_id)]" />
+                <field name="sign_out" domain="[('date', '&lt;=', date_value), ('date', '&gt;=', date_value),('type','in',(3,4)),('employee_id','=',cicon_employee_id)]"/>
+                <field name="work_hour" widget="float_time"/>
+                <field name="leave_id"/>
+            </tree>
+         </field>
+    </record>
+
+
+
+        <record id="cicon_attendance_filter" model="ir.ui.view">
+            <field name="name">Attendance</field>
+            <field name="model">cicon.hr.attendance</field>
+            <field name="arch" type="xml">
+                <search string="Attendance">
+                    <filter icon="terp-camera_test" domain="[('date','=',time.strftime('%%Y-%%m-%%d'))]" name="to_day" string="Today" help="Attendance Today"/>
+                    <field name="employee_id" widget="selection" string="Employee"/>
+                    <field name="cicon_employee_id"  string="Employee ID"/>
+                    <field name="date" />
+                </search>
+             </field>
+         </record>
+
+
+      <record id="cicon_attendance_action" model="ir.actions.act_window">
+            <field name="name">Attendance </field>
+            <field name="res_model">cicon.hr.attendance</field>
+             <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_to_day':1}</field>
+      </record>
+
+    <menuitem name="CICON Attendance" id="menu_cicon_hr_root" parent="hr.menu_hr_root" groups="base.group_hr_user,base.group_hr_hse_user" sequence="10"/>
+    <menuitem action="cicon_attendance_log_action" id="cicon_menu_attendance_log"  parent="cicon_hr.menu_cicon_hr_root" sequence="20" />
+    <menuitem action="cicon_attendance_sheet_action" id="cicon_menu_attendance_sheet" parent="menu_cicon_hr_root" sequence="30" />
+    <menuitem action="cicon_attendance_action" id="cicon_menu_attendance" parent="menu_cicon_hr_root" sequence="40" />
+
+    </data>
+</openerp>
