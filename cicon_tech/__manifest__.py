@@ -4,7 +4,7 @@
     'author': 'CICON',
     'website': 'http://www.ciconuae.net',
     'category': 'Generic Modules/Others',
-    'depends': ['project', 'res_company_extn', 'cic_user_sign'],
+    'depends': ['project', 'res_company_extn', 'cic_user_sign','cicon_job_site'],
     'data': ['security/tech_security.xml',
              'security/ir.model.access.csv',
              'wizard/drawing_creator_view.xml',

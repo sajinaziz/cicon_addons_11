@@ -16,7 +16,7 @@ class ProjectContact(models.Model):
 
     display_name = fields.Char(string='Name', compute='_compute_display_name', store=False)
     name = fields.Char('Name', size=250, required=True, help="Contact Full Name")
-    job_site_id = fields.Many2one('cic.job.site', 'Job Site Name', required=True, ondelete='cascade')
+    job_site_id = fields.Many2one('cicon.job.site', 'Job Site Name', required=True, ondelete='cascade')
     # TODO:Change with contact Title or  resPartner Contact
     salutation = fields.Char('Salutation', size=10)
     designation = fields.Char('Designation', size=150)

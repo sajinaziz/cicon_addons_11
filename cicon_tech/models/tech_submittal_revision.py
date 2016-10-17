@@ -214,7 +214,7 @@ class SubmittalRevision(models.Model):
         _sub_count_on_project = 1   # Set Count of submittal on project = 1
         _sub_count_on_global = 1   # Set Count of all submittal = 1
         submittal_obj = self.env['tech.submittal']
-        _job_site = self.env['cic.job.site'].browse(job_site_id)
+        _job_site = self.env['cicon.job.site'].browse(job_site_id)
         _company_id = self.env.user.company_id.id
         #   Get Last saved Submittal for Job SIte
         sub_id = submittal_obj.search([('job_site_id', '=', job_site_id)], order='id desc', limit=1)

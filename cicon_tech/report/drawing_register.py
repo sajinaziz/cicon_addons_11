@@ -8,7 +8,7 @@ class DrawingRegister(models.Model):
     _description = "Drawing Register"
     _auto = False
 
-    job_site_id = fields.Many2one('cic.job.site',readonly=True)
+    job_site_id = fields.Many2one('cicon.job.site',readonly=True)
     submittal_id = fields.Many2one('tech.submittal','Submittal',readonly=True)
     revision_id = fields.Many2one('tech.submittal.revision','Submittal',readonly=True)
     name = fields.Char('Drawing Name', readonly=True)
