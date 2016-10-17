@@ -9,7 +9,7 @@ class CiconTechRfi(models.Model):
 
     name = fields.Char('RFI Reference', required=True, index=True)
     partner_id = fields.Many2one('res.partner', string="Customer/Contractor", domain=[('customer', '=', True)], required=True)
-    job_site_id = fields.Many2one('cic.job.site', string="Project / Job Site",
+    job_site_id = fields.Many2one('cicon.job.site', string="Project / Job Site",
                                   domain="[('partner_id', '=', partner_id)]", required=True)
     site_contact_ids = fields.Many2many('tech.project.contact', 'cicon_tech_rfi_contact_rel',
                                         'rfi_id', 'contact_id', string="Contacts")
