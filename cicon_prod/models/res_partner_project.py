@@ -14,4 +14,3 @@ class res_partner_project(models.Model):
         ('unique_customer_project', 'unique(partner_id,name)', 'Project Name must be unique for each customer')]
 
 res_partner_project()
-

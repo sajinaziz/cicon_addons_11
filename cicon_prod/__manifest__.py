@@ -4,7 +4,7 @@
     "author": "SA",
     "website": "http://www.cicon.ae/",
     "category": "Generic Modules/Others",
-    "depends": ['mail', 'cicon_product_group_template'],
+    "depends": ['mail', 'cicon_product_group_template','cicon_job_site'],
     "data": [
         'security/prod_security.xml',
         'security/ir.model.access.csv',

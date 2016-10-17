@@ -32,7 +32,8 @@ class cicon_prod_order(models.Model):
     tag_count = fields.Integer('Tags', readonly=True, states={'pending': [('readonly', False)]})
     bar_mark_count = fields.Integer('Bar Marks', readonly=True, states={'pending': [('readonly', False)]})
     partner_id = fields.Many2one('res.partner', related='customer_order_id.project_id.partner_id', string='Customer', readonly=True)
-    project_id = fields.Many2one('res.partner.project', related='customer_order_id.project_id', string='Project', readonly=True)
+    #project_id = fields.Many2one('res.partner.project', related='customer_order_id.project_id', string='Project', readonly=True)
+    project_id = fields.Many2one('cicon.job.site', related='customer_order_id.project_id', string='Project',readonly=True)
     state = fields.Selection([('pending', 'New'), ('confirm', 'Confirm'), ('progress', 'In Progress'),
                               ('ready', 'Ready To Deliver'), ('partial_delivery', 'Partially Delivered'),
                               ('delivered', 'Delivered'), ('cancel', 'Cancel'),

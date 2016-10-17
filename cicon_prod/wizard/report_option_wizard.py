@@ -6,7 +6,8 @@ class cicon_prod_report_option_wizard(models.TransientModel):
     _description = "Production Report Options"
 
     partner_id = fields.Many2one('res.partner', string='Customer',domain="[('customer','=',True)]")
-    project_id = fields.Many2one('res.partner.project', string='Project',domain="[('partner_id','=',partner_id)]")
+    project_id = fields.Many2one('cicon.job.site', string='Project', domain="[('partner_id','=',partner_id)]")
+    #project_id = fields.Many2one('res.partner.project', string='Project',domain="[('partner_id','=',partner_id)]")
     template_id = fields.Many2one('cicon.prod.report.template', 'Report Name', required=True)
 
     @api.multi

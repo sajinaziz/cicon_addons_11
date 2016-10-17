@@ -42,8 +42,11 @@ class CiconContract(models.Model):
                                 default=fields.Date.context_today)
     start_date = fields.Date('Start Date',  readonly=True, states={'new': [('readonly', False)]}, track_visibility='onchange')
     end_date = fields.Date('End/Expiry Date',  readonly=True, states={'new': [('readonly', False)]}, track_visibility='onchange')
-    project_ids = fields.Many2many('res.partner.project', 'cicon_prod_contract_proj_rel', 'contract_id', 'project_id',
-                                   string="Projects",  readonly=True, states={'new': [('readonly', False)]})
+    # project_ids = fields.Many2many('res.partner.project', 'cicon_prod_contract_proj_rel', 'contract_id', 'project_id',
+    #                                string="Projects",  readonly=True, states={'new': [('readonly', False)]})
+
+    project_ids = fields.Many2many('cicon.job.site', 'cicon_prod_contract_proj_rel', 'contract_id', 'project_id',
+                                   string="Projects", readonly=True, states={'new': [('readonly', False)]})
     contract_line_ids = fields.One2many('cicon.contract.line', 'contract_id', "Contract Lines",
                                         readonly=True, states={'new': [('readonly', False)]})
     bbs_provider = fields.Selection([('cicon', 'By CICON'), ('customer', 'By Customer')], string="BBS",

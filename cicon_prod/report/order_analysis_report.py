@@ -8,7 +8,8 @@ class cicon_order_analysis_report(models.Model):
     _rec_name = 'product_id'
 
     partner_id = fields.Many2one('res.partner', "Customer", readonly=True)
-    project_id = fields.Many2one('res.partner.project', "Project", readonly=True)
+    #project_id = fields.Many2one('res.partner.project', "Project", readonly=True)
+    project_id = fields.Many2one('cicon.job.site', "Project", readonly=True)
     product_id = fields.Many2one('product.product', "Product", readonly=True)
     product_tmpl_id = fields.Many2one('product.template', "Template", readonly=True)
     categ_id = fields.Many2one('product.category', "Category", readonly=True)

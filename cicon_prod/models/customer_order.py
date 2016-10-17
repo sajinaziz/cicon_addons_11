@@ -10,7 +10,8 @@ class cicon_customer_order(models.Model):
 
     name = fields.Char('Order Ref', size=50, required =True, readonly=True, states={'new': [('readonly', False)]}, track_visibility='always')
     partner_id = fields.Many2one('res.partner', string="Customer", required=True, domain="[('customer','=',True)]",  readonly=True, states={'new': [('readonly', False)]})
-    project_id = fields.Many2one('res.partner.project', 'Project', readonly = True, domain="[('partner_id','=', partner_id)]", required=True, states={'new': [('readonly', False)]}, track_visibility='always')
+    # project_id = fields.Many2one('res.partner.project', 'Project', readonly = True, domain="[('partner_id','=', partner_id)]", required=True, states={'new': [('readonly', False)]}, track_visibility='always')
+    project_id = fields.Many2one('cicon.job.site', 'Project', readonly=True, domain="[('partner_id','=', partner_id)]",required=True, states={'new': [('readonly', False)]}, track_visibility='always')
     page_info = fields.Char('Pages', size=50, readonly=True, states={'new': [('readonly', False)]})
     material_type = fields.Char('Material Type', size=50, readonly=True, states={'new': [('readonly', False)]})
     order_date = fields.Date('Order date', required=True, readonly=True, states={'new': [('readonly', False)]}, default= fields.Date.context_today, track_visibility='always')
