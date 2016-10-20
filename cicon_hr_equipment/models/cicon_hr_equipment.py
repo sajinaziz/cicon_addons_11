@@ -36,7 +36,7 @@ class HrEquipmentPropertyValue(models.Model):
     _description = "Equipment Category Property"
 
     #store equipment id , relate to equipment table
-    equipment_id = fields.Many2one('hr.equipment', string="Equipment")
+    equipment_id = fields.Many2one('maintenance.equipment', string="Equipment")
     #store property id, relate to equipment category property
     property_id = fields.Many2one('hr.equipment.category.property', "Property")
     # store property value
@@ -48,8 +48,8 @@ class HrEquipmentPropertyValue(models.Model):
 HrEquipmentCategoryProperty()
 
 #store equipment related data
-class HrEquipment(models.Model):
-    _inherit = 'hr.equipment'
+class MaintenanceEquipment(models.Model):
+    _inherit = 'maintenance.equipment'
 
     # generate asset code using function. Take the values of name and serial no.,
     #  then combine these two fields and generate asset code.
@@ -79,12 +79,12 @@ class HrEquipment(models.Model):
     status_id = fields.Many2one('hr.equipment.status', string='Status', track_visibility='onchange', default=_get_default_status)
 
     employee_id = fields.Many2one('hr.employee', string='Employee')
-    department_id = fields.Many2one('hr.department', string='Department', related='employee_id.department_id')
+    #department_id = fields.Many2one('hr.department', string='Department', related='employee_id.department_id')
 
     #Add unique constaint to asset code
     _sql_constraints = [('UniqueAsset', 'UNIQUE(asset_code)', 'Asset Name Should be Unique !')]
 
-HrEquipment()
+MaintenanceEquipment()
 
 # to store equipment request categories
 class HrEquipmentRequestCategory(models.Model):
@@ -94,7 +94,7 @@ class HrEquipmentRequestCategory(models.Model):
     #store the request category name
     name = fields.Char('Category', required=True)
     #asset_categ_ids, create a manytomany relation to equipment category table and store asset_categ_ids
-    asset_categ_ids = fields.Many2many('hr.equipment.category', 'hr_equip_categ_req_categ_rel',
+    asset_categ_ids = fields.Many2many('maintenance.equipment.category', 'hr_equip_categ_req_categ_rel',
                                     'req_categ_id', "asset_categ_id", string="Asset Categories")
     #parent id, set the main parent id
     parent_id = fields.Many2one('hr.equipment.request.category', string="Parent")
@@ -138,8 +138,8 @@ HrEquipmentRequestCategory()
 
 
 #store  the equipment request details
-class HrEquipmentRequest(models.Model):
-    _inherit = 'hr.equipment.request'
+class MaintenanceEquipmentRequest(models.Model):
+    _inherit = 'maintenance.request'
 
     # company_id, relate to company table and store company,then set the current logged user company as the default company
     company_id = fields.Many2one('res.company', "Company", default=lambda self: self.env.user.company_id)
@@ -161,18 +161,18 @@ class HrEquipmentRequest(models.Model):
     @api.model
     def create(self, vals):
         vals['ref_no'] = self.env['ir.sequence'].next_by_code('cicon.maint.internal.seq') or 'New'
-        return super(HrEquipmentRequest, self).create(vals)
+        return super(MaintenanceEquipmentRequest, self).create(vals)
 
 
-HrEquipmentRequest()
+MaintenanceEquipmentRequest()
 
 
-class HrEquipmentCategory(models.Model):
-    _inherit = 'hr.equipment.category'
+class MaintenanceEquipmentCategory(models.Model):
+    _inherit = 'maintenance.equipment.category'
 
     property_ids = fields.Many2many('hr.equipment.category.property', 'hr_equipment_categ_property_rel',
                                     'category_id', "property_id", string="Properties")
 
-HrEquipmentCategory()
+MaintenanceEquipmentCategory()
 
 

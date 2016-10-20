@@ -4,8 +4,8 @@
 
         <record id="hr_equipment_category_view_form_extn" model="ir.ui.view">
             <field name="name">hr.equipment.category.form.extn</field>
-            <field name="model">hr.equipment.category</field>
-            <field name="inherit_id" ref="hr_equipment.hr_equipment_category_view_form"/>
+            <field name="model">maintenance.equipment.category</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_category_view_form"/>
             <field name="arch" type="xml">
 
                 <field name="note" position="after">
@@ -41,9 +41,9 @@
         </record>
 
        <record id="hr_equipment_view_form_etxn" model="ir.ui.view">
-            <field name="name">hr.equipment.form.extn</field>
-            <field name="model">hr.equipment</field>
-            <field name="inherit_id" ref="hr_equipment.hr_equipment_view_form"/>
+            <field name="name">maintenance.equipment.form.extn</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
             <field name="arch" type="xml">
                  <xpath expr="//sheet" position="before">
                     <header>
@@ -66,49 +66,49 @@
                 </xpath>
 
                  <field name="serial_no" position="after">
-                     <label for="asset_code" class="oe_edit_only"/>
+                     <!--<label for="asset_code" class="oe_edit_only"/>-->
                      <field name="asset_code"/>
                  </field>
-                 <xpath expr="//div/field[@name='category_id']" position="attributes">
-                   <attribute name="placeholder">Select Material Category</attribute>
-                 </xpath>
-                 <xpath expr="//div/field[@name='serial_no']" position="attributes">
-                   <attribute name="placeholder">Serial Number</attribute>
-                 </xpath>
-                 <xpath expr="//page/field[@name='note']" position="attributes">
-                   <attribute name="placeholder">Material Description....</attribute>
-                 </xpath>
-                 <xpath expr="//group/field[@name='location']" position="attributes">
-                   <attribute name="placeholder">Material Location</attribute>
-                 </xpath>
-                 <xpath expr="//group/field[@name='model']" position="attributes">
-                   <attribute name="placeholder">Model Name</attribute>
-                 </xpath>
-                 <xpath expr="//group/field[@name='partner_ref']" position="attributes">
-                   <attribute name="placeholder">Vendor Reference</attribute>
-                 </xpath>
-                 <xpath expr="//group/field[@name='user_id']" position="attributes">
-                   <attribute name="string">Handled By</attribute>
-                   <attribute name="placeholder">Person who's Handled</attribute>
-                 </xpath>
-                 <xpath expr="//group/field['@name=equipment_assign_to']" position="replace">
+                 <!--<xpath expr="//group/field[@name='category_id']" position="attributes">-->
+                   <!--<attribute name="placeholder">Select Material Category</attribute>-->
+                 <!--</xpath>-->
+                 <!--<xpath expr="//group/field[@name='serial_no']" position="attributes">-->
+                   <!--<attribute name="placeholder">Serial Number</attribute>-->
+                 <!--</xpath>-->
+                 <!--<xpath expr="//page/field[@name='note']" position="attributes">-->
+                   <!--<attribute name="placeholder">Material Description....</attribute>-->
+                 <!--</xpath>-->
+                 <!--<xpath expr="//group/field[@name='location']" position="attributes">-->
+                   <!--<attribute name="placeholder">Material Location</attribute>-->
+                 <!--</xpath>-->
+                 <!--<xpath expr="//group/field[@name='model']" position="attributes">-->
+                   <!--<attribute name="placeholder">Model Name</attribute>-->
+                 <!--</xpath>-->
+                 <!--<xpath expr="//group/field[@name='partner_ref']" position="attributes">-->
+                   <!--<attribute name="placeholder">Vendor Reference</attribute>-->
+                 <!--</xpath>-->
+                 <!--<xpath expr="//group/field[@name='technician_user_id']" position="attributes">-->
+                   <!--<attribute name="string">Handled By</attribute>-->
+                   <!--<attribute name="placeholder">Person who's Handled</attribute>-->
+                 <!--</xpath>-->
+                 <!--<xpath expr="//group/field['@name=equipment_assign_to']" position="replace">-->
 
-                 </xpath>
-                 <xpath expr="//group/field['@name=employee_id']" position="replace">
+                 <!--</xpath>-->
+                 <!--<xpath expr="//group/field['@name=employee_id']" position="replace">-->
 
-                 </xpath>
-                 <xpath expr="//group/field['@name=department_id']" position="replace">
-                    <field name="employee_id" placeholder="Employee Name" />
-                    <field name="department_id" placeholder="Department Name" />
-                 </xpath>
+                 <!--</xpath>-->
+                 <!--<xpath expr="//group/field['@name=department_id']" position="replace">-->
+                    <!--<field name="employee_id" placeholder="Employee Name" />-->
+                    <!--<field name="department_id" placeholder="Department Name" />-->
+                 <!--</xpath>-->
 
             </field>
         </record>
 
          <record id="hr_equipment_request_view_form_extn" model="ir.ui.view">
-            <field name="name">hr.equipment.request.view.form.extn</field>
-            <field name="model">hr.equipment.request</field>
-            <field name="inherit_id" ref="hr_equipment.hr_equipment_request_view_form"/>
+            <field name="name">maintenance.request.view.form.extn</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
             <field name="arch" type="xml">
                  <field name="priority" position="after">
                      <field name="company_id" options="{'no_open':True,'no_create': True}" />
@@ -136,29 +136,27 @@
                        <field name="solution" placeholder="Diagnostic and Recommendation solution ......." />
                     </page>
                 </xpath>
-                <xpath expr="//group/field[@name='equipment_id']" position="attributes">
+               <!-- <xpath expr="//group/field[@name='equipment_id']" position="attributes">
                     <attribute name="placeholder">Select Asset Name</attribute>
                 </xpath>
-                 <xpath expr="//group/field[@name='user_id']" position="attributes">
+                 <xpath expr="//group/field[@name='technician_user_id']" position="attributes">
                     <attribute name="placeholder">Responsible Person</attribute>
-                 </xpath>
+                 </xpath>-->
 
-                 <xpath expr="//group/field[@name='employee_id']" position="attributes">
-                    <attribute name="string">Employee</attribute>
-                    <attribute name="placeholder">Employee Name</attribute>
-                 </xpath>
+                 <!--<xpath expr="field[@name='employee_id']" position="attributes">-->
+                    <!--<attribute name="string">Employee</attribute>-->
+                    <!--<attribute name="placeholder">Employee Name</attribute>-->
+                 <!--</xpath>-->
 
-                 <field name="employee_id" position="after">
-                     <field name="department_id" string="Department" placeholder="Department Name" />
-                 </field>
+                 <!--<field name="employee_id" position="after">-->
+                     <!--<field name="department_id" string="Department" placeholder="Department Name" />-->
+                 <!--</field>-->
 
            </field>
         </record>
-
-
           <record model="ir.ui.view" id="equipment_request_pivot_view">
             <field name="name">Equipment Request Pivot</field>
-            <field name="model">hr.equipment.request</field>
+            <field name="model">maintenance.request</field>
             <field name="arch" type="xml">
                 <pivot string="Equipment Request">
                     <field name="request_categ_id" type="row"/>
@@ -168,9 +166,9 @@
             </field>
           </record>
 
-            <record id="hr_equipment.hr_equipment_request_action" model="ir.actions.act_window">
+            <record id="maintenance.hr_equipment_request_action" model="ir.actions.act_window">
                 <!--<field name="name">Maintenance Requests</field>-->
-                <field name="res_model">hr.equipment.request</field>
+                <field name="res_model">maintenance.request</field>
                 <field name="view_mode">kanban,tree,form,pivot</field>
                 <!--<field name="view_id" ref="hr_equipment_request_view_kanban"/>-->
                 <!--<field name="help" type="html">-->
@@ -182,10 +180,10 @@
                 <!--</field>-->
             </record>
 
-            <record id="hr_equipment_request_view_tree_extn" model="ir.ui.view">
-                <field name="name">hr.equipment.request.view.tree.extn</field>
-                <field name="model">hr.equipment.request</field>
-                <field name="inherit_id" ref="hr_equipment.hr_equipment_request_view_tree"/>
+            <record id="maintenance_request_view_tree_extn" model="ir.ui.view">
+                <field name="name">maintenance.request.view.tree.extn</field>
+                <field name="model">maintenance.request</field>
+                <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
                 <field name="arch" type="xml">
                      <field name="name" position="after">
                           <field name="ref_no"/>
@@ -196,7 +194,7 @@
                 <!-- Equipment pivot view -->
             <record model="ir.ui.view" id="equipment_pivot_view">
                 <field name="name">Equipments</field>
-                <field name="model">hr.equipment</field>
+                <field name="model">maintenance.equipment</field>
                 <field name="arch" type="xml">
                     <pivot string="Equipments">
                         <field name="category_id" type="row"/>
@@ -205,9 +203,9 @@
                 </field>
             </record>
 
-             <record id="hr_equipment.hr_equipment_action" model="ir.actions.act_window">
+             <record id="maintenance.hr_equipment_action" model="ir.actions.act_window">
                 <field name="name">Equipments</field>
-                <field name="res_model">hr.equipment</field>
+                <field name="res_model">maintenance.equipment</field>
                 <field name="view_mode">kanban,tree,form,pivot</field>
              </record>
 
@@ -223,21 +221,21 @@
 
            <record id="hr_equipment_employee" model="ir.actions.act_window">
                <field name="name">Equipments</field>
-               <field name="res_model">hr.equipment</field>
+               <field name="res_model">maintenance.equipment</field>
                <field name="view_mode">tree,form</field>
            </record>
 
 
           <menuitem
             id="menu_equip_categ_prop"
-            parent="hr_equipment.menu_equipment_configuration"
+            parent="maintenance.menu_maintenance_configuration"
             action="action_hr_equip_categ_property"
             groups="base.group_no_one"
             sequence="99"/>
 
          <menuitem
             id="menu_equip_status"
-            parent="hr_equipment.menu_equipment_configuration"
+            parent="maintenance.menu_maintenance_configuration"
             action="action_hr_equip_status"
             groups="base.group_no_one"
             sequence="99"/>
@@ -246,7 +244,7 @@
             <menuitem
             id="menu_equip_employee"
             parent="hr.menu_hr_root"
-            groups="base.group_hr_user,base.group_user"
+            groups="hr.group_hr_user,base.group_user"
             action="hr_equipment_employee"
             sequence="1"/>
 

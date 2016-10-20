@@ -71,9 +71,9 @@
                <menuitem
                  name="Request Category"
                  id="hr_equipment_request_categ_menu"
-                 parent="hr_equipment.menu_equipment_configuration"
+                 parent="maintenance.menu_maintenance_configuration"
                  action="action_hr_equip_request_categ"
-                 groups="base.group_hr_manager,base.group_hr_user,base.group_user"
+                 groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
                  sequence="1"
                  />
 
@@ -81,9 +81,9 @@
                <menuitem
                  name="Equipment Property"
                  id="hr_equipment_prop_value_menu"
-                 parent="hr_equipment.menu_equipment_title"
+                 parent="maintenance.menu_maintenance_title"
                  action="action_hr_equip_property"
-                 groups="base.group_hr_manager,base.group_hr_user,base.group_user"
+                 groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
                  sequence="1"
                  />
 

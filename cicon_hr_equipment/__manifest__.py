@@ -7,7 +7,7 @@
     'description': """CICON HR Equipment""",
     'website': 'http://www.cicon.net',
     'category': 'CICON IT',
-    'depends': ['hr_equipment'],
+    'depends': ['hr_maintenance','maintenance'],
     'data': [
         'security/cicon_hr_equipment_security.xml',
         'security/ir.model.access.csv',
