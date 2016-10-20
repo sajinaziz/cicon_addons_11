@@ -19,11 +19,11 @@ class CmmsPmGenerateWizard(models.TransientModel):
     def generate_pm_job(self):
         _sch_obj = self.env['cmms.pm.schedule.master']
         _job_obj = self.env['cmms.job.order']
-        _sch_recs = _sch_obj.search([('next_date', '=', self.pm_date)])
+        _sch_recs = _sch_obj.search([('next_date', '=', self.pm_date),('company_id', '=', self.env.user.company_id.id)])
         _pm_job_ids = []
         if _sch_recs:
             _machines = _sch_recs.mapped('machine_ids')
-            for m in _machines.filtered(lambda m: m.company_id == self.env.user.company_id.id).sorted(key=lambda r: r.code):
+            for m in _machines.filtered(lambda m: m.company_id.id == self.env.user.company_id.id).sorted(key=lambda r: r.code):
                 _exist = self.env['cmms.job.order'].search([('machine_id', '=', m.id),
                                                             ('job_order_type', '=', 'preventive'),
                                                             ('job_order_date', '=', self.pm_date)], limit=1)

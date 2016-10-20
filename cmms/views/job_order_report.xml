@@ -35,7 +35,7 @@
                                    <td> <span t-field="o.job_category_id.name"/> </td>
                                    <t t-set="_wh" t-value="o.work_hour" />
                                    <td> <span t-esc="'%s:%s' % ( str('%02d' % _wh).split('.')[0], str('%02d' %  int(float(str('%.2f' % _wh).split('.')[1])/100*60)))"/></td>
-                                   <td> <span t-field="o.total_amount"/>  </td>
+                                   <td class="text-right"> <span t-field="o.total_amount"/>  </td>
                                    <td> <span t-field="o.status_id.name"/> </td>
                                 </tr>
                                 <tr style="page-break-inside: avoid !important;">
@@ -48,18 +48,18 @@
                                                     <th> Ref </th>
                                                     <th> Date </th>
                                                     <th> Product </th>
-                                                    <th> Quantity </th>
-                                                    <th> Rate </th>
-                                                    <th> Amount </th>
+                                                    <th class="text-right"> Quantity </th>
+                                                    <th class="text-right"> Rate </th>
+                                                    <th class="text-right"> Amount </th>
                                                 </thead>
                                                 <tbody>
                                                 <tr t-foreach="o.spare_part_ids" t-as="p" style="border:1px solid lightgray;page-break-inside: avoid !important;">
                                                     <td style="height:20px;padding:2px;"> <span t-esc="p.invoice_id.qb_inv_ref or p.name" /></td>
                                                     <td style="height:20px;padding:2px;"> <span t-esc="p.invoice_id.invoice_date" /></td>
                                                     <td style="height:20px;padding:2px;"> <span t-field="p.product_desc"/> </td>
-                                                    <td style="height:20px;padding:2px;"> <span t-field="p.quantity"/> </td>
-                                                    <td style="height:20px;padding:2px;"> <span t-field="p.unit_price"/> </td>
-                                                    <td style="height:20px;padding:2px;"> <span t-field="p.amount"/> </td>
+                                                    <td class="text-right" style="height:20px;padding:2px;"> <span t-field="p.quantity"/> </td>
+                                                    <td class="text-right" style="height:20px;padding:2px;"> <span t-field="p.unit_price"  t-esc-options='{"widget": "monetary"}'/> </td>
+                                                    <td class="text-right" style="height:20px;padding:2px;"> <span t-field="p.amount"  t-esc-options='{"widget": "monetary"}'/> </td>
                                                 </tr>
                                                 </tbody>
                                             </table>

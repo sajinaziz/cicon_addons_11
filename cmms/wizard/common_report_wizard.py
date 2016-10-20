@@ -50,6 +50,9 @@ class CmmsCommonReportWizard(models.TransientModel):
     start_date = fields.Date('Start Date', required=True, default=fields.Date.context_today)
     end_date = fields.Date('End Date', required=True, default=fields.Date.context_today)
     job_order_type = fields.Selection(JOB_ORDER_TYPE, "Job Order Type")
+    machine_categ_ids = fields.Many2many('cmms.machine.category','cmms_report_machine_categ_sel_rel', 'wizard_id', 'categ_id',
+                                         string="Machine Category")
+
 
    # print report_year
 
@@ -101,7 +104,7 @@ class CmmsCommonReportWizard(models.TransientModel):
         if self.report_list == "job_order_report":
             _qry = [('job_order_date', '>=', self.start_date), ('job_order_date', '<=', self.end_date)]
             if self.job_order_type=="breakdown" or self.job_order_type=="general" or self.job_order_type=="preventive":
-                _qry.append(('job_order_type','=',self.job_order_type))
+                _qry.append(('job_order_type', '=', self.job_order_type))
             if self.company_id:
                 _qry.append(('company_id', '=', self.company_id.id))
             _job_orders = self.env['cmms.job.order'].search(_qry)
@@ -116,6 +119,7 @@ class CmmsCommonReportWizard(models.TransientModel):
                                                                    data={})
         if self.report_list == 'machine_analysis_report':
             ctx['year'] = self.report_year
+            ctx['machine_categ_ids'] = self.machine_categ_ids._ids
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.report_machine_analysis_summary_template',
                                                                    data={})
