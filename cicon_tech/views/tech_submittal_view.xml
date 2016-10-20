@@ -30,12 +30,24 @@
 
         <record model="ir.actions.act_window" id="action_project_tree_view">
             <field name="name">Manage Customer Projects</field>
-            <field name="type">ir.actions.act_window</field>
             <field name="res_model">cicon.job.site</field>
-            <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="cicon_job_site_tech_tree_view"/>
+
+        </record>
+
+         <record id="action_project_tree_view_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_project_tree_view"/>
+        </record>
+
+
+          <record id="action_project_tree_view_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="cicon_job_site_tech_form_view"/>
+            <field name="act_window_id" ref="action_project_tree_view"/>
         </record>
 
 

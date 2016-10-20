@@ -35,18 +35,14 @@
                           </button>
                     </div>
                     <group>
-                        <label for="partner_id"/>
-                        <h2>
-                            <field name="partner_id"  required="True"  domain="[('is_company','=',True),('customer','=',True)]" attrs="{'readonly':['|','|',('id','!=',False),('parent_id','!=',False),('state','=','submitted')]}"
+                        <!--<label for="partner_id"/>-->
+                        <field name="partner_id"  required="True"  domain="[('is_company','=',True),('customer','=',True)]" attrs="{'readonly':['|','|',('id','!=',False),('parent_id','!=',False),('state','=','submitted')]}"
                                     options="{ 'no_create': True,  'no_open':True}"/>
-                        </h2>
-                        <label for='job_site_id'/>
-                        <h2>
-                            <field name="job_site_id" context="{'default_partner_id':partner_id}"  attrs="{'readonly':['|', '|',('id','!=',False),('parent_id','!=',False),('state','=','submitted')]}"
-                                    options="{ 'no_create': True,  'no_open':True}" />
-                        </h2>
+                        <!--<label for='job_site_id'/>-->
+                        <field name="job_site_id" context="{'default_partner_id':partner_id}"  attrs="{'readonly':['|', '|',('id','!=',False),('parent_id','!=',False),('state','=','submitted')]}"
+                                    options="{ 'no_create': True,  'no_open':True}"/>
                     </group>
-                    <group>
+                    <group invisible="1">
                         <field name="id" invisible="1"/>
                         <field name="name" attrs="{'readonly':[('parent_id','!=',False)],'invisible':[('parent_id','=',False)]}"/>
                         <!--<field name="submittal_no" invisible="True" attrs="{'readonly':[('parent_id','!=',False)]}"/>-->

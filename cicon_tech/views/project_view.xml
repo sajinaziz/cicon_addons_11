@@ -101,23 +101,56 @@
         <record id="cicon_job_site_tech_form_view" model="ir.ui.view">
             <field name="name">cicon.job.site.tech.form</field>
             <field name="model">cicon.job.site</field>
-            <field name="inherit_id" ref="cicon_job_site.cicon_job_site_form_view"/>
+            <!--<field name="priority">99</field>-->
+            <!--<field name="inherit_id" ref="cicon_job_site.cicon_job_site_form_view"/>-->
             <field name="arch" type="xml">
-                <xpath expr="//form/sheet" position="inside">
-                <group col="4">
-                    <field name="site_ref_no" />
-                    <field name="last_site_ref"/>
-                    <field name="coordinator_id" />
-                </group>
-                <field name="site_contact_ids">
-                    <tree string="Project Contacts" editable="bottom">
-                        <field name="salutation"/>
-                        <field name="name"/>
-                        <field name="designation"/>
-                        <field name="email"/>
-                    </tree>
-                </field>
-                </xpath>
+                 <form string="Project Details" >
+                    <sheet>
+                        <group>
+                            <field name="partner_id" options="{'no_create':True,'no_open': True}" />
+                            <field name="name"  placeholder="Project Name" />
+                            <field name="po_box" />
+                            <field name="telephone" />
+                            <field name="fax" />
+                        </group>
+                        <group col="4" >
+                            <field name="site_ref_no" required="True"/>
+                            <field name="last_site_ref"/>
+                            <field name="coordinator_id" />
+                        </group>
+                        <field name="site_contact_ids">
+                            <tree string="Project Contacts" editable="bottom">
+                                <field name="salutation"/>
+                                <field name="name"/>
+                                <field name="designation"/>
+                                <field name="email"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+
+                <!--<xpath expr="//form/sheet" position="inside">-->
+                <!--<div id="cicon_tec_site" invisible="context.get('is_tech_jobsite_model',False)">-->
+                    <!--<group col="4" >-->
+
+                        <!--<field name="site_ref_no" required="context.get('is_tech_jobsite_model',False)"  id="ref_no"/>-->
+
+                        <!--<field name="last_site_ref"/>-->
+                        <!--<field name="coordinator_id" />-->
+                    <!--</group>-->
+                    <!--<field name="site_contact_ids">-->
+                        <!--<tree string="Project Contacts" editable="bottom">-->
+                            <!--<field name="salutation"/>-->
+                            <!--<field name="name"/>-->
+                            <!--<field name="designation"/>-->
+                            <!--<field name="email"/>-->
+                        <!--</tree>-->
+                    <!--</field>-->
+                <!--</div>-->
+                <!--</xpath>-->
             </field>
         </record>
 

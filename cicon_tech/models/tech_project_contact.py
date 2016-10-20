@@ -8,8 +8,7 @@ class ProjectContact(models.Model):
     # _log_access = False
     _rec_name = 'display_name'
 
-    @api.one
-    @api.depends('name', 'salutation')
+
     def _compute_display_name(self):
         """To show Name with Salutation on field 'display_name'"""
         self.display_name = (self.salutation or '') + ' ' + unicode(self.name)
