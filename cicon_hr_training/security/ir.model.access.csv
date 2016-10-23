@@ -1,13 +1,13 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_cicon_hr_training_hse_user, cicon.hr.training.title.hse user,model_cicon_hr_training_title,base.group_hr_hse_user,1,0,0,0
 access_cicon_hr_emp_training_hse_user, cicon.hr.employee.training.hse user,model_cicon_hr_employee_training,base.group_hr_hse_user,1,0,0,0
-access_cicon_hr_training_user, cicon.hr.training.title.user,model_cicon_hr_training_title,base.group_hr_user,1,0,0,0
-access_cicon_hr_emp_training_user, cicon.hr.employee.training.user,model_cicon_hr_employee_training,base.group_hr_user,1,0,0,0
+access_cicon_hr_training_user, cicon.hr.training.title.user,model_cicon_hr_training_title,hr.group_hr_user,1,0,0,0
+access_cicon_hr_emp_training_user, cicon.hr.employee.training.user,model_cicon_hr_employee_training,hr.group_hr_user,1,0,0,0
 access_cicon_hr_training_trainer, cicon.hr.training.title trainer,model_cicon_hr_training_title,base.group_hr_training_user,1,1,1,1
 access_cicon_hr_emp_training_trainer, cicon.hr.employee.training trainer,model_cicon_hr_employee_training,base.group_hr_training_user,1,1,1,1
 access_cicon_hr_employee_trainer, cicon.hr.employee trainer,hr.model_hr_employee,base.group_hr_training_user,1,1,0,0
 access_cicon_hr_job_trainer, cicon.hr.job trainer,hr.model_hr_job,base.group_hr_training_user,1,1,1,0
-access_cicon_hr_warning_user, cicon.hr.emp.warning user,model_cicon_hr_employee_warning,base.group_hr_user,1,1,1,1
-access_cicon_hr_warning_type_user, cicon.hr.emp.warning.type user,model_cicon_hr_employee_warning_type,base.group_hr_user,1,1,1,0
+access_cicon_hr_warning_user, cicon.hr.emp.warning user,model_cicon_hr_employee_warning,hr.group_hr_user,1,1,1,1
+access_cicon_hr_warning_type_user, cicon.hr.emp.warning.type user,model_cicon_hr_employee_warning_type,hr.group_hr_user,1,1,1,0
 access_cicon_hr_warning_hse_user, cicon.hr.emp.warning hse_user,model_cicon_hr_employee_warning,base.group_hr_hse_user,1,1,1,0
 access_cicon_hr_warning_type_hse_user, cicon.hr.emp.warning.type hse_user,model_cicon_hr_employee_warning_type,base.group_hr_hse_user,1,1,1,0

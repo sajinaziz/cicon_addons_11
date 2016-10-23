@@ -1,4 +1,4 @@
-from openerp import models, fields, api
+from odoo import models, fields, api
 import time
 
 
@@ -36,6 +36,6 @@ cicon_hr_employee_warning()
 class hr_employee(models.Model):
     _inherit = 'hr.employee'
 
-    warning_ids = fields.One2many('cicon.hr.employee.warning', 'employee_id', string='Warnings', groups="base.group_hr_user,base.group_hr_hse_user")
+    warning_ids = fields.One2many('cicon.hr.employee.warning', 'employee_id', string='Warnings', groups="hr.group_hr_user,base.group_hr_hse_user")
 
 hr_employee()

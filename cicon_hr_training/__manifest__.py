@@ -8,9 +8,9 @@
     "data": [
         'security/cicon_hr_training_security.xml',
         'security/ir.model.access.csv',
-        'cicon_hr_emp_warning_view.xml',
-        'cicon_hr_training_view.xml',
-        'cicon_hr_training_sequence.xml',
+        'views/cicon_hr_emp_warning_view.xml',
+        'views/cicon_hr_training_view.xml',
+        'views/cicon_hr_training_sequence.xml',
 
     ],
     "description": "CICON HR Training & Warning",
