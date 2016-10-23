@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+         <report
+            id="report_cicon_hr_daily_attendance_qweb"
+            string="Daily Attendance"
+            model="cicon.hr.attendance.sheet"
+            report_type="qweb-pdf"
+            file="cicon_hr.daily_attendance_report"
+            name="cicon_hr.cicon_hr_daily_attendance_template"
+        />
+
+
+        <report
+            id="report_cicon_hr_emp_attendance_qweb"
+            string="Employee Attendance"
+            model="cicon.emp.attendance.wizard"
+            report_type="qweb-pdf"
+            file="cicon_hr.employee_attendance_report"
+            name="cicon_hr.employee_attendance_report_template"
+        />
+
+
+        <report
+            id="report_employee_leave_report_weekly"
+            string="Employee Leave"
+            model="cicon.hr.employee.leave"
+            report_type="qweb-pdf"
+            file="cicon_hr.employee_leave_report"
+            name="cicon_hr.employee_leave_report_weekly"
+        />
+
+
+
+  </data>
+</odoo>
