@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record model="ir.ui.view" id="cicon_hr_emp_warning_tree">
+            <field name="name">cicon.hr.emp.warning.tree</field>
+            <field name="model">cicon.hr.employee.warning</field>
+            <field name="arch" type="xml">
+                <tree string="Warning">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="date"/>
+                    <field name="warning_type_id" />
+                    <field name="deduction" sum="Total Days"  />
+                </tree>
+            </field>
+        </record>
+
+
+          <record model="ir.ui.view" id="cicon_hr_emp_warning_form">
+           <field name="name">cicon.hr.emp.warning.form</field>
+            <field name="model">cicon.hr.employee.warning</field>
+            <field name="arch" type="xml">
+                <form string="Warning">
+                    <sheet>
+                    <group>
+                          <field name="name"/>
+                        <field name="employee_id" options="{'no_create':True}" required="1"/>
+                        <field name="date"/>
+                        <field name="warning_type_id" options="{'no_create':True,'no_open':True}" />
+                        <field name="deduction"/>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+          <record model="ir.ui.view" id="cicon_hr_emp_warning_type_tree">
+            <field name="name">cicon.hr.employee.warning.type.tree</field>
+            <field name="model">cicon.hr.employee.warning.type</field>
+            <field name="arch" type="xml">
+                <tree string="Warning Type" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+        <record id="cicon_hr_emp_warning_action" model="ir.actions.act_window">
+            <field name="name">Employee Warning</field>
+            <field name="res_model">cicon.hr.employee.warning</field>
+       </record>
+
+          <record id="cicon_hr_emp_warning_type_action" model="ir.actions.act_window">
+            <field name="name">Warning Type</field>
+            <field name="res_model">cicon.hr.employee.warning.type</field>
+              <field name="view_type">form</field>
+              <field name="view_mode">tree</field>
+       </record>
+
+
+         <!--<record id="view_employee_form_cicon_warning" model="ir.ui.view">-->
+            <!--<field name="name">hr.employee.form.cicon.ext.warn</field>-->
+             <!--<field name="model">hr.employee</field>-->
+            <!--<field name="inherit_id" ref="cicon_hr_training.view_employee_form_cicon_training"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//notebook/page[@string='Trainings']" position="after">-->
+                    <!--<page string="Warnings"  groups="hr.group_hr_user,base.group_hr_hse_user">-->
+                        <!--<field name="warning_ids" context="{'default_employee_id': active_id}">-->
+                             <!--<tree string="Warning">-->
+                                    <!--<field name="name"/>-->
+                                   <!--<field name="date"/>-->
+                                    <!--<field name="warning_type_id" />-->
+                                    <!--<field name="deduction"/>-->
+                             <!--</tree>-->
+                        <!--</field>-->
+                    <!--</page>-->
+
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <menuitem name="Employee Warning" id="menu_cicon_hr_warning_root" groups="hr.group_hr_user,base.group_hr_hse_user" parent="hr.menu_hr_root" sequence="90"/>
+        <menuitem action="cicon_hr_emp_warning_action" id="menu_cicon_hr_warning" parent="menu_cicon_hr_warning_root" sequence="10"/>
+        <menuitem action="cicon_hr_emp_warning_type_action" id="menu_cicon_hr_warning_type" parent="menu_cicon_hr_warning_root" sequence="20"/>
+
+    </data>
+
+ </odoo>

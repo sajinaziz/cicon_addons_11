@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence   s for Training -->
+        <!--<record id="sequence_hr_training" model="ir.sequence.type">-->
+            <!--<field name="name">HR Employee Training </field>-->
+            <!--<field name="code">cicon.hr.employee.training.seq</field>-->
+        <!--</record>-->
+
+        <record id="sequence_hr_training_emp" model="ir.sequence">
+            <field name="name">HR Employee Training</field>
+            <field name="code">cicon.hr.employee.training.seq</field>
+            <field name="prefix">C/CER/%(year)s/</field>
+            <field name="padding">3</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+            <!--<field name="implementation">no_gap</field>-->
+        </record>
+
+        <!--<record id="sequence_hr_warning" model="ir.sequence.type">-->
+            <!--<field name="name">HR Employee Warning</field>-->
+            <!--<field name="code">cicon.hr.employee.warning.seq</field>-->
+        <!--</record>-->
+
+        <record id="sequence_hr_warning_emp" model="ir.sequence">
+            <field name="name">HR Employee Training</field>
+            <field name="code">cicon.hr.employee.warning.seq</field>
+            <field name="prefix">C/WRN/%(year)s/</field>
+            <field name="padding">3</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+            <field name="implementation">no_gap</field>
+        </record>
+    </data>
+</odoo>
