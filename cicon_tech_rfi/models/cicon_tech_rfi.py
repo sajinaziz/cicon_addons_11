@@ -41,14 +41,14 @@ class CiconTechRfi(models.Model):
 
     def _generate_new_rfi_code(self, job_site_id):
         _rfi_count = 1
-        _job_site_obj = self.env['cic.job.site'].browse(job_site_id)
+        _job_site_obj = self.env['cicon.job.site'].browse(job_site_id)
         _last_rfi_on_site = self.env['cicon.tech.rfi'].search([('job_site_id', '=', _job_site_obj.id)], order="id desc", limit=1)
         print _job_site_obj.name
         if _last_rfi_on_site:
             _rfi_count = _last_rfi_on_site.rfi_count_on_job_site + 1
         _prefix = "RFI-"
         _prefix += self.env.user.company_id.submittal_prefix or 'CIC'
-        _rfi_code = _prefix + '-' + _job_site_obj.site_ref_no + '-' + str(_rfi_count).zfill(3)
+        _rfi_code = _prefix + '-' + str(_job_site_obj.site_ref_no) + '-' + str(_rfi_count).zfill(3)
         return {'rfi_code': _rfi_code, 'rfi_count': _rfi_count}
 
     @api.onchange('job_site_id')
