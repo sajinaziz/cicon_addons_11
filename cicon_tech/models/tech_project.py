@@ -7,7 +7,7 @@ class CiconCustJobSite(models.Model):
     @api.model
     def _get_last_site_ref(self):
         """ Compute last created site Ref on field on Creation Form 'last_site_ref' """
-        _job_site_id = self.env['cicon.job.site'].search([('site_ref_no','>','0')], order='id desc', limit=1)
+        _job_site_id = self.env['cicon.job.site'].search([('site_ref_no','!=',False)], order='id desc', limit=1)
         return _job_site_id.site_ref_no
 
     @api.one
