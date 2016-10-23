@@ -1,5 +1,5 @@
 import time
-from openerp.report import report_sxw
+from odoo.report import report_sxw
 from datetime import datetime
 from dateutil import rrule
 

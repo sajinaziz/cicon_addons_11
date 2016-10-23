@@ -1,5 +1,3 @@
-import cicon_hr
+import models
 import wizard
-import cicon_hr_leave
-import cicon_hr_attendance
 import report

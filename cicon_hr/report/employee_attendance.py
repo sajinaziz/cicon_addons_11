@@ -1,5 +1,5 @@
-from openerp.report import report_sxw
-from openerp import models, fields, api
+from odoo.report import report_sxw
+from odoo import models, fields, api
 from datetime import datetime
 from datetime import timedelta
 from dateutil import rrule

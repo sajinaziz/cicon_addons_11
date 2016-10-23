@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
 <data>
 
 <template id="cicon_hr_internal_layout">
@@ -130,6 +130,6 @@
 </template>
 
     </data>
-</openerp>
+</odoo>
 
 

@@ -1,5 +1,5 @@
-from openerp.report import report_sxw
-from openerp import models, fields, api
+from odoo.report import report_sxw
+from odoo import models, fields, api
 
 import time
 
@@ -29,6 +29,7 @@ class cicon_hr_daily_attendance_report(models.AbstractModel): # Report File Name
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cicon_hr.cicon_hr_daily_attendance_template')
         _docs = self.env[report.model].browse(self._ids)
+        # print _docs
         rml = report_sxw.rml_parse(self._cr, self._uid, 'cicon_hr_daily_attendance_template')
         docargs = {
             'doc_ids': self._ids,

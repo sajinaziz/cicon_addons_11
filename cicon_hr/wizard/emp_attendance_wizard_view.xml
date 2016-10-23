@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <record id="cicon_hr_employee_attendance_wizard" model="ir.ui.view">
             <field name="name">cicon.hr.emp.attendance.wizard</field>
@@ -52,10 +52,10 @@
         </record>
 
       <menuitem id="cicon_report_menu" name="Reports" parent="menu_cicon_hr_root" sequence="50" />
-      <menuitem action="emp_attendance_wizard_action" id="cicon_emp_attendance_wziard_menu"  groups="base.group_hr_user" parent="cicon_report_menu" sequence="10" />
-        <menuitem action="emp_attendance_wizard_tag_action" id="cicon_emp_attendance_wziard_tag_menu"  groups="base.group_hr_user" parent="cicon_report_menu" sequence="20" />
-      <menuitem action="emp_attendance_wizard_action_leave" id="cicon_emp_attendance_wziard_leave_menu" parent="cicon_report_menu" groups="base.group_hr_user,base.group_hr_hse_user" sequence="30" />
+      <menuitem action="emp_attendance_wizard_action" id="cicon_emp_attendance_wziard_menu"  groups="hr.group_hr_user" parent="cicon_report_menu" sequence="10" />
+        <menuitem action="emp_attendance_wizard_tag_action" id="cicon_emp_attendance_wziard_tag_menu"  groups="hr.group_hr_user" parent="cicon_report_menu" sequence="20" />
+      <menuitem action="emp_attendance_wizard_action_leave" id="cicon_emp_attendance_wziard_leave_menu" parent="cicon_report_menu" groups="hr.group_hr_user,base.group_hr_hse_user" sequence="30" />
     </data>
 
 
-</openerp>
+</odoo>

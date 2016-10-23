@@ -1,5 +1,5 @@
-from openerp import models, fields, api
-from openerp import api
+from odoo import models, fields, api
+from odoo import api
 import time
 
 
