@@ -82,9 +82,9 @@
             <!--</field>-->
         <!--</record>-->
 
-        <menuitem name="Employee Warning" id="menu_cicon_hr_warning_root" groups="hr.group_hr_user,base.group_hr_hse_user" parent="hr.menu_hr_root" sequence="90"/>
-        <menuitem action="cicon_hr_emp_warning_action" id="menu_cicon_hr_warning" parent="menu_cicon_hr_warning_root" sequence="10"/>
-        <menuitem action="cicon_hr_emp_warning_type_action" id="menu_cicon_hr_warning_type" parent="menu_cicon_hr_warning_root" sequence="20"/>
+        <menuitem name="Employee Warning" id="menu_cicon_hr_warning_root" groups="hr.group_hr_user,base.group_hr_hse_user" parent="hr.menu_hr_root" sequence="77"/>
+        <menuitem action="cicon_hr_emp_warning_action" id="menu_cicon_hr_warning" parent="menu_cicon_hr_warning_root" sequence="1"/>
+        <menuitem action="cicon_hr_emp_warning_type_action" id="menu_cicon_hr_warning_type" parent="menu_cicon_hr_warning_root" sequence="2"/>
 
     </data>
 
