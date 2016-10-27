@@ -11,7 +11,7 @@ class cicon_prod_report_option_wizard(models.TransientModel):
     template_id = fields.Many2one('cicon.prod.report.template', 'Report Name', required=True)
 
     @api.multi
-    def show_report(self):
+    def show_report(self,data):
         _parms = []
         _parms.append(('state', 'not in', ['delivered', 'cancel', 'transfer']))
         if self.partner_id:
@@ -29,6 +29,7 @@ class cicon_prod_report_option_wizard(models.TransientModel):
         ctx['prod_template_ids'] = _categ_ids
         ctx['digits'] = self.template_id.digits
         ctx['report_heading'] = self.template_id.name
+        #datas = {'ids': self.env.context.get('active_ids', [])}
         return self.with_context(ctx).env['report'].get_action(self, report_name='cicon_prod.cicon_steel_order_in_hand_template', data=_datas)
 
 cicon_prod_report_option_wizard()

@@ -3,6 +3,7 @@ import time
 from odoo.report import report_sxw
 from odoo.osv import osv
 from odoo import models, api
+from datetime import date,datetime
 
 #
 # class CiconOrderInHand(report_sxw.rml_parse):
@@ -22,7 +23,8 @@ class cicon_steel_order_in_hand(models.AbstractModel): # Report File Name
     # _wrapped_report_class = CiconOrderInHand
 
     @api.multi
-    def render_html(self, data=None):
+    def render_html(self,docids,data=None):
+        data = data if data is not None else {}
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cicon_prod.cicon_steel_order_in_hand_template')
         rml = report_sxw.rml_parse(self._cr, self._uid, 'cicon_steel_order_in_hand_template')
