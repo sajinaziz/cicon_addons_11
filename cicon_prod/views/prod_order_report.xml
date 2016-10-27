@@ -26,7 +26,7 @@
             <div class="col-xs-2">
                 <!--<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>-->
                 <t t-if="doc_model != 'cicon.customer.order'" >
-                 <span t-esc="formatLang(time.strftime('%Y-%m-%d %H:%M:%S'),date_time=True)"/>
+                 <span t-esc="formatLang(time.strftime('%Y-%m-%d %H:%M:%S'),date=True)"/>
                 </t>
             </div>
         </div>
