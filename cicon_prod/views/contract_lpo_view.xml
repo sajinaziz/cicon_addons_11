@@ -132,6 +132,7 @@
                                         </tree>
                                     </field>
                                 </page>
+
                             <!--<page string="Production Orders">-->
                                 <!--<field name="prod_order_ids">-->
                                     <!--<tree string="Production Orders">-->
