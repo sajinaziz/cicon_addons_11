@@ -3,7 +3,7 @@
 <data>
     <template id="cmms_inventory_expense_report_summary">
          <t t-call="report.html_container">
-         <t t-call="cmms.cmms_internal_layout"/>
+         <t t-call="cmms.cmms_internal_layout">
             <div class="page">
                 <table class="table table-bordered">
                       <caption> <h4>  <span t-esc="heading"/></h4> </caption>
@@ -88,6 +88,7 @@
                          </t>
                      </t>
             </div>
+         </t>
          </t>
     </template>
 

@@ -3,7 +3,7 @@
 <data>
     <template id="job_order_report_template">
      <t t-call="report.html_container">
-         <t t-call="cmms.cmms_internal_layout"/>
+         <t t-call="cmms.cmms_internal_layout">
             <div class="page">
                 <div class="row">
                     <table class="table table-bordered">
@@ -74,6 +74,7 @@
                 </div>
             </div>
          </t>
+       </t>
     </template>
 </data>
 </odoo>

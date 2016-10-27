@@ -3,7 +3,7 @@
 <data>
     <template id="report_machine_analysis_summary_template">
      <t t-call="report.html_container">
-         <t t-call="cmms.cmms_internal_layout"/>
+         <t t-call="cmms.cmms_internal_layout">
             <div class="page">
                  <div class="row">
                      <div class="col-xs-12 text-center"><h3>Machine Analysis Report</h3></div>
@@ -86,6 +86,7 @@
                     </tbody>
                  </table>
             </div>
+          </t>
          </t>
     </template>
 </data>

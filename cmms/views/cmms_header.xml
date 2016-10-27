@@ -23,10 +23,11 @@
                 <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
             </div>
             <div class="col-xs-8 text-left" style="margin-top:25px;padding-left:25px;" t-field="company.rml_header1"/>
-            <div class="col-xs-2">
-                <!--<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>-->
-                 <span t-esc="time.strftime('%Y-%m-%d %H:%M')" />
-            </div>
+            <!--<div class="col-xs-2">-->
+                <!--&lt;!&ndash;<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>&ndash;&gt;-->
+                 <!--<span t-esc="time.strftime('%Y-%m-%d %H:%M')" />-->
+                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+            <!--</div>-->
         </div>
         <div class="row">
             <div class="col-xs-12">
@@ -35,7 +36,8 @@
                     , <span t-field="company.state_id.name" /> - <span t-field="company.country_id.name" />
                 </p>
             </div>
-        </div>
+         </div>
+
         <div class="row zero_min_height">
             <div class="col-xs-12">
                 <div style="border-bottom: 1px solid black;"></div>
@@ -82,6 +84,7 @@
             <div class="col-xs-2">
                 <!--<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>-->
                  <!--<span t-esc="time.strftime('%Y-%m-%d %H:%M')" />-->
+                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
             </div>
         </div>
         <div class="row zero_min_height">
