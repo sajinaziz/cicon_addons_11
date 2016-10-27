@@ -79,13 +79,14 @@ class CmmsCommonReportWizard(models.TransientModel):
             self.end_date = year_last_day
 
     @api.multi
-    def show_report(self):
+    def show_report(self,data):
         self.ensure_one()
         ctx = dict(self._context)
         start_date = datetime.strptime(self.start_date, '%Y-%m-%d').strftime('%d-%b-%Y')
         end_date = datetime.strptime(self.end_date, '%Y-%m-%d').strftime('%d-%b-%Y')
         ctx['from_date'] = start_date
         ctx['to_date'] = end_date
+        datas = {'ids': self.env.context.get('active_ids', [])}
         if self.company_id:
             ctx['company_id'] = self.company_id.id
         if self.report_list == 'expense_report':
@@ -93,13 +94,13 @@ class CmmsCommonReportWizard(models.TransientModel):
             ctx['heading'] = "Expense Report - Summary [ " + start_date + ' To ' + end_date + ' ]'
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.cmms_inventory_expense_report_summary',
-                                                                   data={})
+                                                                   data=datas)
         elif self.report_list == 'expense_detailed':
             ctx['show_summary'] = 0
             ctx['heading'] = "Expense Report - Detailed [ " + start_date + ' To ' + end_date + ' ]'
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.cmms_inventory_expense_report_summary',
-                                                                   data={})
+                                                                   data=datas)
 
         if self.report_list == "job_order_report":
             _qry = [('job_order_date', '>=', self.start_date), ('job_order_date', '<=', self.end_date)]
@@ -116,13 +117,13 @@ class CmmsCommonReportWizard(models.TransientModel):
             ctx['heading'] = "Spare Parts Summary" + '\n' + "  From[ " + start_date + ' To ' + end_date + ' ]'
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.report_partsby_producttype_summary_template',
-                                                                   data={})
+                                                                   data=datas)
         if self.report_list == 'machine_analysis_report':
             ctx['year'] = self.report_year
             ctx['machine_categ_ids'] = self.machine_categ_ids._ids
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.report_machine_analysis_summary_template',
-                                                                   data={})
+                                                                   data=datas)
         if self.report_list == 'machine_status_report':
             if self.company_id:
                 _qry = [('company_id', '=', self.company_id.id),('is_machinery','=', 'True')]

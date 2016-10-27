@@ -37,7 +37,7 @@
                             <field name="job_order_type"  invisible="1" />
                          </group>
                          <group>
-                            <field name="job_order_date"/>
+                            <field name="job_order_date" />
                             <field name="description"/>
                          </group>
                              <notebook >

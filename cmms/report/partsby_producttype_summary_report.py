@@ -7,14 +7,16 @@ _inv_lines = None
 class ReportPartsbyProductTypeSummary(models.AbstractModel): # Report File Name
     _name = 'report.cmms.report_partsby_producttype_summary_template'
 
-    @api.multi
-    def render_html(self, data=None):
+    @api.model
+    def render_html(self, docids,data=None):
+        data = data if data is not None else {}
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cmms.report_partsby_producttype_summary_template')
-        _docs = self._get_report_data()
+        _docs = self._get_report_data(data.get('ids', data.get('active_ids')))
 
        # _get_category = self._get_categories
         docargs = {
+            'doc_ids': data.get('ids', data.get('active_ids')),
             'doc_model': report.model,
             'docs': _docs,
             'heading': self._context.get('heading'),
@@ -25,7 +27,7 @@ class ReportPartsbyProductTypeSummary(models.AbstractModel): # Report File Name
         }
         return report_obj.render('cmms.report_partsby_producttype_summary_template', docargs)
 
-    def _get_report_data(self):
+    def _get_report_data(self,data):
         _start_date = self._context.get('from_date')
         _end_date = self._context.get('to_date')
         self._inv_lines = self.env['cmms.store.invoice.line'].search([('invoice_date', '>=', _start_date),

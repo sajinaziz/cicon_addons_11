@@ -1,7 +1,8 @@
 from odoo import models, fields, api, tools
 # from openerp.exceptions import Warning
-from datetime import datetime
+from datetime import datetime,date,timedelta
 # keep job order type in list of tuples
+
 JOB_ORDER_TYPE = [('breakdown', 'BREAKDOWN'), ('preventive', 'PREVENTIVE'), ('general', 'GENERAL')]
 
 

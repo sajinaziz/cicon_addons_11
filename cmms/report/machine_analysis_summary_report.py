@@ -1,4 +1,4 @@
-from openerp import fields,models,api
+from odoo import fields,models,api
 from dateutil import rrule
 from datetime import date
 
@@ -9,15 +9,17 @@ _inv_lines = None
 class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
     _name = 'report.cmms.report_machine_analysis_summary_template'
 
-    @api.multi
-    def render_html(self, data=None):
+    @api.model
+    def render_html(self,docids, data=None):
+        data = data if data is not None else {}
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cmms.report_machine_analysis_summary_template')
-        _docs = self._get_report_data()
+        _docs = self._get_report_data(data.get('ids', data.get('active_ids')))
 
 
 
         docargs = {
+            'doc_ids': data.get('ids', data.get('active_ids')),
             'doc_model': report.model,
             'docs': _docs,
             'heading': self._context.get('heading'),
@@ -26,10 +28,9 @@ class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
             'get_machine': self._get_machines,
             'get_breakdown_count': self._job_order_count
         }
-
         return report_obj.render('cmms.report_machine_analysis_summary_template', docargs)
 
-    def _get_report_data(self):
+    def _get_report_data(self,data):
         _qry =[]
         if self._context.get('company_id'):
             _qry.append(('company_id','=',self._context.get('company_id')))

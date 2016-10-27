@@ -36,13 +36,14 @@ class CmmsPmSchPlanReportWizard(models.TransientModel):
     rpt_year = fields.Selection(_get_year, string="Year", required=True, default=_get_this_year)
 
     @api.multi
-    def show_report(self):
+    def show_report(self,data):
         self.ensure_one()
         ctx = dict(self._context)
         ctx['rpt_month'] = int(self.rpt_month)
         ctx['rpt_year'] = int(self.rpt_year)
         ctx['heading'] = dict(self._MONTHS)[self.rpt_month] + ',' + self.rpt_year
-        return self.with_context(ctx).env['report'].get_action(self, report_name='cmms.cmms_pm_plan_report_template', data={})
+        datas = {'ids': self.env.context.get('active_ids')}
+        return self.with_context(ctx).env['report'].get_action(self, report_name='cmms.cmms_pm_plan_report_template', data=datas)
 
 CmmsPmSchPlanReportWizard()
 

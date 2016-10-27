@@ -6,12 +6,14 @@ _inv_lines = None
 class InventoryExpenseReports(models.AbstractModel): # Report File Name
     _name = 'report.cmms.cmms_inventory_expense_report_summary'
 
-    @api.multi
-    def render_html(self, data=None):
+    @api.model
+    def render_html(self,docids, data=None):
+        data = data if data is not None else {}
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cmms.cmms_inventory_expense_report_summary')
-        _docs = self._get_report_data()
+        _docs = self._get_report_data(data.get('ids', data.get('active_ids')))
         docargs = {
+            'doc_ids': data.get('ids', data.get('active_ids')),
             'doc_model': report.model,
             'docs': _docs,
             'heading': self._context.get('heading'),
@@ -23,10 +25,21 @@ class InventoryExpenseReports(models.AbstractModel): # Report File Name
             'get_total_categ': self._get_invoice_total_categ,
             'get_total_type': self._get_invoice_total_type,
             'get_grand_total': self._get_grand_total
+
+            # 'data':dict(
+            #     data,
+            #     get_category= self._get_categories(_docs),
+            #     get_machine= self._get_machines(_docs,get_category),
+            #     get_invoice= self._get_invoices,
+            #     get_total_machine= self._get_invoice_total_machine,
+            #     get_total_categ= self._get_invoice_total_categ,
+            #     get_total_type= self._get_invoice_total_type,
+            #     get_grand_total= self._get_grand_total
+            # )
         }
         return report_obj.render('cmms.cmms_inventory_expense_report_summary', docargs)
 
-    def _get_report_data(self):
+    def _get_report_data(self,data):
         _start_date = self._context.get('from_date')
         _end_date = self._context.get('to_date')
         _qry = [('invoice_date', '>=', _start_date),('invoice_date', '<=', _end_date)]

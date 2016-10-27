@@ -6,20 +6,23 @@ import  sys
 class PmSchPlanReport(models.AbstractModel): # Report File Name
     _name = 'report.cmms.cmms_pm_plan_report_template'
 
-    @api.multi
-    def render_html(self, data=None):
+    @api.model
+    def render_html(self,docids, data=None):
+        data = data if data is not None else {}
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cmms.cmms_pm_plan_report_template')
-        _docs = self._get_date_list()
+        _docs = self._get_date_list(data.get('ids', data.get('active_ids')))
         docargs = {
+            'doc_ids': data.get('ids', data.get('active_ids')),
             'doc_model': report.model,
             'docs': _docs,
             'heading': self._context.get('heading'),
             'get_pm_detail': self._get_pm_details
         }
+        #print docargs
         return report_obj.render('cmms.cmms_pm_plan_report_template', docargs)
 
-    def _get_date_list(self):
+    def _get_date_list(self,data):
         _cal = Calendar()
         _date = list(_cal.itermonthdates(self._context.get('rpt_year'), self._context.get('rpt_month')))
         return _date
