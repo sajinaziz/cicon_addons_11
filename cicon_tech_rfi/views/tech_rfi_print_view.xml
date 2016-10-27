@@ -5,7 +5,7 @@
         <template id="report_rfi_template">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <t t-call="cicon_tech.tech_cicon_external_layout"/>
+                    <t t-call="cicon_tech.tech_cicon_external_layout">
                     <div class="page">
                         <div class="oe_structure"/>
                         <h3 class="text-center" >REQUEST FOR INFORMATION[RFI]</h3>
@@ -88,6 +88,7 @@
                         </div>
 
                     </div>
+                    </t>
                 </t>
             </t>
         </template>
