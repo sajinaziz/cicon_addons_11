@@ -64,7 +64,7 @@
 
 <template id="cicon_prod_order_report_template">
     <t t-call="report.html_container">
-        <t t-call="cicon_prod.cicon_prod_external_layout"/>
+        <t t-call="cicon_prod.cicon_prod_external_layout">
         <div class="page">
               <div class="oe_structure"/>
               <table class="table table-bordered">
@@ -123,10 +123,7 @@
 
 
         </div>
-
-
-
-
+        </t>
     </t>
 </template>
 
