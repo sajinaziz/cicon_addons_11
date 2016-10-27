@@ -1,6 +1,6 @@
 from odoo.report import report_sxw
 from odoo import models, fields, api
-from datetime import datetime
+from datetime import datetime,date
 from datetime import timedelta
 from dateutil import rrule
 import time
@@ -26,8 +26,9 @@ import time
 class employee_attendance_report(models.AbstractModel): # Report File Name
     _name = 'report.cicon_hr.employee_attendance_report_template'
 
-    @api.multi
-    def render_html(self, data=None):
+    @api.model
+    def render_html(self,docids, data=None):
+        data = data if data is not None else {}
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cicon_hr.employee_attendance_report_template')
         _docs = dict(employees=self.env['hr.employee'].search([('id', 'in', self._context.get('employee_ids'))]))
@@ -65,13 +66,15 @@ class employee_attendance_report(models.AbstractModel): # Report File Name
 class employee_leave_report(models.AbstractModel): # Report File Name
     _name = 'report.cicon_hr.employee_leave_report_weekly'
 
-    @api.multi
-    def render_html(self, data=None):
+    @api.model
+    def render_html(self,docids, data=None):
+        data = data if data is not None else {}
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cicon_hr.employee_leave_report_weekly')
-        _docs = self._get_emp_leave()
+        _docs = self._get_emp_leave(data.get('ids', data.get('active_ids')))
         rml = report_sxw.rml_parse(self._cr, self._uid, 'employee_leave_report_weekly')
         docargs = {
+            'doc_ids': data.get('ids', data.get('active_ids')),
             'doc_model': report.model,
             'docs': _docs,
             'formatLang': rml.formatLang,
@@ -81,9 +84,9 @@ class employee_leave_report(models.AbstractModel): # Report File Name
         return report_obj.render('cicon_hr.employee_leave_report_weekly', docargs)
 
     def get_selection(self, model, field_name, val):
-        return dict(self.env[model]._columns[field_name].selection).get(val)
+        return dict(self.env[model].fields_get()[field_name]['selection']).get(val)
 
-    def _get_emp_leave(self):
+    def _get_emp_leave(self,data):
         fromDate = self._context.get('start_date')
         toDate = self._context.get('end_date')
         _dmn = [('start_date', '<=', toDate), ('end_date', '>=', fromDate)]

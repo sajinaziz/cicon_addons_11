@@ -43,8 +43,8 @@ class cicon_emp_attendance_wizard(models.TransientModel):
     report_type = fields.Selection([('employee_leave', 'Employee Leave'), ('employee_attendance', 'Attendance'), ('employee_tag', 'Employee Tag')], "Report Type")
 
     @api.multi
-    def show_report(self):
-        self.ensure_one()
+    def show_report(self,data):
+        # self.ensure_one()
         #_month = int(_rec.month_sel)
         #_year = int(_rec.year_sel)
         #_from_date = datetime(_year, _month, 1)
@@ -67,12 +67,13 @@ class cicon_emp_attendance_wizard(models.TransientModel):
         ctx['start_date'] = self.from_date
         ctx['end_date'] = self.to_date
         ctx['employee_ids'] = _emp_ids
+        datas = {'ids': self.env.context.get('active_ids', [])}
         if self.leave_type:
             ctx['leave_type'] = self.leave_type
         if self.report_type == 'employee_leave':
-            return self.with_context(ctx).env['report'].get_action(self, report_name='cicon_hr.employee_leave_report_weekly',data={})
+            return self.with_context(ctx).env['report'].get_action(self, report_name='cicon_hr.employee_leave_report_weekly',data=datas)
         else:
-            return self.with_context(ctx).env['report'].get_action(self, report_name='cicon_hr.employee_attendance_report_template',data={})
+            return self.with_context(ctx).env['report'].get_action(self, report_name='cicon_hr.employee_attendance_report_template',data=datas)
 
 
 cicon_emp_attendance_wizard()

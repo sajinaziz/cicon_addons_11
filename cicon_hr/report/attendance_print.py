@@ -1,5 +1,6 @@
 from odoo.report import report_sxw
 from odoo import models, fields, api
+from datetime import datetime,date
 
 import time
 
@@ -24,15 +25,16 @@ import time
 class cicon_hr_daily_attendance_report(models.AbstractModel): # Report File Name
     _name = 'report.cicon_hr.cicon_hr_daily_attendance_template'
 
-    @api.multi
-    def render_html(self, data=None):
+    @api.model
+    def render_html(self,docids,data=None):
+        data = data if data is not None else {}
         report_obj = self.env['report']
         report = report_obj._get_report_from_name('cicon_hr.cicon_hr_daily_attendance_template')
-        _docs = self.env[report.model].browse(self._ids)
+        _docs = self.env[report.model].browse(data.get('ids', data.get('active_ids')))
         # print _docs
         rml = report_sxw.rml_parse(self._cr, self._uid, 'cicon_hr_daily_attendance_template')
         docargs = {
-            'doc_ids': self._ids,
+            'doc_ids': data.get('ids', data.get('active_ids')),
             'doc_model': report.model,
             'docs': _docs,
             'formatLang': rml.formatLang,

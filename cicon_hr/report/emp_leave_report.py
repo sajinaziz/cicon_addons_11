@@ -1,6 +1,6 @@
 import time
 from odoo.report import report_sxw
-from datetime import datetime
+from datetime import datetime,date
 from dateutil import rrule
 
 

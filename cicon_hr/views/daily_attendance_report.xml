@@ -32,7 +32,7 @@
             </div>
             <div class="col-xs-3" >
                 <!--<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>-->
-                 <span t-esc="formatLang(time.strftime('%Y-%m-%d %H:%M:%S'),date_time=True)"/>
+                 <span t-esc="formatLang(time.strftime('%Y-%m-%d %H:%M:%S'),date=True)"/>
 
             </div>
         <div class="row zero_min_height">
