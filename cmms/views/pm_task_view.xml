@@ -11,15 +11,15 @@
                         <div class="oe_title">
                             <label for="pm_scheme_id"/>
                             <h3>
-                                <field name="pm_scheme_id"/>
+                                <field name="pm_scheme_id" options="{'no_create':True}"/>
                             </h3>
                              <label for="interval_id" />
                             <h4>
-                               <field name="interval_id" />
+                               <field name="interval_id" options="{'no_create':True,'no_open':True}"  />
                             </h4>
-                            <label for="machine_ids"/>
+                            <label for="machine_ids"   />
                             <h4>
-                                <field name="machine_ids" widget="many2many_tags"/> <!--on_change="onchange_machine_list(machine_ids)" -->
+                                <field name="machine_ids" options="{'no_create':True}" widget="many2many_tags"/> <!--on_change="onchange_machine_list(machine_ids)" -->
                             </h4>
 
                         </div>

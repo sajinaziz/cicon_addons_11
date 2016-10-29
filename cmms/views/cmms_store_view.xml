@@ -143,6 +143,13 @@
                              <field name="qb_line_ref" invisible="1" />
                              <field name="state" />
                         </group>
+                        <group col="4" string="History">
+                            <field name="part_used_count"/>
+                            <field name="part_last_used" />
+                            <field name="part_last_job_order_id" />
+                            <field name="part_life_span"/>
+                            <field name="part_avg_life_span"/>
+                        </group>
                     </sheet>
                 </form>
             </field>

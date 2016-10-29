@@ -165,6 +165,14 @@ class CmmsPmScheduleMaster(models.Model):
     #company id, create a relation to res company . store companies and set the current logged users company as the default company
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.user.company_id)
 
+    @api.onchange('pm_scheme_id')
+    def _filter_valid_interval(self):
+        _dm = {}
+        _exists_tasks = self.env['cmms.pm.task.master'].search([('pm_scheme_id', '=', self.pm_scheme_id.id)])
+        _intervals = _exists_tasks.mapped('interval_id')
+        _dm['interval_id'] = [('id', 'in', _intervals._ids)]
+        return {'domain': _dm}
+
 
     @api.onchange('interval_id')
     def _check_machine_not_scheduled(self):

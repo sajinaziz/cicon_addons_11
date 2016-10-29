@@ -108,7 +108,7 @@ class CmmsCommonReportWizard(models.TransientModel):
                 _qry.append(('job_order_type', '=', self.job_order_type))
             if self.company_id:
                 _qry.append(('company_id', '=', self.company_id.id))
-            _job_orders = self.env['cmms.job.order'].search(_qry)
+                _job_orders = self.env['cmms.job.order'].search(_qry, order='job_order_date')
             if _job_orders.ids:
                 return self.env['report'].get_action(_job_orders, 'cmms.job_order_report_template')
             else:

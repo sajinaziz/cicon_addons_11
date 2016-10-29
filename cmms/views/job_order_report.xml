@@ -43,23 +43,36 @@
                                         <td></td>
                                         <td colspan="10">
                                             <table style="border:1px solid gray;" width="100%" >
-                                                <caption>Spare Parts</caption>
+                                                <caption>Spare Parts : <span t-field="o.name"/> </caption>
                                                 <thead style="border:1px lightgray;">
-                                                    <th> Ref </th>
-                                                    <th> Date </th>
-                                                    <th> Product </th>
-                                                    <th class="text-right"> Quantity </th>
-                                                    <th class="text-right"> Rate </th>
-                                                    <th class="text-right"> Amount </th>
+                                                    <tr>
+                                                        <th> Ref </th>
+                                                        <th> Date </th>
+                                                        <th> Product </th>
+                                                        <th class="text-right"> Quantity </th>
+                                                        <th class="text-right"> Rate </th>
+                                                        <th class="text-right" > Amount </th>
+                                                        <th colspan="3" class="text-center" style="border:1px solid gray;"> History </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="6"/>
+                                                        <th class="text-center" style="border-left:1px solid gray;"> Used </th>
+                                                        <th class="text-center" > Last Date </th>
+                                                        <th class="text-center" > Life Span (Days) </th>
+                                                    </tr>
+
                                                 </thead>
                                                 <tbody>
                                                 <tr t-foreach="o.spare_part_ids" t-as="p" style="border:1px solid lightgray;page-break-inside: avoid !important;">
-                                                    <td style="height:20px;padding:2px;"> <span t-esc="p.invoice_id.qb_inv_ref or p.name" /></td>
-                                                    <td style="height:20px;padding:2px;"> <span t-esc="p.invoice_id.invoice_date" /></td>
-                                                    <td style="height:20px;padding:2px;"> <span t-field="p.product_desc"/> </td>
-                                                    <td class="text-right" style="height:20px;padding:2px;"> <span t-field="p.quantity"/> </td>
-                                                    <td class="text-right" style="height:20px;padding:2px;"> <span t-field="p.unit_price"  t-esc-options='{"widget": "monetary"}'/> </td>
-                                                    <td class="text-right" style="height:20px;padding:2px;"> <span t-field="p.amount"  t-esc-options='{"widget": "monetary"}'/> </td>
+                                                    <td style="height:20px;padding:2px; width:8%;"> <span t-esc="p.invoice_id.qb_inv_ref or p.name" /></td>
+                                                    <td style="height:20px;padding:2px; width:8%;"> <span t-field="p.invoice_id.invoice_date" /></td>
+                                                    <td style="height:20px;padding:2px; width:34%;"> <span t-field="p.product_desc"/> </td>
+                                                    <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-field="p.quantity"/> </td>
+                                                    <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-esc="p.unit_price"  t-field-options='{"widget": "monetary"}'/> </td>
+                                                    <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-esc="p.amount"  t-field-options='{"widget": "monetary"}'/> </td>
+                                                    <td class="text-center" style="border-left:1px solid gray;width:8%;"> <span t-esc="p.part_used_count"/>  </td>
+                                                    <td class="text-center" style="width:8%;"> <t t-if="p.part_last_used" >      <span t-esc="time.strftime('%d-%b-%Y',time.strptime(p.part_last_used,'%Y-%m-%d'))"/> </t>   </td>
+                                                    <td class="text-center" style="width:10%;"> <span t-esc="p.part_life_span" /> </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -74,7 +87,7 @@
                 </div>
             </div>
          </t>
-       </t>
+     </t>
     </template>
 </data>
 </odoo>

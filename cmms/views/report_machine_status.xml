@@ -24,18 +24,18 @@
                         <tbody>
                             <t t-foreach="docs" t-as="o">
                             <tr t-att-class=" 'warning' if o.state == 'repair' else 'danger' if o.state in ('unstable') else '' ">
-                                <td> <span t-esc="o_index +1"/>  </td>
-                                <td> <span t-field="o.code"/>  </td>
-                                <td> <span t-field="o.name"/>  </td>
-                                <td> <span t-field="o.group_id.code"/>  </td>
-                                <td> <span t-field="o.set_code"/>  </td>
-                                <td> <span t-field="o.model"/>  </td>
-                                <td> <span t-field="o.supplier_id.name"/>  </td>
-                                <td> <span t-field="o.mfg_year"/>  </td>
-                                <td> <span t-field="o.serial_no"/>  </td>
-                                <td> <span t-field="o.condition"/>  </td>
-                                <td> <span t-field="o.state"/>  </td>
-                                <td> <span t-field="o.note"/>  </td>
+                                <td style="width: 3%" > <span t-esc="o_index +1"/>  </td>
+                                <td style="width: 5%"> <span t-field="o.code"/>  </td>
+                                <td style="width: 25%"> <span t-field="o.name"/>  </td>
+                                <td style="width: 5%" > <span t-field="o.group_id.code"/>  </td>
+                                <td style="width: 7%"> <span t-field="o.set_code"/>  </td>
+                                <td style="width: 10%" > <span t-field="o.model"/>  </td>
+                                <td style="width: 10%"> <span t-field="o.supplier_id.name"/>  </td>
+                                <td style="width: 5%" > <span t-field="o.mfg_year"/>  </td>
+                                <td style="width: 10%" > <span t-field="o.serial_no"/>  </td>
+                                <td style="width: 10%" > <span t-field="o.condition"/>  </td>
+                                <td style="width: 10%"> <span t-field="o.state"/>  </td>
+                                <td style="width: 10%"> <span t-field="o.note"/>  </td>
                             </tr>
                             </t>
                         </tbody>
@@ -43,7 +43,7 @@
                 </div>
             </div>
          </t>
-    </t>
+     </t>
 </template>
 </data>
 </odoo>
