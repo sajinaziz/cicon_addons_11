@@ -2,7 +2,7 @@
 <odoo>
     <data>
 
-            <menuitem name="CMMS " id="cmms_menu" sequence="60" />
+            <menuitem name="CMMS " id="cmms_menu" sequence="60" groups="group_cmms_user"/>
 
             <record model="ir.ui.view" id="cmms_machine_tree_view">
             <field name="name">cmms.machine.tree</field>
