@@ -50,7 +50,7 @@ class cicon_qc_observation(models.Model):
 
     name = fields.Char('Report No :', readonly=True)
     qc_check_ids = fields.Many2many( comodel_name='cicon.qc.check', relation='cicon_qc_observation_check_rel', column1='qc_observation_id', column2='qc_check_id', string='QC Checks' )
-    reference = fields.Char('Reference No#', readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
+    reference = fields.Char('Reference No#', readonly=True, default='New', states={'new': [('readonly', False)], 'open': [('readonly', False)]})
     category_id = fields.Many2one('cicon.qc.observation.category', string='Category', required=True ,
                                   readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]}, track_visibility='onchange')
     report_type = fields.Selection([('non_conf', 'Non Conformance'), ('opp_improve', 'Opportunity for Improve')], required=True,
@@ -75,9 +75,10 @@ class cicon_qc_observation(models.Model):
 
     @api.model
     def create(self, vals):
-        _qc_obs_seq = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
-                                                      ('code', '=', 'cic.qc.observation.seq')])
-        vals.update({'name': _qc_obs_seq.next_by_id() or time.strftime('%Y/%m/%d/%H/%M')})
+        # _qc_obs_seq = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
+        #                                               ('code', '=', 'cic.qc.observation.seq')])
+        # vals.update({'name': _qc_obs_seq.next_by_id() or time.strftime('%Y/%m/%d/%H/%M')})
+        vals['name'] = self.env['ir.sequence'].next_by_code('cic.qc.observation.seq') or 'New'
         return super(cicon_qc_observation, self).create(vals)
 
     @api.multi

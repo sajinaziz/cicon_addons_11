@@ -45,7 +45,7 @@ class QcSummary(models.Model):
                                                             ('res_id', 'in', _file_ids._ids)])
             self.attachment_ids = list(_attach_ids._ids)
 
-    name = fields.Char('Trip Reference', readonly=True)
+    name = fields.Char('Trip Reference', readonly=True,default='New')
     dn_date = fields.Date('DN Date', required=True, default=fields.Date.context_today)
     delivery_date = fields.Date('Delivery Date', default=fields.Date.context_today)
     partner_id = fields.Many2one('res.partner', domain="[('customer','=',True)]", string="Customer", required=True)
@@ -66,9 +66,11 @@ class QcSummary(models.Model):
 
     @api.model
     def create(self, vals):
-        _qc_summary_seq = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
-                                                          ('code', '=', 'cic.qc.summary.seq')])
-        vals.update({'name': _qc_summary_seq.next_by_id() or time.strftime('%Y/%m/%d/%H/%M')})
+        # _qc_summary_seq = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
+        #                                                   ('code', '=', 'cic.qc.summary.seq')])
+        # vals.update({'name': _qc_summary_seq.next_by_id() or time.strftime('%Y/%m/%d/%H/%M')})
+
+        vals['name'] = self.env['ir.sequence'].next_by_code('cic.qc.summary.seq') or 'New'
         return super(QcSummary, self).create(vals)
 
 QcSummary()
