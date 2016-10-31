@@ -75,7 +75,7 @@
 
     <template id="qc_summary_sheet_template">
     <t t-call="report.html_container">
-        <t t-call="cicon_qc.cicon_qc_external_layout"/>
+        <t t-call="cicon_qc.cicon_qc_external_layout">
         <div class="page">
             <div class="oe_structure"/>
             <table class="table table-bordered">
@@ -149,8 +149,7 @@
                 </tbody>
             </table>
         </div>
-
-
+        </t>
     </t>
 </template>
     </data>
