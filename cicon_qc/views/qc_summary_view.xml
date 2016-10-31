@@ -24,16 +24,13 @@
 			<field name="model">cic.qc.cert.line</field>
 			<field name="arch" type="xml" >
 				<tree string="Mill Certificates" editable="bottom" >
-                    <!--<field name="dia_attrib_value_id" required="True"  options="{'no_create':True,'no_open':True}" />-->
-                    <!--<field name="origin_attrib_value_id" options="{'no_create':True,'no_open':True}"/>-->
-                    <!--<field name="certificate_ids" widget="many2many_tags" domain="[('dia_attrib_value_id','=',dia_attrib_value_id),-->
-                    <!--('origin_attrib_value_id','=',origin_attrib_value_id)]" />-->
-                    <!--<field name="quantity" />-->
+                    <field name="sequence" widget="handle"/>
                     <field name="certificate_id"  />
                     <field name="dia_attrib_value_id" />
                     <field name="origin_attrib_value_id" />
                     <field name="length_attrib_value_id" />
                     <field name="issued_date"/>
+                    <field name="quantity" />
 
 
 

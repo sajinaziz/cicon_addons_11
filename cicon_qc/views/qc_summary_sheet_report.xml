@@ -83,10 +83,10 @@
                 <thead>
                     <th style="width:8%" > Trip Ref. </th>
                     <th style="width:10%"> Customer</th>
-                    <th style="width:12%"> Project</th>
-                    <th style="width:10%"> Date</th>
-                    <th style="width:30%"> Delivery Notes</th>
-                    <th style="width:30%"> Certificates</th>
+                    <th style="width:14%"> Project</th>
+                    <th style="width:8%"> Date</th>
+                    <th style="width:25%"> Delivery Notes</th>
+                    <th style="width:35%"> Certificates</th>
                 </thead>
 
                 <tbody>
@@ -122,15 +122,16 @@
                                     <th>Date</th>
                                 </thead>
                                 <tbody>
+
                                      <tr t-foreach="o.certificate_line_ids" t-as="mline">
-                                          <td> <span t-field="mline.dia_attrib_value_id.name" /> </td>
-                                          <td> <span t-field="mline.origin_attrib_value_id.name" /> </td>
-                                          <td>
+                                          <td  style="width:20%"> <span t-field="mline.dia_attrib_value_id.name" /> </td>
+                                          <td  style="width:20%"> <span t-field="mline.origin_attrib_value_id.name" /> </td>
+                                          <td  style="width:15%">
                                               <t t-if="mline.quantity > 0">
                                               <span t-field="mline.quantity" />
                                              </t>
                                           </td>
-                                         <td>
+                                         <td  style="width:20%" >
                                              <!--<ul class="list-unstyled">-->
                                                  <!--<li t-foreach="mline.certificate_ids" t-as="c">-->
                                                      <!--<span t-esc="c.name"/>-->
@@ -140,7 +141,7 @@
                                              <span t-field="mline.certificate_id.name"/>
 
                                          </td>
-                                         <td> <span t-field="mline.certificate_id.issued_date" t-field-options='{"format": "dd-MM-yyyy"}' /> </td>
+                                         <td  style="width:25%"> <span t-field="mline.certificate_id.issued_date" t-field-options='{"format": "dd-MMM-yyyy"}' /> </td>
                                      </tr>
                                 </tbody>
                             </table>
