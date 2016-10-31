@@ -33,7 +33,7 @@
             <div class="oe_structure"/>
 
             <table class="table table-bordered">
-                <caption> <h3> Customer's Requisition Form </h3> </caption>
+                <caption> <h4> Customer's Requisition Form </h4> </caption>
                 <thead>
                     <th style="width:56%" class="text-center" >To be filled by Technical Dept.</th>
                     <th style="width:44%" class="text-center">To be filled by Production Dept.</th>
