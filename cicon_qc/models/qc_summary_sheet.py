@@ -66,11 +66,11 @@ class QcSummary(models.Model):
 
     @api.model
     def create(self, vals):
-        # _qc_summary_seq = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
-        #                                                   ('code', '=', 'cic.qc.summary.seq')])
-        # vals.update({'name': _qc_summary_seq.next_by_id() or time.strftime('%Y/%m/%d/%H/%M')})
+        _qc_summary_seq = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
+                                                          ('code', '=', 'cic.qc.summary.seq')])
+        vals.update({'name': _qc_summary_seq.next_by_id() or time.strftime('%Y/%m/%d/%H/%M')})
 
-        vals['name'] = self.env['ir.sequence'].next_by_code('cic.qc.summary.seq') or 'New'
+        # vals['name'] = self.env['ir.sequence'].next_by_code('cic.qc.summary.seq') or 'New'
         return super(QcSummary, self).create(vals)
 
 QcSummary()

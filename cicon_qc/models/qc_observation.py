@@ -75,10 +75,10 @@ class cicon_qc_observation(models.Model):
 
     @api.model
     def create(self, vals):
-        # _qc_obs_seq = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
-        #                                               ('code', '=', 'cic.qc.observation.seq')])
-        # vals.update({'name': _qc_obs_seq.next_by_id() or time.strftime('%Y/%m/%d/%H/%M')})
-        vals['name'] = self.env['ir.sequence'].next_by_code('cic.qc.observation.seq') or 'New'
+        _qc_obs_seq = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
+                                                      ('code', '=', 'cic.qc.observation.seq')])
+        vals.update({'name': _qc_obs_seq.next_by_id() or time.strftime('%Y/%m/%d/%H/%M')})
+        # vals['name'] = self.env['ir.sequence'].next_by_code('cic.qc.observation.seq') or 'New'
         return super(cicon_qc_observation, self).create(vals)
 
     @api.multi
