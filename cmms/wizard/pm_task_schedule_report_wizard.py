@@ -41,7 +41,7 @@ class CmmsPmSchPlanReportWizard(models.TransientModel):
         ctx = dict(self._context)
         ctx['rpt_month'] = int(self.rpt_month)
         ctx['rpt_year'] = int(self.rpt_year)
-        ctx['heading'] = dict(self._MONTHS)[self.rpt_month] + ',' + self.rpt_year
+        ctx['heading'] = 'Maintenance Preventive Plan For '+ dict(self._MONTHS)[self.rpt_month] + ',' + self.rpt_year
         datas = {'ids': self.env.context.get('active_ids')}
         return self.with_context(ctx).env['report'].get_action(self, report_name='cmms.cmms_pm_plan_report_template', data=datas)
 

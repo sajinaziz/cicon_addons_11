@@ -6,7 +6,7 @@
             <t t-call="cmms.cmms_external_layout">
             <div style="font-family: Ubuntu;" class="page">
                 <table class="table table-bordered">
-                    <caption class="text-uppercase"> <strong> <span t-esc="heading"/> </strong>  </caption>
+                    <caption class="text-uppercase" style="text-align:center;"> <strong> <h3><span t-esc="heading" /> </h3></strong>  </caption>
                     <thead>
                         <th class="text-center">SUN</th>
                         <th class="text-center">MON</th>

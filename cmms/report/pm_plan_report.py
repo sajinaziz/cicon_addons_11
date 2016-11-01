@@ -23,7 +23,7 @@ class PmSchPlanReport(models.AbstractModel): # Report File Name
         return report_obj.render('cmms.cmms_pm_plan_report_template', docargs)
 
     def _get_date_list(self,data):
-        _cal = Calendar(6)
+        _cal = Calendar(5)
         _date = list(_cal.itermonthdates(self._context.get('rpt_year'), self._context.get('rpt_month')))
         return _date
 

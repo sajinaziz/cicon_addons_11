@@ -163,10 +163,10 @@ class CmmsStoreInvoice(models.Model):
 
     @api.model
     def create(self, vals):
-        # _seq_store_inv = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
-        #                                                 ('code', '=', 'cmms.store.invoice')])
-        # vals['name'] = _seq_store_inv.next_by_id() or 'New'
-        vals['name'] = self.env['ir.sequence'].next_by_code('cmms.store.invoice') or 'New'
+        _seq_store_inv = self.env['ir.sequence'].search([('company_id', '=', self.env.user.company_id.id),
+                                                        ('code', '=', 'cmms.store.invoice')])
+        vals['name'] = _seq_store_inv.next_by_id() or 'New'
+        #vals['name'] = self.env['ir.sequence'].next_by_code('cmms.store.invoice') or 'New'
         return super(CmmsStoreInvoice,self).create(vals)
 
 
