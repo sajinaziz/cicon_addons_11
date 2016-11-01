@@ -89,13 +89,15 @@ class QcCertLine(models.Model):
     length_attrib_value_id = fields.Many2one('product.attribute.value', related='certificate_id.length_attrib_value_id',
                                           readonly=True, string='Length', store=False)
     issued_date = fields.Date('Issued Date', related='certificate_id.cert_file_id.issued_date', readonly=True)
-
-    #dia_attrib_value_id = fields.Many2one('product.attribute.value', domain="[('attribute_id.name','=','Diameter' )]", string='Diameter')
-    #origin_attrib_value_id = fields.Many2one('product.attribute.value', domain="[('attribute_id.name','=','Steel Origin' )]", string='Origin')
-    #certificate_ids = fields.Many2many('cic.qc.mill.cert.line', 'qc_summary_cert_line_mill_cert_line_rel',
-    #                                   'cert_line_id', 'mill_cert_id', string='Heat Numbers')
-
     quantity = fields.Float('Remarks', digits=(10, 3))
+    sequence = fields.Integer('Sequence')
+
+    _order = 'sequence'
+
+    @api.onchange('certificate_id')
+    def _onchange_certificate(self):
+        if self.certificate_id:
+            self.sequence = self.certificate_id.dia_attrib_value_id.sequence
 
     #_sql_constraints = [('uniq_line', 'UNIQUE(qc_summary_id,dia_attrib_value_id,origin_attrib_value_id)', 'Cert Line Name Must be Unique')]
     _sql_constraints = [('uniq_line', 'CHECK(1=1)','Cert Line Name Must be Unique')]
