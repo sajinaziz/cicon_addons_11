@@ -30,10 +30,8 @@
                     <field name="origin_attrib_value_id" />
                     <field name="length_attrib_value_id" />
                     <field name="issued_date"/>
+                    <field name="page_number"/>
                     <field name="quantity" />
-
-
-
 				</tree>
 			</field>
 		</record>
@@ -75,13 +73,12 @@
                             <!--<page string="Heat Nos">-->
                                 <!--<field name="heat_number_ids"/>-->
                             <!--</page>-->
-                            <page string="Order Codes">
-                                <field name="order_codes"/>
-                            </page>
-
-                            <page string="Heat Numbers">
-                                <field name="heat_numbers"/>
-                            </page>
+                            <!--<page string="Order Codes">-->
+                                <!--<field name="order_codes"/>-->
+                            <!--</page>-->
+                            <!--<page string="Heat Numbers">-->
+                                <!--<field name="heat_numbers"/>-->
+                            <!--</page>-->
                             <page string="Attachments">
                                 <group>
                                     <field name="attachment_ids" widget="many2many_binary"/>
