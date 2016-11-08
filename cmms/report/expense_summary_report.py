@@ -26,16 +26,6 @@ class InventoryExpenseReports(models.AbstractModel): # Report File Name
             'get_total_type': self._get_invoice_total_type,
             'get_grand_total': self._get_grand_total
 
-            # 'data':dict(
-            #     data,
-            #     get_category= self._get_categories(_docs),
-            #     get_machine= self._get_machines(_docs,get_category),
-            #     get_invoice= self._get_invoices,
-            #     get_total_machine= self._get_invoice_total_machine,
-            #     get_total_categ= self._get_invoice_total_categ,
-            #     get_total_type= self._get_invoice_total_type,
-            #     get_grand_total= self._get_grand_total
-            # )
         }
         return report_obj.render('cmms.cmms_inventory_expense_report_summary', docargs)
 
