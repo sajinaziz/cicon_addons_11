@@ -34,43 +34,32 @@
                                 <field name="rrule_str"/>
                                 <field name="date" string="Starting at" />
                              </group>
+                             <group>
+                                    <field name="recurrency" invisible="1"/>
+                             </group>
+                             <group attrs="{'invisible': [('recurrency','=',False)]}">
                                 <group>
-                                    <group col="1">
-                                        <group>
-                                            <field name="recurrency" invisible="1"/>
-                                        </group>
-                                        <group attrs="{'invisible': [('recurrency','=',False)]}">
-                                            <label for="interval"/>
-                                            <div>
-                                                <field name="interval" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
-                                                <field name="rrule_type" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
-                                            </div>
-                                            <label string="Until" for="end_type"/>
-                                            <div>
-                                                <field name="end_type" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
-                                                <field name="count" attrs="{'invisible': [('end_type', '!=', 'count')], 'required': [('recurrency','==',True)]}" class="oe_inline"/>
-                                                <field name="end_date" attrs="{'invisible': [('end_type', '!=', 'end_date')], 'required': [('end_type', '=', 'end_date')]}" class="oe_inline"/>
-                                            </div>
-                                            <label string="Select Weekday" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}"/>
-                                             <group col="2" colspan="1" name="weekday" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}">
-                                                <field name="week_day" nolabel="1" attrs="{'required': [('rrule_type', '=', 'weekly')]}"/>
-                                            </group>
-                                            <label string="Day of Month"
-                                                   attrs="{'invisible': [('rrule_type','!=','monthly')]}"/>
-                                            <div class="oe_left" attrs="{'invisible': [('rrule_type','!=','monthly')]}">
-                                                <field name="select1" attrs="{'required': [('rrule_type','=','monthly')]}" />
-                                                <field name="day"
-                                                       attrs="{'required': [('select1','=','date'), ('rrule_type','=','monthly')],
-                                                'invisible': [('select1','=','day')]}"/>
-                                                <field name="byday" string="The"
-                                                       attrs="{'required': [('select1','=','day'), ('rrule_type','=','monthly')], 'invisible': [('select1','=','date')]}"/>
-                                                <field name="week_list" nolabel="1"
-                                                       attrs="{'required': [('select1','=','day'), ('rrule_type','=','monthly')], 'invisible': [('select1','=','date')]}"/>
-                                            </div>
-
-                                        </group>
-                                    </group>
+                                    <field name="interval" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                    <field name="rrule_type" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
                                 </group>
+                                <group>
+                                     <field name="end_type" attrs="{'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                     <field name="count" attrs="{'invisible': [('end_type', '!=', 'count')], 'required': [('recurrency','==',True)]}" class="oe_inline"/>
+                                     <field name="end_date" attrs="{'invisible': [('end_type', '!=', 'end_date')], 'required': [('end_type', '=', 'end_date')]}" class="oe_inline"/>
+                                </group>
+                                            <!--<label string="Select Weekday" attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}"/>-->
+                                 <group attrs="{'invisible' :[('rrule_type','not in', ['weekly'])]}">
+                                     <field name="week_day"  attrs="{'required': [('rrule_type', '=', 'weekly')]}"/>
+                                 </group>
+                                 <group  attrs="{'invisible': [('rrule_type','!=','monthly')]}">
+                                     <field name="select1" attrs="{'required': [('rrule_type','=','monthly')]}" />
+                                     <field name="day" attrs="{'required': [('select1','=','date'), ('rrule_type','=','monthly')],'invisible': [('select1','=','day')]}"/>
+                                     <field name="byday" attrs="{'required': [('select1','=','day'), ('rrule_type','=','monthly')], 'invisible': [('select1','=','date')]}"/>
+                                     <field name="week_list"  attrs="{'required': [('select1','=','day'), ('rrule_type','=','monthly')], 'invisible': [('select1','=','date')]}"/>
+                                 </group>
+
+                             </group>
+
                             </page>
                         </notebook>
                     </sheet>

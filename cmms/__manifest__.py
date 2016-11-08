@@ -44,6 +44,7 @@ Required modules:
         'views/cmms_joborder_view.xml',
         'views/pm_task_view.xml',
         'views/cmms_joborder_sequence.xml',
+        'views/cmms_document.xml',
         'wizard/pm_job_generate_view.xml',
         'wizard/job_order_generate_view.xml',
         'wizard/pm_task_sch_report_wizard_view.xml',

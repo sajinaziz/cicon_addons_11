@@ -7,6 +7,7 @@ class CmmsSparePartType(models.Model):
     _description = "Spare Part Type"
 
     name = fields.Char("Spare Part Type", required=True)
+    is_asset = fields.Boolean('Asset', default=False)
 
     _sql_constraints = [('uniq_name', 'UNIQUE(name)', 'Spare Part Type Must Unique')]
 

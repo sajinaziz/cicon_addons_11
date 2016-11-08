@@ -270,6 +270,7 @@
            <field name="arch" type="xml" >
                 <tree string="Parts Type" editable="bottom">
                     <field name="name"/>
+                    <field name="is_asset"/>
                 </tree>
             </field>
         </record>
