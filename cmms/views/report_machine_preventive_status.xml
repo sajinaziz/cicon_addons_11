@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="report_machine_preventive_status_template">
+     <t t-call="report.html_container">
+         <t t-call="cmms.cmms_internal_layout">
+            <div class="page">
+                <div class="row">
+                    <table class="table table-bordered">
+                        <thead style="padding-top:20px;">
+                            <th style="padding-top:20px;"> Sn.</th>
+                            <th style="padding-top:20px;"> Code </th>
+                            <th style="padding-top:20px;"> Name </th>
+                            <th style="padding-top:20px;"> PM Scheme</th>
+                            <th style="padding-top:20px;"> Interval </th>
+                            <th style="padding-top:20px;"> Next Date </th>
+                            <th style="padding-top:20px;"> Last Date </th>
+                        </thead>
+                        <tbody>
+                              <t t-foreach="docs" t-as="o">
+                                    <t t-set="intervals" t-value="get_intervals(o)"/>
+                                    <t t-set="invcount" t-value="len(intervals)" />
+                                    <t t-if="invcount > 0">
+                                        <tr style="page-break-inside: avoid !important;">
+                                            <td  t-att-rowspan="invcount" style="width: 3%"> <span t-esc="o_index +1"/>  </td>
+                                            <td  t-att-rowspan="invcount" style="width: 5%"> <span t-field="o.code"/>  </td>
+                                            <td  t-att-rowspan="invcount" style="width: 25%"> <span t-field="o.name"/>  </td>
+                                            <td  t-att-rowspan="invcount" style="width: 10%"> <span t-field="o.pm_scheme_id.name"/>  </td>
+                                            <t t-foreach="intervals" t-as="i">
+                                                <t t-if="i_index > 0">
+                                                    <![CDATA[<tr>]]>
+                                                </t>
+                                                <td style="width: 10%"> <span t-field="i.name"/> </td>
+                                                <td style="width: 10%"> <span t-esc="get_schedules(o,i)"/></td>
+                                                <td style="width: 10%"> </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                              </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+       </t>
+    </t>
+</template>
+</data>
+</odoo>

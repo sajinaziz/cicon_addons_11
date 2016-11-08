@@ -82,5 +82,14 @@
         file="cmms.report_machine_analysis_summary"
         name="cmms.report_machine_analysis_summary_template"
     />
+
+       <report
+        id="report_cmms_machine_preventive_status"
+        string="Machine Preventive Status"
+        model="cmms.machine"
+        report_type="qweb-pdf"
+        file="cmms.report_machine_preventive_status"
+        name="cmms.report_machine_preventive_status_template"
+    />
     </data>
 </odoo>
