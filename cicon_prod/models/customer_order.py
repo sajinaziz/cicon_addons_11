@@ -62,8 +62,9 @@ class cicon_customer_order(models.Model):
         self.write({'state': 'new'})
 
 
-    @api.one
+    @api.multi
     def copy(self, default=None):
+        self.ensure_one()
         if default is None:
             default = {}
         if not default.get('name', False):

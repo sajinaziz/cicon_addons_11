@@ -41,6 +41,7 @@
                         <group>
                              <field name="partner_id" options="{'no_create':True,'no_open':True}"/>
                              <field name="project_id" options="{'no_create':True,'no_open':True}"/>
+                             <field name="last_order" options="{'no_create':True}"/>
                         </group>
                         <div class="oe_title">
                             <label for="name"  class="oe_edit_only"/>

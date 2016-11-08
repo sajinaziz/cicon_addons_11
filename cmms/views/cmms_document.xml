@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+
+         <record model="ir.actions.act_window" id="action_cmms_doc_view">
+            <field name="name" >CMMS Documents</field>
+            <field name="res_model">ir.attachment</field>
+             <field name="domain">[('res_model','like', 'cmms')]</field>
+        </record>
+
+        <menuitem name="Documents" parent="cmms_menu" id="menu_cmms_docs" action="action_cmms_doc_view" sequence="90"/>
+
+    </data>
+</odoo>

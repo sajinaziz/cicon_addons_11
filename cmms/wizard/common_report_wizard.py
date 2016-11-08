@@ -1,7 +1,11 @@
 from odoo import models, fields, api
 from datetime import datetime,date,timedelta
 from odoo.exceptions import UserError
+from dateutil.relativedelta import relativedelta
 import calendar
+import xlsxwriter
+import cStringIO
+import base64
 
 JOB_ORDER_TYPE = [('breakdown', 'BREAKDOWN'), ('general', 'GENERAL'),('preventive','PREVENTIVE')]
 
@@ -9,7 +13,6 @@ JOB_ORDER_TYPE = [('breakdown', 'BREAKDOWN'), ('general', 'GENERAL'),('preventiv
 class CmmsCommonReportWizard(models.TransientModel):
     _name = 'cmms.common.report.wizard'
     _description = "CMMS Reports"
-
 
     @api.onchange('report_by')
     def _get_date(self):
@@ -44,7 +47,8 @@ class CmmsCommonReportWizard(models.TransientModel):
                                     ('job_order_report','Job Order Report'),
                                     ('parts_by_producttype_report','Parts Summary By Product Type Report'),
                                     ('machine_analysis_report','Machine Analysis Report'),
-                                    ('machine_status_report','Machine Status Report')],string='Report', required=True)
+                                    ('machine_status_report','Machine Status Report'),
+                                    ('parts_depreciation_report', 'Depreciation Report')],string='Report', required=True)
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.user.company_id)
 
     start_date = fields.Date('Start Date', required=True, default=fields.Date.context_today)
@@ -78,6 +82,80 @@ class CmmsCommonReportWizard(models.TransientModel):
             year_last_day = '{:%Y-%m-%d}'.format(last_month)
             self.start_date = year_first_day
             self.end_date = year_last_day
+
+    def _gen_depreciation_report(self, end_date):
+        _types = self.env['cmms.spare.part.type'].search([('is_asset', '=', True)])
+        _domain = [('invoice_date' ,'<=' , end_date), ('spare_part_type_id', 'in' , _types.ids), ('job_order_id','!=', False)]
+        _fields = ['machine_id','invoice_date', 'amount']
+        _group_by = [('machine_id'),('invoice_date:month')]
+        _store_lines = self.env['cmms.store.invoice.line'].read_group(domain=_domain, fields=_fields, groupby=_group_by,lazy=False)
+        _res_list = []
+        _mac_ids = [r['machine_id'][0] for r in _store_lines]
+        _all_machines = self.env['cmms.machine'].search([('id', 'in', list(set(_mac_ids)))])
+        _records = {}
+        for _machine in list(set(_mac_ids)):
+            _res = [r for r in _store_lines if r['machine_id'][0] == _machine]
+            _val = {}
+            for _r in _res:
+                _d_str = _r['invoice_date:month'].strip() + ' ' + '01'
+                _invoice_date = datetime.strptime(_d_str, '%B %Y %d')
+                _invoice_amount = float(_r['amount'])
+                _run_amount = _invoice_amount
+                _dep_value =  float(_invoice_amount /24)
+                for x in range(0,25,1):
+                    _month = _invoice_date + relativedelta(months=x)
+                    if _val.get(_month):
+                        _val[_month] = _val[_month] + _run_amount
+                    else:
+                        _val[_month] = _run_amount
+                    _run_amount -= _dep_value
+            _records[_all_machines.filtered(lambda m: m.id == _machine)] = _val
+
+        _dates = []
+        for c in _records:
+            _dates.extend(_records[c].keys())
+        _date_list = list(set(_dates))
+        _date_list.sort()
+
+        output = cStringIO.StringIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+        row = 0
+        col = 3
+        worksheet.write(row, 0, 'Sn#')
+        worksheet.write(row, 1, 'Code')
+        worksheet.write(row, 2, 'Name')
+        worksheet.write(row, 3, 'Category')
+        for _d in _date_list:
+           col += 1
+           worksheet.write(row, col, _d.strftime('%b %Y'))
+        for rec in _records:
+            row += 1
+            worksheet.write(row, 1, rec.code)
+            worksheet.write(row, 2, rec.name)
+            col = 3
+            for _d in _date_list:
+                col += 1
+                v = (_records[rec]).get(_d, '')
+                if v:
+                    v_amount = round(float(v),2)
+                    print v_amount
+                    worksheet.write(row, col, v_amount)
+        workbook.close()
+        output.seek(0)
+        _r_name = 'Depreciation Report -' + datetime.today().strftime('%d-%b-%Y')
+        _file_name = 'cmms_depreciation_' + datetime.today().strftime('%d-%b-%Y') + '.xlsx'
+        vals = {
+                'name': _r_name,
+                'datas_fname': _file_name,
+                'description': 'CMMS Depreciation Report',
+                'type': 'binary',
+                'db_datas': base64.encodestring(output.read()),
+                'res_model': 'cmms.common.report.wizard'
+        }
+        file_id = self.env['ir.attachment'].create(vals)
+        return file_id
+
 
     @api.multi
     def show_report(self,data):
@@ -138,3 +216,9 @@ class CmmsCommonReportWizard(models.TransientModel):
                 return self.env['report'].get_action(_machines, 'cmms.report_machine_status_template')
             else:
                 raise UserError("No Report Exists")
+
+        if self.report_list == 'parts_depreciation_report':
+            self._gen_depreciation_report(self.end_date)
+
+
+
