@@ -52,6 +52,7 @@ class CmmsCommonReportWizard(models.TransientModel):
     job_order_type = fields.Selection(JOB_ORDER_TYPE, "Job Order Type")
     machine_categ_ids = fields.Many2many('cmms.machine.category','cmms_report_machine_categ_sel_rel', 'wizard_id', 'categ_id',
                                          string="Machine Category")
+    report_option = fields.Selection([('summary', 'Summary'), ('detail', 'Detailed')], string='Report Option',default='summary')
 
 
    # print report_year
@@ -108,13 +109,18 @@ class CmmsCommonReportWizard(models.TransientModel):
                 _qry.append(('job_order_type', '=', self.job_order_type))
             if self.company_id:
                 _qry.append(('company_id', '=', self.company_id.id))
-                _job_orders = self.env['cmms.job.order'].search(_qry, order='job_order_date')
+            _job_orders = self.env['cmms.job.order'].search(_qry, order='job_order_date')
             if _job_orders.ids:
                 return self.env['report'].get_action(_job_orders, 'cmms.job_order_report_template')
             else:
                 raise UserError("No Report Exists For This Period")
+            
         if self.report_list == 'parts_by_producttype_report':
-            ctx['heading'] = "Spare Parts Summary" + '\n' + "  From[ " + start_date + ' To ' + end_date + ' ]'
+            ctx['report_option'] = self.report_option
+            if self.report_option == 'summary':
+                ctx['heading'] = "Spare Parts Summary by Product Type" + "(" + start_date + ' to ' + end_date + ' )'
+            elif self.report_option == 'detail':
+                ctx['heading'] = "Spare Parts Details by Product Type" + "(" + start_date + ' to ' + end_date + ' )'
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.report_partsby_producttype_summary_template',
                                                                    data=datas)
