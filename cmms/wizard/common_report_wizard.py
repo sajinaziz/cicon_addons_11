@@ -131,6 +131,7 @@ class CmmsCommonReportWizard(models.TransientModel):
            worksheet.write(row, col, _d.strftime('%b %Y'))
         for rec in _records:
             row += 1
+            worksheet.write(row, 0, row)
             worksheet.write(row, 1, rec.code)
             worksheet.write(row, 2, rec.name)
             col = 3
