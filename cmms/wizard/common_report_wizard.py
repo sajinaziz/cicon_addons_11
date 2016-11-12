@@ -176,6 +176,8 @@ class CmmsCommonReportWizard(models.TransientModel):
                     v_amount = round(float(v),2)
                     #print v_amount
                     worksheet.write(row, col, v_amount)
+            mode_res_id = rec.id
+
         workbook.close()
         output.seek(0)
         _r_name = 'Depreciation Report -' + datetime.today().strftime('%d-%b-%Y')
@@ -186,7 +188,8 @@ class CmmsCommonReportWizard(models.TransientModel):
                 'description': 'CMMS Depreciation Report',
                 'type': 'binary',
                 'db_datas': base64.encodestring(output.read()),
-                'res_model': 'cmms.common.report.wizard'
+                'res_model': 'cmms.machine',
+                'res_id': mode_res_id
         }
         file_id = self.env['ir.attachment'].create(vals)
         return file_id
