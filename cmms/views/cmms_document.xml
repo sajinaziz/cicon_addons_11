@@ -3,14 +3,103 @@
     <data>
 
 
+         <!--<record model="ir.actions.act_window" id="action_cmms_doc_view">-->
+            <!--<field name="name" >CMMS Documents</field>-->
+            <!--<field name="res_model">ir.attachment</field>-->
+             <!--<field name="domain">[('res_model','like', 'cmms')]</field>-->
+        <!--</record>-->
 
-         <record model="ir.actions.act_window" id="action_cmms_doc_view">
-            <field name="name" >CMMS Documents</field>
-            <field name="res_model">ir.attachment</field>
-             <field name="domain">[('res_model','like', 'cmms')]</field>
+        <!--<menuitem name="Documents" parent="cmms_menu" id="menu_cmms_docs" action="action_cmms_doc_view" sequence="90"/>-->
+
+
+
+          <record id="cmms_document_form_view" model="ir.ui.view">
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <form string="Attachments" create="false" groups="base.group_no_one">
+                   <sheet>
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="type"/>
+                            <field name="datas" filename="datas_fname" attrs="{'invisible':[('type','=','url')]}"/>
+                            <field name="datas_fname" invisible="1" attrs="{'invisible':[('type','=','url')]}" class="oe_inline oe_right"/>
+                            <field name="url" widget="url" attrs="{'invisible':[('type','=','binary')]}"/>
+                            <field name="mimetype" groups="base.group_no_one"/>
+
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="res_model" context="{'default_res_model':'cmms.common.report.wizard'}" invisible="1"/>
+                            <field name="res_field" invisible="1"/>
+                            <field name="res_id" invisible="1"/>
+                            <field name="res_name" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="public" invisible="1"/>
+                        </group>
+                        <group string="History" groups="base.group_no_one">
+                            <label for="create_uid" string="Creation"/>
+                            <div name="creation_div">
+                                <field name="create_uid" readonly="1" class="oe_inline"/> on
+                                <field name="create_date" readonly="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group name="description_group" string="Description" groups="base.group_no_one"  colspan="4" invisible="1">
+                            <field name="description" nolabel="1" />
+                        </group>
+                        <group groups="base.group_no_one" string="Indexed Content" colspan="4" invisible="1">
+                            <field name="index_content" nolabel="1" />
+                        </group>
+                    </group>
+                  </sheet>
+                </form>
+            </field>
         </record>
 
-        <menuitem name="Documents" parent="cmms_menu" id="menu_cmms_docs" action="action_cmms_doc_view" sequence="90"/>
+        <record id="cmms_document_tree_view" model="ir.ui.view">
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <tree string="CMMS Attachments" create="false">
+                    <field name="name"/>
+                    <field name="datas_fname"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_cmms_att_view">
+            <field name="name">CMMS Documents</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="domain">[('res_model','like', 'cmms')]</field>
+            <!--<field name="context">{"default_res_model":'cmms.common.report.wizard'}</field>-->
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Documents" parent="cmms_menu" id="menu_cmms_docs" action="action_cmms_att_view" sequence="90"/>
+
+        <record id="action_cmms_tree_view_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_cmms_att_view"/>
+        </record>
+
+
+        <record id="action_cmms_tree_view_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="cmms_document_form_view"/>
+            <field name="act_window_id" ref="action_cmms_att_view"/>
+        </record>
+
+
+
+
 
     </data>
 </odoo>
