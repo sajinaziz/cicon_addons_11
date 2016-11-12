@@ -41,6 +41,7 @@ class CmmsCommonReportWizard(models.TransientModel):
 
 
 
+
     report_by = fields.Selection([('this_month','This Month'),('this_week','This Week'),('last_month','Last Month'),('last_week','Last Week')],string='Report By')
     report_list = fields.Selection([('expense_report', 'Expense Summary'),
                                    ('expense_detailed', 'Expense Detailed'),
@@ -58,8 +59,41 @@ class CmmsCommonReportWizard(models.TransientModel):
                                          string="Machine Category")
     report_option = fields.Selection([('summary', 'Summary'), ('detail', 'Detailed')], string='Report Option',default='summary')
 
+    #find the end date of the select month in report
 
-   # print report_year
+    @api.onchange('rpt_month')
+    def last_date_of_month(self):
+        if self.rpt_month and self.report_year:
+            month = int(self.rpt_month)
+            year = int(self.report_year)
+            selected_date = date(year, month, 1)
+
+            if selected_date.month == 12:  # December
+                last_day_selected_month = date(selected_date.year, selected_date.month, 31)
+            else:
+                last_day_selected_month = date(selected_date.year, selected_date.month + 1, 1) - timedelta(days=1)
+            self.end_date = last_day_selected_month
+            #print self.end_date
+
+    _MONTHS = [('1', 'January'),
+               ('2', 'February'),
+               ('3', 'March'),
+               ('4', 'April'),
+               ('5', 'May'),
+               ('6', 'June'),
+               ('7', 'July'),
+               ('8', 'August'),
+               ('9', 'September'),
+               ('10', 'October'),
+               ('11', 'November'),
+               ('12', 'December'),
+               ]
+
+    def _get_this_month(self):
+        return str(datetime.today().month)
+
+    rpt_month = fields.Selection(_MONTHS, string="Month", required=True, default=_get_this_month)
+
 
     ''' fill year select box values '''
     current_year = datetime.today().strftime("%Y")
@@ -69,7 +103,7 @@ class CmmsCommonReportWizard(models.TransientModel):
 
     report_year = fields.Selection(
         [(current_year, current_year), (last_year, last_year), (prev_last_year, prev_last_year),
-         (prev_year, prev_year)],string="Year")
+         (prev_year, prev_year)],string="Year",default=current_year)
 
     @api.onchange('report_year')
     def _fill_date(self):
@@ -140,7 +174,7 @@ class CmmsCommonReportWizard(models.TransientModel):
                 v = (_records[rec]).get(_d, '')
                 if v:
                     v_amount = round(float(v),2)
-                    print v_amount
+                    #print v_amount
                     worksheet.write(row, col, v_amount)
         workbook.close()
         output.seek(0)

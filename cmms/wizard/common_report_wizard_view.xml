@@ -10,17 +10,18 @@
                 <group>
                     <field name="report_list"/>
                     <field name="job_order_type" attrs="{'invisible': [('report_list','!=','job_order_report')]}"/>
-                    <field name="report_by" attrs="{'invisible': ['|',('report_list','=','machine_analysis_report'),('report_list','=','machine_status_report')]}" />
+                    <field name="report_by" attrs="{'invisible': [('report_list','in',('machine_analysis_report','machine_status_report','parts_depreciation_report'))]}" />
 					<field name="report_option" attrs="{'invisible': [('report_list','!=', 'parts_by_producttype_report' )] }" widget="radio" />
   				</group>
                 <group>
-                    <field name="report_year"  attrs="{'invisible': [('report_list','!=','machine_analysis_report')],'required':[('report_list','==','machine_analysis_report')]}" />
+                    <field name="rpt_month"  attrs="{'invisible': [('report_list','!=','parts_depreciation_report')]}" />
+                    <field name="report_year"  attrs="{'invisible': [('report_list','not in',('machine_analysis_report','parts_depreciation_report'))],'required':[('report_list','==','machine_analysis_report')]}" />
                     <field name="machine_categ_ids"  attrs="{'invisible': [('report_list','!=','machine_analysis_report')]}" widget="many2many_tags" options="{'no_open': True, 'no_create':True}"/>
 
                 </group>
                 <group col="4">
-                    <field name="start_date" attrs="{'invisible': ['|',('report_list','=','machine_analysis_report'),('report_list','=','machine_status_report')]}"/>
-                    <field name="end_date" attrs="{'invisible': ['|',('report_list','=','machine_analysis_report'),('report_list','=','machine_status_report')]}" />
+                    <field name="start_date" attrs="{'invisible': [('report_list','in',('machine_analysis_report','machine_status_report','parts_depreciation_report'))]}"/>
+                    <field name="end_date" attrs="{'invisible': [('report_list','in',('machine_analysis_report','machine_status_report','parts_depreciation_report'))]}" />
                 </group>
                 <group>
                     <field name="company_id" options="{'no_create':True, 'no_open': True}"/>
