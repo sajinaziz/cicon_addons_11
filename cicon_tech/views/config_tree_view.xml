@@ -25,7 +25,7 @@
         </record>
 
          <record model="ir.actions.act_window" id="action_submittals">
-            <field name="name">Submmital</field>
+            <field name="name">Submittal</field>
             <field name="res_model">tech.submittal</field>
         </record>
 
