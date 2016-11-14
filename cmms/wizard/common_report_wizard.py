@@ -187,7 +187,9 @@ class CmmsCommonReportWizard(models.TransientModel):
                 'description': 'CMMS Depreciation Report',
                 'type': 'binary',
                 'db_datas': base64.encodestring(output.read()),
+                'res_name': self.report_list,
                 'res_model': 'cmms.common.report.wizard',
+                'res_id': self.id
         }
         file_id = self.env['ir.attachment'].create(vals)
         return file_id
@@ -255,6 +257,16 @@ class CmmsCommonReportWizard(models.TransientModel):
 
         if self.report_list == 'parts_depreciation_report':
             self._gen_depreciation_report(self.end_date)
-
+            return {
+                'name': "Report Wizard",
+                #'form_id': 'cmms_depreciation_report_form_view',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'res_model': 'cmms.common.report.wizard',  # current model
+                'res_id': self.id,
+                'type': 'ir.actions.act_window',
+                'nodestroy': True,
+                'target': 'current'
+            }
 
 

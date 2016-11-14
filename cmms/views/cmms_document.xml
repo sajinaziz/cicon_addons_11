@@ -81,7 +81,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Documents" parent="cmms_menu" id="menu_cmms_docs" action="action_cmms_att_view" sequence="90"/>
+        <!--<menuitem name="Documents" parent="cmms_menu" id="menu_cmms_docs" action="action_cmms_att_view" sequence="90"/>-->
 
         <record id="action_cmms_tree_view_tree" model="ir.actions.act_window.view">
             <field eval="1" name="sequence"/>

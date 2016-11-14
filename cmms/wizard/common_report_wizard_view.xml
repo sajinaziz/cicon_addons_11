@@ -6,7 +6,7 @@
             <field name="name">CMMS Report</field>
             <field name="model">cmms.common.report.wizard</field>
             <field name="arch" type="xml">
-            <form string="CMMS Report">
+            <form string="CMMS Report" create="false" edit="false">
                 <group>
                     <field name="report_list"/>
                     <field name="job_order_type" attrs="{'invisible': [('report_list','!=','job_order_report')]}"/>
@@ -27,8 +27,9 @@
                     <field name="company_id" options="{'no_create':True, 'no_open': True}"/>
                 </group>
                 <footer>
-                	<button name="show_report" string="Show Report" type="object" class="oe_highlight" />
-                    <button string="Cancel" class="oe_link" special="cancel" />
+                	<button name="show_report" string="Show Report" type="object" class="oe_edit_only" attrs="{'invisible': [('report_list','!=','parts_depreciation_report')]}"/>
+                    <button name="show_report" string="Show Report" type="object" class="oe_highlight"  attrs="{'invisible': [('report_list','=','parts_depreciation_report')]}"/>
+                    <button name="close_report" string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </form>
             </field>
