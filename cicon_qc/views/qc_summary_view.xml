@@ -239,7 +239,8 @@
 			<field name="name">cic.qc.mill.cert.tree</field>
 			<field name="model">cic.qc.mill.cert.line</field>
 			<field name="arch" type="xml" >
-				<tree string="Mill Certificate File" create="false">
+				<tree string="Mill Certificate File" create="false" default_order="id desc">
+                    <field name="id" invisible="1"/>
                     <field name="name"/>
                     <field name="cert_file_id"/>
                     <field name="dia_attrib_value_id"/>
