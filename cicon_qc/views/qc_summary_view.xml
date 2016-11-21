@@ -51,8 +51,12 @@
                             <!-- disable options attribute -->
                             <field name="project_id" />
                             <field name="customer_order_id" domain="[('project_id','=', project_id)]"  options="{'no_create': True}" />
+                        </group>
+                        <group col="4">
                             <field name="dn_date"/>
                             <field name="delivery_date"/>
+                        </group>
+                        <group>
                             <field name="wb_ticket"/>
                             <field name="loading_list"/>
                             <field name="company_id" options="{'no_create': True,'no_open': True}"/>
