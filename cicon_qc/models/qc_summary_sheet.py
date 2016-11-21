@@ -45,6 +45,7 @@ class QcSummary(models.Model):
     delivery_date = fields.Date('Delivery Date', default=fields.Date.context_today)
     partner_id = fields.Many2one('res.partner', domain="[('customer','=',True)]", string="Customer", required=True)
     project_id = fields.Many2one('cicon.job.site', 'Project', domain="[('partner_id','=',partner_id)]")
+    customer_order_id = fields.Many2one('cicon.customer.order', string='Customer Order')
     certificate_line_ids = fields.One2many('cic.qc.cert.line', 'qc_summary_id', string="Mill Certificates")
     dn_line_ids = fields.One2many('cic.qc.dn.line', 'qc_summary_id', string="Delivery Notes")
     wb_ticket = fields.Integer('Weigh Bridge')
