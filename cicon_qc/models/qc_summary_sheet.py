@@ -107,6 +107,13 @@ class QcDnLine(models.Model):
     _description = 'CICON Delivery Note'
     _rec_name = 'delivery_order_id'
 
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=80):
+        _dns = self.env['cicon.prod.delivery.order'].search([('name', operator, name)])
+        _c_orders = self.env['cicon.customer.order'].search([('name', operator, name)])
+        _ids = self.search(['|', ('customer_order_id', 'in', _c_orders.ids), ('delivery_order_id', 'in', _dns.ids)])
+        return _ids.name_get()
+
     # dn_no = fields.Char('Delivery Note Number', required=True)
     customer_order_id = fields.Many2one('cicon.customer.order', string='Customer Order')
     delivery_order_id = fields.Many2one('cicon.prod.delivery.order', string="Delivery Note", required=True)
