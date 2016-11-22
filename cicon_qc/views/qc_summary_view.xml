@@ -50,7 +50,6 @@
                             <!--<field name="project_id" options="{'no_create':True,'no_open':True}"/>-->
                             <!-- disable options attribute -->
                             <field name="project_id" />
-                            <field name="customer_order_id" domain="[('project_id','=', project_id)]"  options="{'no_create': True}" />
                         </group>
                         <group col="4">
                             <field name="dn_date"/>
@@ -65,7 +64,8 @@
                             <field name="dn_line_ids">
                                 <tree editable="bottom">
                                     <!--<field name="dn_no"/>-->
-                                    <field name="delivery_order_id" context="{'default_customer_order_id': parent.customer_order_id}" />
+                                    <field name="customer_order_id" domain="[('project_id','=', parent.project_id)]"  options="{'no_create': True}" />
+                                    <field name="delivery_order_id" domain="[('customer_order_id','=',customer_order_id)]"  context="{'default_customer_order_id': customer_order_id}" />
                                     <field name="order_code_ids" widget="many2many_tags"/>
                                 </tree>
                             </field>
