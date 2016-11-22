@@ -45,6 +45,7 @@ class QcSummary(models.Model):
     delivery_date = fields.Date('Delivery Date', default=fields.Date.context_today)
     partner_id = fields.Many2one('res.partner', domain="[('customer','=',True)]", string="Customer", required=True)
     project_id = fields.Many2one('cicon.job.site', 'Project', domain="[('partner_id','=',partner_id)]")
+
     certificate_line_ids = fields.One2many('cic.qc.cert.line', 'qc_summary_id', string="Mill Certificates")
     dn_line_ids = fields.One2many('cic.qc.dn.line', 'qc_summary_id', string="Delivery Notes")
     wb_ticket = fields.Integer('Weigh Bridge')
@@ -107,7 +108,9 @@ class QcDnLine(models.Model):
     _rec_name = 'delivery_order_id'
 
     # dn_no = fields.Char('Delivery Note Number', required=True)
+    customer_order_id = fields.Many2one('cicon.customer.order', string='Customer Order')
     delivery_order_id = fields.Many2one('cicon.prod.delivery.order', string="Delivery Note", required=True)
+
     qc_summary_id = fields.Many2one('cic.qc.summary', string='QC Summary', ondelete='cascade')
     #order_code_ids = fields.Many2many('cic.qc.order.code', 'dn_line_id', 'order_code_id', string='Order Codes')
     order_code_ids = fields.Many2many('cicon.prod.order', related='delivery_order_id.prod_order_ids',
