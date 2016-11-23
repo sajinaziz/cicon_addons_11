@@ -8,12 +8,13 @@ class ProjectContact(models.Model):
     # _log_access = False
     _rec_name = 'display_name'
 
-
+    @api.one
+    @api.depends('name', 'salutation')
     def _compute_display_name(self):
         """To show Name with Salutation on field 'display_name'"""
         self.display_name = (self.salutation or '') + ' ' + unicode(self.name)
 
-    display_name = fields.Char(string='Name', compute='_compute_display_name', store=False)
+    display_name = fields.Char(string='Name', compute=_compute_display_name, store=False)
     name = fields.Char('Name', size=250, required=True, help="Contact Full Name")
     job_site_id = fields.Many2one('cicon.job.site', 'Job Site Name', required=True, ondelete='cascade')
     # TODO:Change with contact Title or  resPartner Contact

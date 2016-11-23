@@ -5,6 +5,8 @@
          <record model="ir.actions.act_window" id="action_project_contact">
             <field name="name">Manage Project Contacts</field>
             <field name="res_model">tech.project.contact</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
 
@@ -25,7 +27,7 @@
         </record>
 
          <record model="ir.actions.act_window" id="action_submittals">
-            <field name="name">Submmital</field>
+            <field name="name">Submittal</field>
             <field name="res_model">tech.submittal</field>
         </record>
 

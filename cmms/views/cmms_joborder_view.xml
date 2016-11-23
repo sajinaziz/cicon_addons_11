@@ -36,9 +36,11 @@
                          </div>
                             <field name="job_order_type"  invisible="1" />
                          </group>
-                         <group>
-                            <field name="job_order_date" />
-                            <field name="description"/>
+                         <group colspan="4">
+                            <group cols="4">
+                                <field name="job_order_date" />
+                                <field name="description"/>
+                            </group>
                          </group>
                              <notebook >
                                 <page string="Breakdown Details" attrs ="{'invisible':[('job_order_type','!=','breakdown')]}">
