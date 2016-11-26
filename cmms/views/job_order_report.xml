@@ -35,7 +35,7 @@
                                    <td> <span t-field="o.job_category_id.name"/> </td>
                                    <t t-set="_wh" t-value="o.work_hour" />
                                    <td> <span t-esc="'%s:%s' % ( str('%02d' % _wh).split('.')[0], str('%02d' %  int(float(str('%.2f' % _wh).split('.')[1])/100*60)))"/></td>
-                                   <td class="text-right"> <span t-field="o.total_amount"/>  </td>
+                                   <td class="text-right"> <span t-esc="o.total_amount" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/>  </td>
                                    <td> <span t-field="o.status_id.name"/> </td>
                                 </tr>
                                 <tr style="page-break-inside: avoid !important;">
@@ -68,8 +68,8 @@
                                                     <td style="height:20px;padding:2px; width:8%;"> <span t-field="p.invoice_id.invoice_date" /></td>
                                                     <td style="height:20px;padding:2px; width:34%;"> <span t-field="p.product_desc"/> </td>
                                                     <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-field="p.quantity"/> </td>
-                                                    <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-esc="p.unit_price"  t-field-options='{"widget": "monetary"}'/> </td>
-                                                    <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-esc="p.amount"  t-field-options='{"widget": "monetary"}'/> </td>
+                                                    <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-esc="p.unit_price" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/> </td>
+                                                    <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-esc="p.amount" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/> </td>
                                                     <td class="text-center" style="border-left:1px solid gray;width:8%;"> <span t-esc="p.part_used_count"/>  </td>
                                                     <td class="text-center" style="width:8%;"> <t t-if="p.part_last_used" >      <span t-esc="time.strftime('%d-%b-%Y',time.strptime(p.part_last_used,'%Y-%m-%d'))"/> </t>   </td>
                                                     <td class="text-center" style="width:10%;"> <span t-esc="p.part_life_span" /> </td>

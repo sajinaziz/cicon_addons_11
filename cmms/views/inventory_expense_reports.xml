@@ -20,18 +20,18 @@
                          <t t-foreach="categs" t-as="c">
                              <tr>
                                 <td> <span t-field="c.name" />  </td>
-                                <td class="text-right"> <span t-esc="get_total_categ(c)"/>  </td>
+                                <td class="text-right"> <span t-esc="get_total_categ(c)" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/>  </td>
                              </tr>
                          </t>
                              <tr>
                                  <td> Total </td>
-                                 <td class="text-right"> <strong t-esc="get_total_type(o)"/>  </td>
+                                 <td class="text-right"> <strong t-esc="get_total_type(o)" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/>  </td>
                              </tr>
                          </t>
 
                          <tr>
                              <td class="text-center">Grand Total</td>
-                             <td class="text-center"> <strong t-esc="get_grand_total()"/> </td>
+                             <td class="text-center"> <strong t-esc="get_grand_total()" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/> </td>
                          </tr>
                      </tbody>
 

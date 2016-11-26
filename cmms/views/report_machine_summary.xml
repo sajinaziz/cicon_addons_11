@@ -68,10 +68,10 @@
                                            </t>
                                            <td><span t-field="d.product_desc" /></td>
                                            <td><span t-field="d.quantity" /></td>
-                                           <td><span t-esc="round(d.unit_price)" /></td>
-                                           <td><span t-esc="round(d.amount)" /></td>
+                                           <td><span t-esc="d.unit_price" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}' /></td>
+                                           <td><span t-esc="d.amount"  t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/></td>
                                             <t t-if="d_index==0">
-                                                <td t-att-rowspan="partcount" style="vertical-align:top;"> <span t-esc="round(r.total_amount)" /></td>
+                                                <td t-att-rowspan="partcount" style="vertical-align:top;"> <span t-esc="r.total_amount" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/></td>
                                             </t>
                                         </t>
                                         <t t-if="partcount == 0">
