@@ -9,8 +9,8 @@
                 <form string="SUN Account">
                     <sheet>
                         <group>
-                            <field name="partner_id" invisible="1"/>
-                            <field name="project_id" invisible="context.get('create_project',False)" options="{'no_create':True,'no_create_edit': True}"/>
+                            <field name="partner_id"/>
+                            <field name="project_id" invisible="context.get('create_project',False)" options="{'no_create':False,'no_create_edit': False}"/>
                             <field name="sun_db"/>
                             <field name="sun_account_no"/>
                         </group>
@@ -137,8 +137,8 @@
                 <form string="SUN Account">
                      <sheet>
                         <group>
-                            <field name="partner_id" invisible="1"/>
-                            <field name="project_id" readonly="context.get('read_only',False)" options="{'no_create':True,'no_create_edit': True}"/>
+                            <field name="partner_id"/>
+                            <field name="project_id" readonly="context.get('read_only',False)" options="{'no_create':False,'no_create_edit': False}"/>
                             <field name="sun_db" readonly="context.get('read_only',False)"/>
                             <field name="sun_account_no" readonly="context.get('read_only',False)"/>
                         </group>
