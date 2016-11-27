@@ -29,7 +29,7 @@
                     <field name="state"  widget="statusbar" statusbar_visible="new,approved,submitted" />
                 </header>
                 <sheet>
-                    <div class="oe_button_box oe_left">
+                     <div class="oe_button_box" name="button_box">
                           <button states="submitted" name="%(action_tech_submittal_doc_action)d" type="action" class="oe_inline oe_stat_button" icon="fa-book">
                                     <field name="dwg_count" widget="statinfo" string="Documents"   />
                           </button>
@@ -111,21 +111,21 @@
                         </field>
                         </page>
                         <page string="Revised Documents">
-                             <field name="revised_document_ids"  >
-                           <tree string="Documents">
-                                <field name="state" readonly="1" invisible="1" />
-                                <field name="name"/>
-                                <field name="document_type_id"/>
-                                <field name="description"/>
-                                <field name="document_status"/>
-                                <field name="rev_no"  />
-                                <field name="reason_id" />
-                                <field name="draft_time" widget="float_time" invisible="1"/>
-                                <field name="is_revised" invisible="1"/>
-                                <field name="created_by" invisible="1"/>
-                                <field name="parent_id" invisible="1"/>
-                                <field name="date" invisible="1"/>
-                            </tree>
+                             <field name="revised_document_ids">
+                                 <tree string="Documents">
+                                        <field name="state" readonly="1" invisible="1" />
+                                        <field name="name"/>
+                                        <field name="document_type_id"/>
+                                        <field name="description"/>
+                                        <field name="document_status"/>
+                                        <field name="rev_no"  />
+                                        <field name="reason_id" />
+                                        <field name="draft_time" widget="float_time" invisible="1"/>
+                                        <field name="is_revised" invisible="1"/>
+                                        <field name="created_by" invisible="1"/>
+                                        <field name="parent_id" invisible="1"/>
+                                        <field name="date" invisible="1"/>
+                                 </tree>
                         </field>
                         </page>
                         <page string="All Documents">
