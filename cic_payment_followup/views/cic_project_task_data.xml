@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Mail template is done in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="1">
+        <!--Mail template level 0-->
+        <record id="email_template_task_reminder" model="mail.template">
+            <field name="name">Task Reminder Email</field>
+            <field name="email_from">${user.email or ''}</field>
+            <field name="subject">${user.company_id.name} Task Reminder</field>
+            <field name="email_to">${object.assign_to.email or object.user_id.email}</field>
+            <field name="model_id" ref="project.model_project_task"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+
+    <p>Dear ${object.assign_to.name},</p>
+    <p>
+    Please Find Below Pending Task Reminders Assigned to you.
+    </p>
+
+<br/>
+
+
+${object.get_reminders(object.assign_to.id) | safe}
+
+<br/>
+
+ <p>
+This is an auto generated pending task summary,  Please don't reply to this.
+</p>
+
+</div>
+            ]]></field>
+        </record>
+    </data>
+</odoo>
+
+
