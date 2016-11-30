@@ -143,7 +143,7 @@
                     <!--<field name="categ_ids" position="replace" />-->
 
                  <xpath expr="//page/group" position="after">
-                     <group string="GTD">
+                     <group string="GTD" invisible="1">
                         <!--<field name="categ_ids" widget="many2many_tags"/>-->
                         <!--<field name="context_id" widget="selection" options='{"no_open": True}'/>-->
                         <!--<field name="timebox_id" widget="selection" options='{"no_open": True}'  string="Timeframe"/>-->
@@ -155,12 +155,17 @@
                        <field name="partner_id" on_change="change_partner(partner_id)"/>
                        <field name="project_id" on_change="change_project(project_id)" domain="[('partner_id','=',partner_id)]"  context="{'default_use_tasks':1,'default_partner_id':partner_id}" string="Project Name"/>
                    </group>
-                   <group col="4">
-                      <field name="customer_sales_person_id" options='{"no_open": True}' />
-                      <field name="customer_payment_term"  options='{"no_open": True}' />
-                      <field name="sales_person_id" options='{"no_open": True}'/>
-                      <field name="total_amount"/>
+                   <group colspan="4">
+                      <group>
+                          <field name="customer_sales_person_id" options='{"no_open": True}' />
+                          <field name="sales_person_id" options='{"no_open": True}'/>
+                      </group>
+                      <group>
+                          <field name="customer_payment_term"  options='{"no_open": True}' />
+                          <field name="total_amount"/>
+                      </group>
                    </group>
+
                 </xpath>
 
 
