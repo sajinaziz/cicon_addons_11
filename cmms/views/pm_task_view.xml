@@ -31,8 +31,9 @@
                             <page string="Schedule Details">
                              <group>
                                 <field name="company_id" invisible="1"/>
-                                <field name="rrule_str"/>
-                                <field name="date" string="Starting at" />
+                                <field name="rrule_str" class="oe_inline"/>
+                                <field name="date" string="Starting at"  class="oe_inline"/>
+                                <!--<feld name="hidden" invisible="1" />-->
                              </group>
                              <group>
                                     <field name="recurrency" invisible="1"/>
