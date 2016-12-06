@@ -6,6 +6,7 @@
          <t t-call="cmms.cmms_internal_layout">
             <div class="page">
                 <div class="row">
+
                     <table class="table table-condensed">
                         <thead>
                             <th> Sn.</th>
