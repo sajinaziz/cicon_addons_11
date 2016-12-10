@@ -96,7 +96,7 @@
                              Schedule Checked
                              </div>
                              <div class="col-xs-6 text-left">
-                             (Yes / No)
+                             (Yes)
                              </div>
                         </td>
                     </tr>
@@ -114,7 +114,7 @@
                              Printed Sch / Tags
                              </div>
                              <div class="col-xs-6 text-left">
-                              (Yes / No)
+                              (Yes)
                              </div>
                         </td>
                     </tr>
@@ -132,7 +132,7 @@
                                 Attach Mill Certificates
                              </div>
                              <div class="col-xs-6 text-left">
-                              (Yes / No)
+                              (Yes)
                              </div>
                         </td>
                     </tr>
@@ -230,8 +230,8 @@
                  <thead>
                      <tr>
                         <th rowspan="2" class="text-center" style="width:15%"> File Code</th>
-                        <th rowspan="2" class="text-center" style="width:10%"> Thread Type</th>
-                        <th colspan="6" class="text-center" style="width:50%" >Total Number of Thread bars</th>
+                        <th rowspan="2" class="text-center" style="width:10%"> Type</th>
+                        <th colspan="6" class="text-center" style="width:50%" >Total Number of bars</th>
                         <th rowspan="2" class="text-center" style="width:7%" > Weight (Tons)</th>
                         <th rowspan="2" class="text-center" style="width:10%"> Delivery Note No:</th>
                         <th rowspan="2" class="text-center" style="width:7%"> Delivery Date :</th>
