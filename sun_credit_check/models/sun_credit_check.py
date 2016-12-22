@@ -680,13 +680,16 @@ class SunCreditCheck(models.Model):
     #     _res.update({'debtor_statement_lines': self._get_sun_statement_data(cr, uid, values,partner_id,filter_overdue,filter_due,include_allocated)})
     #     return {'value': _res}
 
-    @api.multi
-    def on_change_sun_credit_details(self,sun_credit_details_ids,partner_id, filter_overdue=False, filter_due=False, include_allocated=False):
+    @api.onchange('sun_credit_details_ids')
+    def on_change_sun_credit_details(self):
         _res = {'debtor_statement_lines':[]}
         #print sun_credit_details_ids
-        values = self.resolve_2many_commands('sun_credit_details_ids', sun_credit_details_ids, ['account_code', 'sun_db','project_id'])
-        #print values
-        _res.update({'debtor_statement_lines': self._get_sun_statement_data(values,partner_id,filter_overdue,filter_due,include_allocated)})
+        #values = self.resolve_2many_commands('sun_credit_details_ids', self.sun_credit_details_ids, ['account_code', 'sun_db','project_id'])
+        # values = self.env['sun.credit.checkdetails'].search([('credit_check_id', '=', self.sun_credit_details_ids.id)])
+        # print values
+        # print 'xxxx'
+        # print self.sun_credit_details_ids.sun_db
+        _res.update({'debtor_statement_lines': self._get_sun_statement_data()})
         return {'value': _res}
 
     # def _get_sun_statement_data(self,cr,uid,sun_accounts ,partner_id,filter_overdue,filter_due,include_allocated, context=None):
@@ -827,15 +830,15 @@ class SunCreditCheck(models.Model):
     #     return _followup_lines
 
     @api.multi
-    def _get_sun_statement_data(self,sun_accounts, partner_id, filter_overdue, filter_due, include_allocated):
+    def _get_sun_statement_data(self):
 
         print 'test fn'
-        print sun_accounts
+        #print sun_accounts
         _followup_lines = []
-        partner = self.env['res.partner'].search([('id','=',partner_id)])
+        partner = self.env['res.partner'].search([('id','=',self.partner_id.id)])
         #payment_term = partner['property_payment_term']
         ibm_period = ''
-        for sun_acc in sun_accounts:
+        for sun_acc in self.sun_credit_details_ids.ids:
             payment_term_days = 0
             # if payment_term:
             #     payment_term_days = payment_term.line_ids[0].days
@@ -846,7 +849,7 @@ class SunCreditCheck(models.Model):
                     payment_term_days = _project_obj.project_payment_term_id.line_ids[0].days
                     ibm_period = self._calc_period(payment_term_days)
             _a = ' '
-            if include_allocated:
+            if self.include_allocated:
                 _a = 'A'
             query = "EXEC dbo.GetSunAccountBalanceDetails @SunAccountNo = '" + sun_acc['account_code'] + \
                     "', @SunDb = '" + sun_acc['sun_db'] + "'" + ",@A= '" + _a + "'"
@@ -892,7 +895,7 @@ class SunCreditCheck(models.Model):
                         _int_rate = partner.interest_rate_od
                         _int_amount = self.percent(_int_rate, amt_d, _over_days)
 
-                if filter_due & filter_overdue:
+                if self.filter_due & self.filter_overdue:
                     if _due or _over_due:
                         _followup_lines.append({
                             'acc_name': x['ACCNT_NAME'.strip()],
@@ -911,7 +914,7 @@ class SunCreditCheck(models.Model):
                             'credit': amt_c,
                             'debit': amt_d
                         })
-                elif filter_overdue:  # statement_over_due_only
+                elif self.filter_overdue:  # statement_over_due_only
                     if _over_due:
                         _followup_lines.append({
                             'acc_name': x['ACCNT_NAME'.strip()],
@@ -930,7 +933,7 @@ class SunCreditCheck(models.Model):
                             'credit': amt_c,
                             'debit': amt_d
                         })
-                elif filter_due:
+                elif self.filter_due:
                     if _due:
                         _followup_lines.append({
                             'acc_name': x['ACCNT_NAME'.strip()],
