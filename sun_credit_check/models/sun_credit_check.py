@@ -7,13 +7,7 @@ import time
 #from datetime import datetime
 from datetime import datetime,date,timedelta
 from odoo.exceptions import UserError
-#from time import strftime, strptime, time
-#from datetime import datetime
-#from dateutil.relativedelta import relativedelta
-#import datetime
-#
-#import datetime
-#import dateutil
+
 
 class SunCreditCheck(models.Model):
     _name = 'sun.credit.check'
