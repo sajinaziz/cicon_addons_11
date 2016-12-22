@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record model="ir.ui.view" id="cic_check_aging_tree_view">
+			<field name="name">cic.check.aging.view.tree</field>
+			<field name="model">cic.check.aging.view</field>
+			<field name="arch" type="xml">
+                <tree string="Check Aging" create="false" delete="false" edit="false">
+                    <field name="partner_id"/>
+                    <field name="project_id"/>
+                    <field name="non_cleared_cheque"/>
+                    <field name="current_month_cheque"/>
+                    <field name="next_month"/>
+                    <field name="one_plus_month"/>
+                    <field name="two_plus_month"/>
+                    <field name="three_plus_month"/>
+                    <field name="amount"/>
+                </tree>
+			</field>
+         </record>
+
+
+     <record model="ir.actions.act_window" id="action_cic_check_aging">
+            <field name="name" >PDC Aging</field>
+            <field name="res_model">cic.check.aging.view</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+     </record>
+
+
+
+<!--<menuitem action="action_cic_check_aging" id ="cic_aging_menu" parent="cic_pdc_receipt"/>-->
+     <menuitem action="action_cic_check_aging" id ="cic_aging_menu" parent="account.menu_account_config"/>
+
+
+    </data>
+</odoo>

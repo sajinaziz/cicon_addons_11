@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <report id="uae_check.cheque_receipt_voucher"
+            name="uae_check.cheque_receipt_voucher_template"
+            auto="False"
+            model="cic.check.receipt"
+            file="uae_check.cheque_receipt_voucher"
+            string="Cheque Receipt Voucher"
+            report_type="qweb-pdf"
+            header="False"
+            />
+      <!--If header is True then enable below line inside report id -->
+      <!--webkit_header="base_headers_webkit.cerp_reports_portrait_header"-->
+      <!--webkit_header="base_headers_webkit.without_header_a5_landscape"-->
+  </data>
+</odoo>

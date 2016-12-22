@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Supplier write check view -->
+
+
+ <!--  (3) Create form view to properly display cic_journal_voucher data fields, view id can be any name. field name="name"> can be anything.  <field name="model"> should be doted class name (id _name = "cic.journal.vouchers"). -->
+        <record model="ir.ui.view" id="cic_check_stamp_form_view">
+			<field name="name">cic.check.stamp.view.form</field>
+			<field name="model">cic.check.stamp</field>
+			<field name="arch" type="xml" >
+                <form string="Cheque Receipt" version="7.0">
+                    <group>
+                        <field name="stamp_name"/>
+                        <field name="image"/>
+                        <field name="enabled" invisible="1"/>
+                    </group>
+                </form>
+			</field>
+		</record>
+        <!-- <record model="ir.ui.view" id="view_voucher_tree_uae_check">
+            <field name="name">account.voucher.uae.check.tree</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_tree" />
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace"/>
+                <field name="number" position="before">
+                    <field name="partner_id"/>
+                </field>
+            </field>
+        </record>  -->
+
+
+        <!-- Add cicon IBAN and check format for each bacnk account for company/(Database ie, cad, epoxy,cdb).
+            This check format will be used to print the check.  If multiple printer style are installed,
+            it will display based on printer at the time of check preparation
+        -->
+       <!-- <record id="view_partner_bank_form_check" model="ir.ui.view">
+            <field name="name">res.partner.bank.form.check</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form" />
+            <field name="arch" type="xml">
+                <field name="bank_bic" position="after" >
+                    <field name="cicon_iban"/>
+                    <field name="check_formats" widget="many2many_tags"/>
+                </field>
+
+            </field>
+        </record>-->
+
+
+        <!-- Voucher printing format for each company -->
+        <record id="view_company_form_tech" model="ir.ui.view">
+        <field name="name">res.company.form.tech</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <!--<group name="account_grp" position="inside">-->
+               <!--<field name="voucher_format" options="{'no_open':True}"/>-->
+           <!--</group>-->
+            <xpath expr="//group/field[@name='currency_id']" position="after">
+                <field name="voucher_format" options="{'no_open':True}"/>
+            </xpath>
+        </field>
+        </record>
+        <!--<record model="ir.ui.view" id="view_voucher_tree_check">
+            <field name="name">account.voucher.tree.check</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_tree" />
+            <field name="arch" type="xml">
+                <field name="date" position="replace">
+                    <field name="date" string="Due Date"/>
+                </field>
+                <field name="partner_id" position="after">
+                       <field name="check_number" invisible="not context.get('write_check',False)"/>
+                       <field name="bank_name"  invisible="not context.get('write_check',False)"/>
+                       <field name="account_no"  invisible="not context.get('write_check',False)"/>
+                       <field name="pv_number" string="PV Number"  invisible="not context.get('write_check',False)"/>
+                </field>
+                <field name="number" position="replace"/>
+                <field name="state" position="before">
+                <field name="number"/>
+                </field>
+            </field>
+        </record>-->
+
+        <!-- Menu (A) Display cheque writing details on seperate non editable tree view -->
+        <!--<record model="ir.ui.view" id="cic_payment_info_tree_view">
+			<field name="name">cic.check.info.view.tree</field>
+			<field name="model">cic.check.info</field>
+			<field name="arch" type="xml" >
+                <tree string="Payment Info" create="false" edit="false" delete="false" >
+                    <field name="rel_partner_id"/>
+                    <field name="name"/>
+                    <field name="amount"/>
+                    <field name="sun_account"/>
+                    <field name="rel_partner_id"/> -->
+                <!--</tree>
+
+			</field>
+        </record>-->
+
+
+        <!-- Show CICON Check Payment Informations Separate Menu -->
+        <!--<record model="ir.actions.act_window" id="action_cic_payment_info">
+            <field name="name" >CICON Payment Info</field>
+            <field name="res_model">cic.check.info</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+       </record>-->
+
+         <!--
+             <tree position="attributes">
+                 <attribute name="colors">blue:is_cancelled==True;red:is_absconded==True</attribute>
+             </tree>  -->
+
+        <record model="ir.ui.view" id="cic_check_receipt_tree_view">
+			<field name="name">cic.check.receipt.view.tree</field>
+			<field name="model">cic.check.receipt</field>
+			<field name="arch" type="xml" >
+                <tree string="Received Cheque Details">
+                    <field name="partner_id"/>
+                    <field name="check_date"/>
+		            <field name="check_submission_date"/>
+                    <field name="amount" sum="Total"/>
+                    <field name="res_bank_id"/>
+                    <field name="check_number"/>
+                   <!-- <field name="sun_account"/> -->
+                    <field name="remarks"/>
+                    <field name="company_id"/>
+                    <field name="rv_number"/>
+                    <field name="rcvd_date"/>
+                   <!-- <field name="next_action_date"/> -->
+                    <field name="state"/>
+                    <field name="is_lc"/>
+                </tree>
+			</field>
+        </record>
+
+        <record model="ir.ui.view" id="cic_check_receipt_form_view">
+			<field name="name">cic.check.receipt.view.form</field>
+			<field name="model">cic.check.receipt</field>
+			<field name="arch" type="xml" >
+				<form string="Cheque Receipt">
+
+                    <header>
+                        <button name="action_reset" type="object" string="Reset" states="re_submitted,submitted,bounced,cleared,replaced,return" groups="account.group_account_invoice"/>
+                        <button name="action_submit" type="object" string="Submitted" states='received,hold' class="oe_highlight"/>
+                        <button name="action_bounce" type="object" string="Bounced" states='submitted,re_submitted' class="oe_highlight"/>
+                        <button name="action_clear" type="object" string="Cleared" states='submitted,re_submitted,bounced' class="oe_highlight"/>
+                        <button name="action_resubmit" type="object" string="Re-Submitted" states='bounced' class="oe_highlight"/>
+                        <button name="action_clear" type="object" string="Submitted &amp; Cleared" states='received' class="oe_highlight"/>
+                        <button name="action_hold" type="object" string="Hold" states='hold,received,bounced'/>
+                        <button name="action_replace" type="object" string="Replace" states='received,hold,bounced'/>
+                        <button name="action_return_back" type="object" string="Return" states='received,hold,bounced'/>
+                        <field name="state" widget="statusbar" statusbar_visible='received,submitted,bounced,cleared'/>
+                    </header>
+                    <sheet string="Cheque Receipt Details">
+                        <field name="id" invisible="1"/>
+                        <group>
+                            <field name="company_id" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                            <field name="partner_id"  attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}" />
+                            <field name="project_id"  attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                            <field name="sun_account_id" required="True"  />
+                            <field name="res_bank_id" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="check_date" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+				                <field name="check_submission_date" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                                <field name="amount" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}" on_change="onchange_amount(amount)"/>
+                                <field name="text_amount" invisible="1" />
+                            </group>
+                            <group>
+                                <field name="check_number" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                                <field name="rv_number" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                                <field name="cv_number" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                            </group>
+                          <!--  <field name="account_period_id" widget="selection"/>  -->
+                        </group>
+                        <group>
+                            <group>
+                            <field name="rcvd_date" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                            <field name="cic_division_id" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                            <field name="credited_date" attrs="{'readonly':[('state','in',['cleared','replaced'])]}"/>
+                            <field name="created_user_id" invisible="1" required="True"/>
+                            <div class="oetitle">
+                                <label for="next_action_date" attrs="{'invisible':[('id','=',False)]}"  />
+                                <field name="next_action_date" attrs="{'invisible':[('id','=',False)]}"/>
+                            </div>
+                            </group>
+                            <group>
+                            <field name="remarks" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}"/>
+                            <field name="is_lc"/>
+                            <button name="print_voucher" type="object" string="Print Voucher" />
+                            </group>
+
+                            <!--<field name="cleared" on_change="onchange_cleared(cleared,credited_date,check_submission_date)"   />
+                            <field name="credited_date"  attrs="{'invisible':[('cleared','=',False)]}"/> -->
+                        </group>
+                        <group>
+                            <field name="is_replacement" invisible="1"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Bounced History" attrs="{'invisible':[('bounced_history_ids','=',[])]}">
+                                <field name="bounced_history_ids" attrs="{'readonly':[('state','in',['cleared'])]}">
+                                    <tree string="Bounced History" editable="bottom" create="false">
+                                        <field name="bounced_date"/>
+                                        <field name="re_submit_date"/>
+                                        <field name="reason"/>
+                                        <field name="remarks"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Replaced Checks" attrs="{'invisible':[('is_replacement','=',False)]}">
+                                <field name="replaced_check_ids" attrs="{'readonly':[('state','in',['re_submitted','bounced','cleared','replaced'])]}" >
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                     <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+				</form>
+			</field>
+		</record>
+
+         <record model="ir.ui.view" id="cic_bounced_history_form">
+			<field name="name">Bounce History</field>
+			<field name="model">cic.check.bounce.history</field>
+			<field name="arch" type="xml">
+                <form version="7.0" string="Bounced Check Details">
+                    <group>
+                        <field name="bounced_date" />
+                        <field name="re_submit_date" attrs="{'required':[('state','in',['bounced','hold'])],'invisible':[('state','=','replaced')]}"/>
+                        <field name="replaced_with_cash" attrs="{'invisible':[('state','not in',('replaced','return'))]}"/>
+                        <field name="reason"/>
+                        <field name="remarks"/>
+                        <field name="check_receipt_id" invisible="1" />
+                        <field name="state" invisible="1"/>
+                    </group>
+                <footer>
+                    <button name="save_history" type="object" string="Save" class="oe_highlight" />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+                </form>
+			</field>
+        </record>
+
+
+        <record id="cic_check_receipt_search" model="ir.ui.view">
+            <field name="name">cic.check.receipt.search</field>
+            <field name="model">cic.check.receipt</field>
+            <field name="arch" type="xml">
+                <search string="Search Check Receipt">
+                    <filter icon="terp-mail-message-new" string="To Do" name="message_unread" domain="[('message_unread','=',True)]"/>
+                    <filter name="to_day" string="To Day" domain="[('next_action_date','=',time.strftime('%%Y-%%m-%%d'))]" help="Next Action Dated Today" icon="terp-project"/>
+                    <filter name="cheque_uncleared" string="Un Cleared Cheques" domain="[('check_date','&lt;=',time.strftime('%%Y-%%m-%%d')),('state','not in',['cleared','replaced'])]" help="Uncleared Checks" icon="terp-project"/>
+                    <filter name="on_hand" string="On Hand" domain="[('state','not in',['cleared','replaced','return'])]" help="All Check Not Cleared" icon="terp-project"/>
+                    <field name="partner_id" string="Customer"  />
+                    <field name="company_id" string="Company" widget="selection"/>
+                    <field name="res_bank_id" string="Bank" widget="selection"/>
+                    <!--<field name="partner_sun_system_id" string="Sun Account"/>-->
+
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_cic_check_receipt">
+            <field name="name" >PDC Receipts</field>
+            <field name="res_model">cic.check.receipt</field>
+            <field name="view_mode">form,tree</field>
+            <field name="search_view_id" ref="cic_check_receipt_search"/>
+            <field name="context">{'search_default_on_hand':1}</field>
+       </record>
+
+
+
+
+        <!--(2) Action for menu Cic Journal Voucher (action_cic_journal_voucher)(id should be <menuitem action),  After this create a view for the model cic.journal.voucher  -->
+        <record model="ir.actions.act_window" id="action_cic_journal_voucher">
+            <field name="name" >CICON Journal Voucher</field>
+            <field name="res_model">cic.journal.vouchers</field>
+            <field name="view_mode">tree,form</field>
+       </record>
+
+        <!--  (3) Create form view to properly display cic_journal_voucher data fields, view id can be any name. field name="name"> can be anything.  <field name="model"> should be doted class name (id _name = "cic.journal.vouchers"). -->
+        <!--<record model="ir.ui.view" id="cic_journal_voucher_form_view">
+			<field name="name">cic.journal.voucher.view.form</field>
+			<field name="model">cic.journal.vouchers</field>
+			<field name="arch" type="xml" >
+				<form string="Cicon Journal Vouchers" version="7.0">
+                    <sheet string="Cicon Journal Vouchers">
+                        <group>
+                            <group>
+                                <field name="jvp_no" />
+                                <field name="account_period_id" widget="selection"/>
+                            </group>
+                            <group>
+                                <field name="company_id" widget="selection"/>
+                                <field name="created_user_id" widget="selection"/>
+                            </group>
+                        </group>
+
+                        <field name="voucher_details_ids">
+                            <tree string="Voucher Details" colors="blue:amount_cr>0">
+                                <field name="doc_date"/>
+                                <field name="sun_account"/>
+                                <field name="company_id"/>
+                                <field name="partner_id"/>
+                                <field name="description"/>
+                                <field name="amount_dr"/>
+                                <field name="amount_cr"/>
+                                <field name="reconcile_ref"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="doc_date"/>
+                                        <field name="sun_account"/>
+                                    </group>
+                                    <group>
+                                        <field name="amount_dr"/>
+                                        <field name="amount_dr"/>
+                                    </group>
+                                </group>
+                                <newline/>
+                                <group>
+                                        <field name="company_id" widget="selection"/>
+                                        <field name="partner_id"/>
+                                        <field name="description"/>
+                                        <field name="reconcile_ref"/>
+                                </group>
+                            </form>
+
+
+                        </field>
+
+                    </sheet>
+
+
+				</form>
+			</field>
+		</record>-->
+        <!--  Tree view for cicon journal voucher.  id can be anything. If need to address this tree some where else, it should use this id to represent this tree -->
+        <!--<record model="ir.ui.view" id="cic_journal_voucher_tree_view">
+			<field name="name">cic.journal.voucher.view.tree</field>
+			<field name="model">cic.journal.vouchers</field>
+			<field name="arch" type="xml" >
+                <tree string="CICON Journal Voucher Details">
+                    <field name="jvp_no"/>
+                    <field name="account_period_id"/>
+                    <field name="company_id"/>
+                </tree>
+			</field>
+        </record>-->
+
+         <menuitem  sequence="1" name="CICON"
+            id="menu_sub_cic" parent="account.menu_finance_configuration"/>
+
+      <!--  <menuitem action="action_cic_payment_info"
+            id="menu_action_cic_payment_info"  parent="menu_sub_cic"/>  -->
+
+        <menuitem action="action_cic_check_receipt"
+            id="menu_action_cic_check_receipt"  parent="account.menu_finance_configuration" sequence="2" name="Check Receipt"/>
+
+        <!-- (1) Create menu for cic_journal_voucher class,  Here "action_cic_journal_voucher" is the action triggers when click on the menu -->
+         <menuitem action="action_cic_journal_voucher"
+            id="menu_action_cic_journal_voucher"  parent="menu_sub_cic"/>
+
+          <!--<menuitem action="account_check_writing.action_write_check"
+            id="account_check_writing.menu_action_write_check"  parent="menu_sub_cic"/>-->
+
+
+
+
+       <menuitem name="CICON" id="cicon_root_menu"/>
+        <menuitem name="Accounting" id="cic_accounting_menu" parent="cicon_root_menu"/>
+        <menuitem name="PDC Receipt" id="cic_pdc_receipt" parent="cic_accounting_menu"/>
+        <!--<menuitem action="action_cic_check_receipt" id ="cic_check_receipt_menu" parent="cic_pdc_receipt"/>-->
+
+        <!--<menuitem action="account_check_writing.action_write_check"
+            id="account_check_writing.cic_menu_action_write_check"  parent="cic_accounting_menu"/>-->
+
+        <!--<record id="account_check_writing.action_write_check_form" model="ir.actions.act_window.view">
+            <field eval="0" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_check_writing.view_vendor_payment_check_form"/>
+            <field name="act_window_id" ref="account_check_writing.action_write_check"/>
+        </record>-->
+
+
+
+        <!-- Search By Selected Partner Only   -->
+         <!--<record id="cic_view_voucher_filter" model="ir.ui.view">
+            <field name="name">cic.account.voucher.select</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field name="partner_id"/>
+                </field>
+            </field>
+        </record>-->
+
+
+
+    </data>
+</odoo>

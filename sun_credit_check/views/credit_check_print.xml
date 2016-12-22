@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?><odoo>
+    <data>
+        <template id="report_credit_check_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!--<t t-call="cicon_tech.tech_cicon_external_layout">-->
+
+                    <div class="page" style="font-size:14px;">
+                    <div class="oe_structure"/>
+                    <table class="table table-bordered">
+                            <caption class="text-uppercase" style="text-align:center;"> <strong> <h3>CREDIT CHECK</h3></strong>  </caption>
+                            <tr>
+                                <td class="big_heading heading">Customer Name</td>
+                                <td>:</td>
+                                <td colspan="5"><span t-field="o.partner_id.name" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="heading">Customer Status</td>
+                                <td>:</td>
+                                <td colspan="5"><span t-if="'Unknown' o.status==False else o.status" /></td>
+                            </tr>
+                            <tr>
+                                <td class="heading">Cases of Holding of Cheque</td>
+                                <td>:</td>
+                                <td><span t-field="o.cheque_hold" /></td>
+                                <td>&nbsp; </td>
+                                <td class="heading">Payment Term</td>
+                                <td>:</td>
+                                <td><span t-field="o.payment_terms.name" /></td>
+                            </tr>
+                            <tr>
+                                <td class="heading">Cases of Check Bounce</td>
+                                <td>:</td>
+                                <td><span t-field="o.cheque_bounce" /></td>
+                                <td>&nbsp;</td>
+                                <td class="heading">Sales Person</td>
+                                <td>:</td>
+                                <td><span t-field="o.partner_id.user_id.name or ''" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7">&nbsp;</td>
+                            </tr>
+                            <t t-if="o.sun_credit_details_ids">
+                                <tr>
+                                    <td colspan="7">
+                                        <table class="table_border">
+                                            <tr>
+                                                <td class="cell_border table_heading heading">Account Name</td>
+                                                <td class="cell_border table_heading heading amount_column">Account Balance</td>
+                                                <td class="cell_border table_heading heading amount_column">Account Due</td>
+                                            </tr>
+                                            <t t-foreach="o.sun_credit_details_ids" t-as="line">
+                                                <tr>
+                                                    <td class="cell_border"><span t-field="line.project_id.name or ''" /></td>
+                                                    <td class="cell_border amount amount_column"><span t-field="line.proj_account_balance" /></td>
+                                                    <td class="cell_border amount amount_column"><span t-field="line.proj_account_due" /></td>
+                                                </tr>
+                                            </t>
+
+                                            <tr>
+                                                <td class="cell_border heading amount">Total</td>
+                                                <t t-set="proj_account_balance" t-value="0" />
+                                                <t t-set="proj_account_due" t-value="0" />
+
+                                                <t t-foreach="o.sun_credit_details_ids" t-as="line">
+                                                     <t t-set="proj_account_balance" t-value="proj_account_balance += line.proj_account_balance" />
+                                                     <t t-set="proj_account_balance" t-value="proj_account_due += line.proj_account_due" />
+                                                </t>
+                                                <td class="cell_border amount heading"><span t-field="formatLang(proj_account_balance, digits=2)" /></td>
+                                                <td class="cell_border amount heading"><span t-field="formatLang(proj_account_due, digits=2)" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td class="heading" colspan="7">Remarks :</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" class="remarks"><t t-if="'' o.remarks==False else o.remarks"/></td>
+                            </tr>
+                             <tr>
+                                <td class="heading" colspan="7">Verification Remarks :</td>
+                            </tr>
+                             <tr>
+                                <td colspan="7" class="remarks"><t t-if="'' o.verification_remarks==False else o.verification_remarks"/></td>
+                            </tr>
+                             <tr>
+                                <td class="heading" colspan="7">Management Note :</td>
+                            </tr>
+                             <tr>
+                                <td colspan="7" ><t t-if="' ' if o.management_note == False else o.management_note" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7">&nbsp;</td>
+                            </tr>
+                        </table>
+                        <table class="table_border">
+                            <tr>
+                                <td colspan="2">
+                                    <b>Date</b> : <span t-field="parser.parse(o.date_create).strftime('%d %B %Y')" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="footer_table"><b>Credit check conducted by</b>:<br/><br/>
+                                    <span t-field="o.user_id.name" /><br/>
+                                </td>
+                                <td class="footer_table"><b>Approved by</b>:<br/><br/><br/>
+                                   SAMEER BALOCH
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="page-break-after: always"/>
+
+                        </div>
+                 </t>
+            </t>
+        </template>
+    </data>
+</odoo>

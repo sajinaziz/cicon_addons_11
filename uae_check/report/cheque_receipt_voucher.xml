@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="cheque_receipt_voucher_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!--<t t-call="cicon_tech.tech_cicon_external_layout">-->
+
+                        <div class="page" style="font-size:14px;">
+                            <div class="oe_structure"/>
+                                <div class="row" style="min-height:40px;margin-top:15px;border:1px solid;cell-padding:2px;">
+                                    <div class="col-xs-4 text-right" style="border-right:1px solid;min-height:40px;"><span t-field="o.amount" /></div>
+                                    <div class="col-xs-8 text-center"><span t-field="o.check_date" /></div>
+                                </div>
+                                <div class="row" style="min-height:40px;margin-top:15px;border:1px solid">
+                                    <div class="col-xs-2" style="border-right:1px solid;min-height:40px;"></div>
+                                    <div class="col-xs-10"><span t-field="o.partner_id" /></div>
+                                </div>
+                                <div class="row" style="min-height:40px;margin-top:15px;border:1px solid">
+                                    <div class="col-xs-12"><span t-esc="o.text_amount" /></div>
+                                </div>
+                                <div class="row" style="min-height:40px;margin-top:15px;border:1px solid">
+                                    <div class="col-xs-12">Being: <span t-esc="o.text_amount" /></div>
+                                </div>
+                                <div class="row" style="margin-top:15px;border:1px solid;min-height:40px;">
+                                    <table class="table table-bordered" style="min-height:55px;">
+                                        <tr>
+                                            <td></td>
+                                            <td><span t-field="o.res_bank_id" /> </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><span t-field="o.check_date" /></td>
+                                            <td><span t-field="o.check_number" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                        </div>
+                 </t>
+
+            </t>
+
+        </template>
+    </data>
+</odoo>

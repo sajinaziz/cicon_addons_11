@@ -45,6 +45,7 @@ class Task(models.Model):
     #     return {'value': _val,'domain':_domain}
 
 
+    @api.onchange('partner_id')
     def change_partner(self, partner_id, context=None):
         res = {}
         _val = {'project_id': None, 'customer_sales_person_id': None, 'customer_payment_term': None}
@@ -74,6 +75,7 @@ class Task(models.Model):
     #     return {'value': _val, 'domain': _domain}
 
 
+    @api.onchange('project_id')
     def change_project(self, project_id, context=None):
         _val = {'sales_person_id': None}
         _domain = {}
@@ -106,7 +108,7 @@ class ProjectTaskWork(models.Model):
     expected_amount = fields.Float("Expected Amount", digits=(10, 2))  # To calculate expected amount from customer as per the promise
     expected_date = fields.Date("Expected Date")  # To calculate expected payment date from customer as per the promise which will help to calculate total expected receivables for a period.
 
-
+    @api.onchange('rem_date')
     def onchange_reminder_date(self, rem_date, context=None):
         if rem_date:
             return {'value': {'expected_date': rem_date}}
@@ -132,6 +134,7 @@ class ProjectTaskWork(models.Model):
                     self.env('mail.notification').create(_notify_msg)
         return True
 
+    @api.multi
     def set_done(self):
         res = self.write({'state': 'done'})
         _task_obj = self.env['project.task']
@@ -146,6 +149,7 @@ class ProjectTaskWork(models.Model):
         print res
         return res
 
+    @api.multi
     def send_reminder(self, ids=None, context=None):
         ir_model_data = self.pool.get('ir.model.data')
         template_obj = self.pool.get('email.template')
@@ -166,7 +170,7 @@ class ProjectTaskWork(models.Model):
                     # print "Mail Send " , mail_id
         return True
 
-
+    @api.multi
     def get_reminders(self, user_id, context=None):
         reminder_table = ''
         _rem_ids = self.search([('state', '=', 'pending'), ('reminder_date', '<=', datetime.date.today()),

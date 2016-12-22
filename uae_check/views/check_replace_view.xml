@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <act_window name="Replace Multiple Check "
+            res_model="cic.check.receipt"
+            src_model="cic.check.receipt"
+            view_mode="form"
+            view_type="form"
+            multi="True"
+            key2="client_action_multi"
+            context="{'active_ids':active_ids,'check_replace':True}"
+            id="action_check_replace_wizard_view_2" />
+
+    </data>
+</odoo>
+
+
+
+
+
+

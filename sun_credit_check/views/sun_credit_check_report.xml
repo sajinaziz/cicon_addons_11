@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--<report id="sun_credit_check.report_credit_check"-->
+                <!--name="credit.check.webkit"-->
+                <!--auto="False"-->
+                <!--header="False"-->
+                <!--model="sun.credit.check"-->
+                <!--file="sun_credit_check/report/credit_check.mako"-->
+                <!--string="Credit Check"-->
+                <!--report_type="webkit"/>-->
+        <report
+            id="sun_credit_check.report_credit_check"
+            string="Credit Check"
+            model="sun.credit.check"
+            file="sun_credit_check.credit_check_print"
+            name="sun_credit_check.report_credit_check_template"
+            report_type="qweb-pdf"
+        />
+         <!--<report id="uae_check.cheque_receipt_voucher"-->
+            <!--name="uae_check.cheque_receipt_voucher_template"-->
+            <!--auto="False"-->
+            <!--model="cic.check.receipt"-->
+            <!--file="uae_check.cheque_receipt_voucher"-->
+            <!--string="Cheque Receipt Voucher"-->
+            <!--report_type="qweb-pdf"-->
+            <!--header="False"-->
+            <!--/>-->
+    </data>
+</odoo>
