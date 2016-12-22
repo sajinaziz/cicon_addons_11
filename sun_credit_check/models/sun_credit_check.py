@@ -849,6 +849,7 @@ class SunCreditCheck(models.Model):
                     payment_term_days = _project_obj.project_payment_term_id.line_ids[0].days
                     ibm_period = self._calc_period(payment_term_days)
             _a = ' '
+
             if self.include_allocated:
                 _a = 'A'
             query = "EXEC dbo.GetSunAccountBalanceDetails @SunAccountNo = '" + sun_acc['account_code'] + \
