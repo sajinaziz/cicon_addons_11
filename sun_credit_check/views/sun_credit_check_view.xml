@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record model="ir.ui.view" id="sun_credit_check_tree_view">
+
+        <record id="sun_credit_check_tree_view" model="ir.ui.view">
+            <field name="name">sun.credit.check.tree</field>
             <field name="model">sun.credit.check</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Credit check">
-                    <field name="partner_id"/>
+                   <field name="partner_id"/>
                     <field name="period"/>
                     <field name="state"/>
                     <field name="check_inhand_amount"/>
-
                 </tree>
             </field>
-        </record>
+	    </record>
+
+        <!--<record model="ir.ui.view" id="sun_credit_check_tree_view">-->
+            <!--<field name="name">sun.credit.check.tree</field>-->
+            <!--<field name="model">sun.credit.check</field>-->
+            <!--<field name="type">tree</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree string="Credit check">-->
+                    <!--<field name="partner_id"/>-->
+                    <!--<field name="period"/>-->
+                    <!--<field name="state"/>-->
+                    <!--<field name="check_inhand_amount"/>-->
+
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
 
         <record model="ir.ui.view" id="sun_credit_check_form_view">
+            <field name="name">sun.credit.check.form</field>
             <field name="model">sun.credit.check</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
@@ -295,13 +312,20 @@
                                                             <!--&lt;!&ndash;type="object" string="Cheque Details" icon="STOCK_GO_FORWARD"/>&ndash;&gt;-->
         <!--</tree>-->
 
-        <record model="ir.actions.act_window" id="action_sun_credit_check_tree_view">
-            <field name="name">Credit Check</field>
-            <field name="res_model">sun.credit.check</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+        <!--<record model="ir.actions.act_window" id="action_sun_credit_check_tree_view">-->
+            <!--<field name="name">Credit Check</field>-->
+            <!--<field name="res_model">sun.credit.check</field>-->
+            <!--&lt;!&ndash;<field name="view_mode">tree,form</field>&ndash;&gt;-->
+            <!--<field name="view_type">form</field>-->
+        <!--</record>-->
 
-
+         <record model="ir.actions.act_window" id="action_sun_credit_check_tree_view">
+              <field name="name">Credit Check</field>
+              <field name="res_model">sun.credit.check</field>
+              <!--<field name="view_type">tree</field>-->
+              <!--<field name="view_mode">tree,form</field>-->
+              <!--<field name="view_id" ref="sun_credit_check_tree_view"/>-->
+         </record>
 
         <!--&lt;!&ndash;#For customer pending invoice details statement&ndash;&gt;-->
         <!--<record model="ir.actions.act_window" id="action_sun_credit_details_tree_view">-->
@@ -427,14 +451,24 @@
 <!--<menuitem id="sun_credit_details_menu" name="Sun System Receivables" parent="uae_check.cic_accounting_menu"-->
                   <!--action="action_sun_credit_details_tree_view"/>-->
 
-
-        <menuitem id="sun_credit_check_menu" name="Sun System Credit Check" parent="uae_check.cic_accounting_menu"
+        <menuitem id="sun_credit_check_menu" name="Sun System Credit Check" parent="account.menu_account_config"
                   action="action_sun_credit_check_tree_view"/>
 
+        <!--<menuitem id="sun_credit_check_menu" name="Sun System Credit Check" parent="uae_check.cic_accounting_menu"-->
+                  <!--action="action_sun_credit_check_tree_view"/>-->
 
 
-        <menuitem action="action_sun_credit_check_tree_view"
-            id="sun_credit_check_menu_cic"  parent="uae_check.menu_sub_cic"/>
+
+        <!--<menuitem action="action_sun_credit_check_tree_view"-->
+            <!--id="sun_credit_check_menu_cic"  parent="uae_check.menu_sub_cic"/>-->
+
+
+        <!--<menuitem action="action_sun_credit_check_tree_view"-->
+            <!--id="sun_credit_check_menu_cic"  parent="uae_check.menu_sub_cic"/>-->
+
+        <!--<menuitem action="action_sun_credit_check_tree_view"-->
+            <!--id="sun_credit_check_menu_cic"  parent="sun_credit_check_menu"/>-->
+
 
     </data>
 </odoo>
