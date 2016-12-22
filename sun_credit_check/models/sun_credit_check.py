@@ -829,7 +829,6 @@ class SunCreditCheck(models.Model):
     #     _followup_lines = sorted(_followup_lines, key=itemgetter('trans_date_int'))
     #     return _followup_lines
 
-    @api.multi
     def _get_sun_statement_data(self):
 
         print 'test fn'
