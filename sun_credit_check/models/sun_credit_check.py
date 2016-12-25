@@ -680,7 +680,8 @@ class SunCreditCheck(models.Model):
         # print values
         # print 'xxxx'
         # print self.sun_credit_details_ids.sun_db
-        _res.update({'debtor_statement_lines': self._get_sun_statement_data()})
+        if self.partner_id:
+            _res.update({'debtor_statement_lines': self._get_sun_statement_data(self.partner_id.id)})
         return {'value': _res}
 
     # def _get_sun_statement_data(self,cr,uid,sun_accounts ,partner_id,filter_overdue,filter_due,include_allocated, context=None):
