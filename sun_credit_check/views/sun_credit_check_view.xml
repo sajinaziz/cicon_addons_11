@@ -322,10 +322,10 @@
          <record model="ir.actions.act_window" id="action_sun_credit_check_tree_view">
               <field name="name">Credit Check</field>
               <field name="res_model">sun.credit.check</field>
-              <!--<field name="view_type">tree</field>-->
-              <!--<field name="view_mode">tree,form</field>-->
-              <!--<field name="view_id" ref="sun_credit_check_tree_view"/>-->
+              <field name="view_type">tree</field>
          </record>
+
+
 
         <!--&lt;!&ndash;#For customer pending invoice details statement&ndash;&gt;-->
         <!--<record model="ir.actions.act_window" id="action_sun_credit_details_tree_view">-->
@@ -451,23 +451,15 @@
 <!--<menuitem id="sun_credit_details_menu" name="Sun System Receivables" parent="uae_check.cic_accounting_menu"-->
                   <!--action="action_sun_credit_details_tree_view"/>-->
 
-        <menuitem id="sun_credit_check_menu" name="Sun System Credit Check" parent="account.menu_account_config"
+        <!--<menuitem id="sun_credit_check_menu" name="Sun System Credit Check" parent="account.menu_account_config"-->
+                  <!--action="action_sun_credit_check_tree_view"/>-->
+ <!---->
+
+        <menuitem id="sun_credit_check_menu" name="Sun System Credit Check" parent="uae_check.cic_accounting_menu"
                   action="action_sun_credit_check_tree_view"/>
 
-        <!--<menuitem id="sun_credit_check_menu" name="Sun System Credit Check" parent="uae_check.cic_accounting_menu"-->
-                  <!--action="action_sun_credit_check_tree_view"/>-->
-
-
-
-        <!--<menuitem action="action_sun_credit_check_tree_view"-->
-            <!--id="sun_credit_check_menu_cic"  parent="uae_check.menu_sub_cic"/>-->
-
-
-        <!--<menuitem action="action_sun_credit_check_tree_view"-->
-            <!--id="sun_credit_check_menu_cic"  parent="uae_check.menu_sub_cic"/>-->
-
-        <!--<menuitem action="action_sun_credit_check_tree_view"-->
-            <!--id="sun_credit_check_menu_cic"  parent="sun_credit_check_menu"/>-->
+        <menuitem action="action_sun_credit_check_tree_view" name="Sun System Credit Check"
+            id="sun_credit_check_menu_cic"  parent="uae_check.menu_sub_cic"/>
 
 
     </data>
