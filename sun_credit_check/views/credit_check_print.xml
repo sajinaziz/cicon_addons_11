@@ -69,8 +69,8 @@
                                                 <t t-set="proj_account_due" t-value="0" />
 
                                                 <t t-foreach="o.sun_credit_details_ids" t-as="line">
-                                                     <t t-set="proj_account_balance" t-value="proj_account_balance = proj_account_balance + line.proj_account_balance" />
-                                                     <t t-set="proj_account_due" t-value="proj_account_due = proj_account_due + line.proj_account_due" />
+                                                     <t t-set="proj_account_balance" t-esc="proj_account_balance = proj_account_balance + line.proj_account_balance" />
+                                                     <t t-set="proj_account_due" t-esc="proj_account_due = proj_account_due + line.proj_account_due" />
                                                 </t>
                                                 <td ><span t-field="proj_account_balance" /></td>
                                                 <td><span t-field="proj_account_due" /></td>
