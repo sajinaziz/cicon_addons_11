@@ -21,7 +21,6 @@ class SunCreditCheck(models.Model):
     #        amount = sum(x['amount'] for x in _checks_amount)
     #     return amount
 
-    @api.multi
     def get_check_amount(self, partner_id, context=None):
         amount = 0
         _check_ids = self.env['cic.check.receipt'].search([('partner_id','=',partner_id), ('state', 'not in' ,['bounced','cleared','replaced'])])
@@ -223,11 +222,10 @@ class SunCreditCheck(models.Model):
 
     @api.model
     def create(self, vals):
-        partner_id = self.partner_id
-        print 'Partner on Create :', partner_id
+        partner_id = vals.get('partner_id')
         if partner_id:
             _val = {}
-            _val = self.get_partner_info(False)
+            _val = self.get_partner_info(partner_id, False)
             vals.update({'status': _val['status']})
             vals.update({'period': _val['period']})
             vals.update({'cheque_last_bounced': _val['cheque_last_bounced']})
@@ -255,7 +253,7 @@ class SunCreditCheck(models.Model):
     def on_partner_change(self):
         _val = {}
         if self.partner_id:
-            _val = self.get_partner_info(False)
+            _val = self.get_partner_info(self.partner_id.id,  False)
         return {'value': _val}
 
     # def _calc_invoice_extra_days(self,cr,uid,in_date,pt_days,context=None):
@@ -516,7 +514,7 @@ class SunCreditCheck(models.Model):
     #     return _val
 
     #####Load sunaccount code from openerp, then load Account credit details from sunsystem.
-    def get_partner_info(self,status):
+    def get_partner_info(self, partner_id, status):
         _val = {}
         _val['has_attachment'] = None
         _val['sales_person'] = None
@@ -537,14 +535,14 @@ class SunCreditCheck(models.Model):
 
         # print partner_id
         # print 'hhhh'
-        partner = self.partner_id
+        partner = self.env['res.partner'].search([('id','=', partner_id)])
         # print partner
         # print 'hhhh'
        # _val['has_attachment'] = len(partner.attachment_ids)
         _val['sales_person'] = partner.user_id.name
         #payment_term = partner.project_payment_term_id
         #_val['payment_terms'] = payment_term.id
-        _val['check_inhand_amount'] = self.get_check_amount(self.partner_id.id)
+        _val['check_inhand_amount'] = self.get_check_amount(partner.id)
         #_val['check_inhand_amount1'] = self.get_check_amount(cr,uid,partner_id)
         _val['credit_limit'] = partner.credit_limit
 
@@ -822,12 +820,10 @@ class SunCreditCheck(models.Model):
     #     _followup_lines = sorted(_followup_lines, key=itemgetter('trans_date_int'))
     #     return _followup_lines
 
-    def _get_sun_statement_data(self):
-
-        print 'test fn'
+    def _get_sun_statement_data(self, partner_id):
         #print sun_accounts
         _followup_lines = []
-        partner = self.env['res.partner'].search([('id','=',self.partner_id.id)])
+        partner = self.env['res.partner'].search([('id','=',partner_id)])
         #payment_term = partner['property_payment_term']
         ibm_period = ''
         for sun_acc in self.sun_credit_details_ids.ids:
