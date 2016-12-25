@@ -42,12 +42,9 @@ class SunCreditCheck(models.Model):
     #         res[i.id]['cheque_details_ids'] = _check_ids
     #     return res
 
-
     @api.multi
     def _get_check_aging(self, ids, field, arg):
-
         res = {}
-        #for i in self.browse(ids):
         for i in self:
             res[i.id] = {'check_aging_ids': [], 'cheque_details_ids': []}
             _aging_ids = self.env['cic.check.aging.view'].search([('partner_id', '=', i.partner_id.id)])
@@ -231,10 +228,9 @@ class SunCreditCheck(models.Model):
     @api.model
     def create(self, vals):
         partner_id = self.partner_id
-        _val = {}
         if partner_id:
+            _val = {}
             _val = self.get_partner_info(False)
-
             vals.update({'status': _val['status']})
             vals.update({'period': _val['period']})
             vals.update({'cheque_last_bounced': _val['cheque_last_bounced']})
