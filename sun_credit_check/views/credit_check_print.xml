@@ -41,7 +41,7 @@
                                 <td> </td>
                                 <td class="heading">Sales Person</td>
                                 <td>:</td>
-                                <td><span t-field="o.partner_id.user_id.name or ''" /></td>
+                                <td><span t-field="o.partner_id.user_id.name" /></td>
                             </tr>
                             <tr>
                                 <td colspan="7"> </td>
@@ -69,11 +69,11 @@
                                                 <t t-set="proj_account_due" t-value="0" />
 
                                                 <t t-foreach="o.sun_credit_details_ids" t-as="line">
-                                                     <t t-set="proj_account_balance" t-value="proj_account_balance += line.proj_account_balance" />
-                                                     <t t-set="proj_account_balance" t-value="proj_account_due += line.proj_account_due" />
+                                                     <t t-set="proj_account_balance" t-value="proj_account_balance = proj_account_balance + line.proj_account_balance" />
+                                                     <t t-set="proj_account_due" t-value="proj_account_due = proj_account_due + line.proj_account_due" />
                                                 </t>
-                                                <td class="cell_border amount heading"><span t-field="formatLang(proj_account_balance, digits=2)" /></td>
-                                                <td class="cell_border amount heading"><span t-field="formatLang(proj_account_due, digits=2)" /></td>
+                                                <td ><span t-field="proj_account_balance" /></td>
+                                                <td><span t-field="proj_account_due" /></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -83,19 +83,19 @@
                                 <td class="heading" colspan="7">Remarks :</td>
                             </tr>
                             <tr>
-                                <td colspan="7" class="remarks"><t t-if="'' o.remarks==False else o.remarks"/></td>
+                                <td colspan="7" class="remarks"><span  t-esc="o.remarks"/></td>
                             </tr>
                              <tr>
                                 <td class="heading" colspan="7">Verification Remarks :</td>
                             </tr>
                              <tr>
-                                <td colspan="7" class="remarks"><t t-if="'' o.verification_remarks==False else o.verification_remarks"/></td>
+                                <td colspan="7" class="remarks"> <span t-esc="o.verification_remarks"/></td>
                             </tr>
                              <tr>
                                 <td class="heading" colspan="7">Management Note :</td>
                             </tr>
                              <tr>
-                                <td colspan="7" ><t t-if="' ' if o.management_note == False else o.management_note" /></td>
+                                <td colspan="7" ><span t-esc ="o.management_note" /></td>
                             </tr>
                             <tr>
                                 <td colspan="7"></td>
@@ -104,7 +104,7 @@
                         <table class="table_border">
                             <tr>
                                 <td colspan="2">
-                                    <b>Date</b> : <span t-field="parser.parse(o.date_create).strftime('%d %B %Y')" />
+                                    <b>Date</b> : <span t-field="o.date_create" />
                                 </td>
                             </tr>
                             <tr>
