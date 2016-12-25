@@ -10,7 +10,7 @@
     'depends': ['base','uae_check','project'],
     "data": ["security/ir.model.access.csv",
              "views/sun_credit_check_view.xml",
-             #"views/sun_credit_check_report.xml",
+             "views/sun_credit_check_report.xml",
              #"views/credit_check_print.xml"
              ],
     'test': [],
