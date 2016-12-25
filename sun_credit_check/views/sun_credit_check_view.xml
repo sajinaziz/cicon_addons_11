@@ -319,10 +319,17 @@
             <!--<field name="view_type">form</field>-->
         <!--</record>-->
 
-         <record model="ir.actions.act_window" id="action_sun_credit_check_tree_view">
+         <!--<record model="ir.actions.act_window" id="action_sun_credit_check_tree_view">-->
+              <!--<field name="name">Credit Check</field>-->
+              <!--<field name="res_model">sun.credit.check</field>-->
+             <!--<field name="view_mode">tree,form</field>-->
+              <!--<field name="view_type"></field>-->
+         <!--</record>-->
+
+
+         <record model="ir.actions.act_window" id="action_sun_credit_check_view">
               <field name="name">Credit Check</field>
               <field name="res_model">sun.credit.check</field>
-              <field name="view_type">tree</field>
          </record>
 
 
@@ -456,10 +463,10 @@
  <!---->
 
         <menuitem id="sun_credit_check_menu" name="Sun System Credit Check" parent="uae_check.cic_accounting_menu"
-                  action="action_sun_credit_check_tree_view"/>
+                  action="action_sun_credit_check_view"/>
 
-        <menuitem action="action_sun_credit_check_tree_view" name="Sun System Credit Check"
-            id="sun_credit_check_menu_cic"  parent="uae_check.menu_sub_cic"/>
+        <menuitem action="action_sun_credit_check_view" name="Sun System Credit Check"
+            id="sun_credit_check_menu_cic"  parent="uae_check.menu_sub_cic" />
 
 
     </data>

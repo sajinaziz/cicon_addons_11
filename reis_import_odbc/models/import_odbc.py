@@ -88,7 +88,6 @@ class ImportOdbcDbsource(models.Model):
 
         #Build the full connection string
         connStr = self.conn_string
-        print connStr
         if self.password:
             if '%s' not in self.conn_string:
                 connStr += ';PWD=%s'
@@ -102,7 +101,6 @@ class ImportOdbcDbsource(models.Model):
             conn = cx_Oracle.connect(connStr)
         else:
             conn = pyodbc.connect(connStr)
-        print conn
         #If no exception raise, return ok
         return conn
 
@@ -178,7 +176,6 @@ class ImportOdbcDbsource(models.Model):
 
 
     def fetch_data(self, dbsource=None, query=None):
-        print 'In FetchData'
         datarow = []
         data = self.search([('name', '=', dbsource)])
         try:
@@ -188,7 +185,6 @@ class ImportOdbcDbsource(models.Model):
                 db_cursor.execute(query)
                 cols = [x[0] for x in db_cursor.description]
                 for row in db_cursor:
-                    print row
                     columns = {}
                     for col in cols:
                         columns.update({col: getattr(row, col)})
@@ -424,7 +420,6 @@ class ImportOdbcDbtable(models.Model):
                 rows = db_cursor.fetchall()
                 for row in rows:
                     data_list = {'id':row[0],'name': row[1]}
-                    print data_list
                 return data_list
 
 
@@ -432,7 +427,6 @@ class ImportOdbcDbtable(models.Model):
 
     @api.multi
     def import_run(self):
-        print self.ids
         # TODO: too many lines and indent levels - please refactor me!
         def is_id_field(x):
             """"Detect is the column is a one2many field"""
