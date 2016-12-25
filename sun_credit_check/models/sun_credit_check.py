@@ -43,17 +43,13 @@ class SunCreditCheck(models.Model):
     #     return res
 
     @api.multi
-    def _get_check_aging(self, ids, field, arg):
-        res = {}
+    def _get_check_aging(self):
         for i in self:
-            res[i.id] = {'check_aging_ids': [], 'cheque_details_ids': []}
             _aging_ids = self.env['cic.check.aging.view'].search([('partner_id', '=', i.partner_id.id)])
             _check_ids = self.env('cic.check.receipt').search([('partner_id', '=', i.partner_id.id), (
             'state', 'in', ['received', 'submitted', 'resubmitted'])])
-            res[i.id]['check_aging_ids'] = _aging_ids
-            res[i.id]['cheque_details_ids'] = _check_ids
-        return res
-
+            i.check_aging_ids = _aging_ids
+            i.cheque_details_ids = _check_ids
 
     # _columns = {
     #     'date_create': fields.datetime(string='Date'),
@@ -228,6 +224,7 @@ class SunCreditCheck(models.Model):
     @api.model
     def create(self, vals):
         partner_id = self.partner_id
+        print 'Partner on Create :', partner_id
         if partner_id:
             _val = {}
             _val = self.get_partner_info(False)
