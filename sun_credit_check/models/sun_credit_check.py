@@ -46,7 +46,7 @@ class SunCreditCheck(models.Model):
     def _get_check_aging(self):
         for i in self:
             _aging_ids = self.env['cic.check.aging.view'].search([('partner_id', '=', i.partner_id.id)])
-            _check_ids = self.env('cic.check.receipt').search([('partner_id', '=', i.partner_id.id), (
+            _check_ids = self.env['cic.check.receipt'].search([('partner_id', '=', i.partner_id.id), (
             'state', 'in', ['received', 'submitted', 'resubmitted'])])
             i.check_aging_ids = _aging_ids
             i.cheque_details_ids = _check_ids
