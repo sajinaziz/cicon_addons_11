@@ -824,9 +824,7 @@ class SunCreditCheck(models.Model):
         partner = self.partner_id
         #payment_term = partner['property_payment_term']
         ibm_period = ''
-        print partner.name
         for sun_acc in self.sun_credit_details_ids:
-            print sun_acc
             payment_term_days = 0
             # if payment_term:
             #     payment_term_days = payment_term.line_ids[0].days
@@ -842,9 +840,7 @@ class SunCreditCheck(models.Model):
                     "', @SunDb = '" + sun_acc.sun_db + "'" + ",@A= '" + _a + "'"
             # query = "EXEC dbo.sun_account @SunAccountNo = '" + sun_acc['account_code'] + \
             #         "', @SunDb = '" + sun_acc['sun_db'] + "'" + ",@A= '" + _a + "'"
-            print query
             result = self.env['import.odbc.dbsource'].fetch_data(dbsource='SQL', query=query)
-            print result
             for x in result:
                 d_c = x['D_C']
                 amt_c = 0
