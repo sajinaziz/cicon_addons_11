@@ -16,7 +16,7 @@
                                 <td colspan="5"><span t-field="o.partner_id.name" /></td>
                             </tr>
                             <tr>
-                                <td colspan="7">&nbsp;</td>
+                                <td colspan="7"> </td>
                             </tr>
                             <tr>
                                 <td class="heading">Customer Status</td>
@@ -27,7 +27,7 @@
                                 <td class="heading">Cases of Holding of Cheque</td>
                                 <td>:</td>
                                 <td><span t-field="o.cheque_hold" /></td>
-                                <td>&nbsp; </td>
+                                <td>  </td>
                                 <td class="heading">Payment Term</td>
                                 <td>:</td>
                                 <td><span t-field="o.payment_terms.name" /></td>
@@ -36,13 +36,13 @@
                                 <td class="heading">Cases of Check Bounce</td>
                                 <td>:</td>
                                 <td><span t-field="o.cheque_bounce" /></td>
-                                <td>&nbsp;</td>
+                                <td> </td>
                                 <td class="heading">Sales Person</td>
                                 <td>:</td>
                                 <td><span t-field="o.partner_id.user_id.name or ''" /></td>
                             </tr>
                             <tr>
-                                <td colspan="7">&nbsp;</td>
+                                <td colspan="7"> </td>
                             </tr>
                             <t t-if="o.sun_credit_details_ids">
                                 <tr>
@@ -96,7 +96,7 @@
                                 <td colspan="7" ><t t-if="' ' if o.management_note == False else o.management_note" /></td>
                             </tr>
                             <tr>
-                                <td colspan="7">&nbsp;</td>
+                                <td colspan="7"></td>
                             </tr>
                         </table>
                         <table class="table_border">
