@@ -65,15 +65,8 @@
 
                                             <tr>
                                                 <td class="cell_border heading amount">Total</td>
-                                                <t t-set="proj_account_balance" t-value="0" />
-                                                <t t-set="proj_account_due" t-value="0" />
-
-                                                <t t-foreach="o.sun_credit_details_ids" t-as="line">
-                                                     <t t-set="proj_account_balance" t-esc="proj_account_balance = proj_account_balance + line.proj_account_balance" />
-                                                     <t t-set="proj_account_due" t-esc="proj_account_due = proj_account_due + line.proj_account_due" />
-                                                </t>
-                                                <td ><span t-field="proj_account_balance" /></td>
-                                                <td><span t-field="proj_account_due" /></td>
+                                                <td ><span t-esc="sum([x.proj_account_balance for x in o.sun_credit_details_ids])" /></td>
+                                                <td><span t-esc="sum([x.proj_account_due for x in o.sun_credit_details_ids])" /></td>
                                             </tr>
                                         </table>
                                     </td>
