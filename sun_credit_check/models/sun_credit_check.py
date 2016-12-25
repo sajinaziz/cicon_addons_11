@@ -126,7 +126,7 @@ class SunCreditCheck(models.Model):
     period = fields.Char('Period', size=10, readonly=True)
     filter_overdue = fields.Boolean('Filter By Over Due')
     filter_due = fields.Boolean('Filter By Due')
-    include_allocated = fields.Boolean('Include Allocated',Default='New')
+    include_allocated = fields.Boolean('Include Allocated',Default='False')
     # TODO:Attachment should be checked for licence file. (Licence attachment should from different menu with a licence tag.)
     has_attachment = fields.Boolean('Has attachment')
     debtor_statement_lines = fields.One2many('sun.credit.check.debtor.statement', 'sun_credit_check_id',
@@ -678,7 +678,7 @@ class SunCreditCheck(models.Model):
         # print 'xxxx'
         # print self.sun_credit_details_ids.sun_db
         if self.partner_id:
-            _res.update({'debtor_statement_lines': self._get_sun_statement_data(self.partner_id.id)})
+            _res.update({'debtor_statement_lines': self._get_sun_statement_data()})
         return {'value': _res}
 
     # def _get_sun_statement_data(self,cr,uid,sun_accounts ,partner_id,filter_overdue,filter_due,include_allocated, context=None):
@@ -818,30 +818,28 @@ class SunCreditCheck(models.Model):
     #     _followup_lines = sorted(_followup_lines, key=itemgetter('trans_date_int'))
     #     return _followup_lines
 
-    def _get_sun_statement_data(self, partner_id):
+    def _get_sun_statement_data(self):
         #print sun_accounts
         _followup_lines = []
-        partner = self.env['res.partner'].search([('id','=',partner_id)])
+        partner = self.partner_id
         #payment_term = partner['property_payment_term']
         ibm_period = ''
         print partner.name
-        print self.sun_credit_details_ids
-        for sun_acc in self.sun_credit_details_ids.ids:
+        for sun_acc in self.sun_credit_details_ids:
+            print sun_acc
             payment_term_days = 0
             # if payment_term:
             #     payment_term_days = payment_term.line_ids[0].days
             ibm_period = self._calc_period(payment_term_days)
-            if sun_acc['project_id']:  # checking whether sun account has project, and project has seperate payment term
-                _project_obj = self.env['project.project'].search([('id','=',sun_acc['project_id'])])
-                if _project_obj.project_payment_term_id:
-                    payment_term_days = _project_obj.project_payment_term_id.line_ids[0].days
+            if sun_acc.project_id:  # checking whether sun account has project, and project has seperate payment term
+                if sun_acc.project_id.project_payment_term_id:
+                    payment_term_days =  sun_acc.project_id.project_payment_term_id.line_ids[0].days
                     ibm_period = self._calc_period(payment_term_days)
             _a = ' '
-
             if self.include_allocated:
                 _a = 'A'
-            query = "EXEC dbo.GetSunAccountBalanceDetails @SunAccountNo = '" + sun_acc['account_code'] + \
-                    "', @SunDb = '" + sun_acc['sun_db'] + "'" + ",@A= '" + _a + "'"
+            query = "EXEC dbo.GetSunAccountBalanceDetails @SunAccountNo = '" + sun_acc.account_code + \
+                    "', @SunDb = '" + sun_acc.sun_db + "'" + ",@A= '" + _a + "'"
             # query = "EXEC dbo.sun_account @SunAccountNo = '" + sun_acc['account_code'] + \
             #         "', @SunDb = '" + sun_acc['sun_db'] + "'" + ",@A= '" + _a + "'"
             print query
