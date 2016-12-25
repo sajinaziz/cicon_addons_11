@@ -57,7 +57,7 @@
                                             </tr>
                                             <t t-foreach="o.sun_credit_details_ids" t-as="line">
                                                 <tr>
-                                                    <td class="cell_border"><span t-field="line.project_id.name or ''" /></td>
+                                                    <td class="cell_border"><span t-field="line.project_id.name" /></td>
                                                     <td class="cell_border amount amount_column"><span t-field="line.proj_account_balance" /></td>
                                                     <td class="cell_border amount amount_column"><span t-field="line.proj_account_due" /></td>
                                                 </tr>
