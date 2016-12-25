@@ -602,9 +602,7 @@ class SunCreditCheck(models.Model):
 
         query = "EXEC dbo.GetSunAccountBalanceCombined @SunAccountNo = '" + sun_account['sun_acc_no'] + \
                 "', @SunDb = '" + sun_account['sun_db'] + "', @ToPeriod = " + ibm_period  #
-        print query
         result = self.env['import.odbc.dbsource'].fetch_data(dbsource='SQL', query=query)
-        print result
         for x in result:
             x.update({'prj_period':str(ibm_period),
                       'prj_pay_days':payment_term_days,
@@ -661,7 +659,6 @@ class SunCreditCheck(models.Model):
         _val['cheque_details_ids'] = _cheque_ids
         _val['debtor_statement_lines'] = []
 
-        print _val
         return _val
 
 
@@ -827,6 +824,8 @@ class SunCreditCheck(models.Model):
         partner = self.env['res.partner'].search([('id','=',partner_id)])
         #payment_term = partner['property_payment_term']
         ibm_period = ''
+        print partner.name
+        print self.sun_credit_details_ids
         for sun_acc in self.sun_credit_details_ids.ids:
             payment_term_days = 0
             # if payment_term:
