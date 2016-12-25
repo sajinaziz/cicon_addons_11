@@ -21,7 +21,9 @@
                             <tr>
                                 <td class="heading">Customer Status</td>
                                 <td>:</td>
-                                <td colspan="5"><span t-if="'Unknown' o.status==False else o.status" /></td>
+                                <td colspan="5">
+                                    <span t-esc="o.status or 'Unknown'" />
+                                </td>
                             </tr>
                             <tr>
                                 <td class="heading">Cases of Holding of Cheque</td>
