@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!--- external css calling -->
+        <template id="minimal_layout_inherit" inherit_id="report.minimal_layout">
+            <xpath expr="//head" position="inside">
+                <link rel='stylesheet' href="/sun_credit_check/static/src/css/credit_check.css"/>
+            </xpath>
+        </template>
+
         <template id="report_credit_check_template">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
                     <!--<t t-call="cicon_tech.tech_cicon_external_layout">-->
-
                     <div class="page" style="font-size:14px;">
                     <div class="oe_structure"/>
-                    <table class="table table-bordered">
+                    <table class="table_full">
                             <caption class="text-uppercase" style="text-align:center;"> <strong> <h3>CREDIT CHECK</h3></strong>  </caption>
                             <tr>
                                 <td class="big_heading heading">Customer Name</td>
