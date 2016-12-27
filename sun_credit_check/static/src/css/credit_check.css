@@ -1,0 +1,66 @@
+body
+{
+    font-family: serif, arial;
+}
+table
+{
+    border-spacing: 0;
+}
+td
+{
+    vertical-align: middle;
+    padding: 5;
+}
+.big_heading
+{
+    font-size: 20px;
+    font-weight: bold;
+}
+.heading
+{
+    font-weight: bold;
+    background-color: #dfdfdf;
+}
+.table_full
+{
+    width: 100%;
+    border-spacing: 2px;
+}
+.table_border
+{
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+    width: 100%;
+    padding: 5px;
+}
+.cell_border
+{
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+}
+.remarks
+{
+    vertical-align: top;
+}
+.amount
+{
+    text-align: right;
+}
+.table_heading
+{
+    text-align: center;
+}
+.footer_table
+{
+    widows: 50%;
+}
+.main_table
+{
+    border-spacing: 2px;
+}
+.amount_column
+{
+    width: 100px;
+}
