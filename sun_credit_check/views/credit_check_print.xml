@@ -14,38 +14,38 @@
                     <!--<t t-call="cicon_tech.tech_cicon_external_layout">-->
                     <div class="page" style="font-size:14px;">
                     <div class="oe_structure"/>
-                    <table class="table_full">
-                            <caption class="text-uppercase" style="text-align:center;"> <strong> <h3>CREDIT CHECK</h3></strong>  </caption>
+                    <table class="table_border">
+                            <caption style="text-align:center;"> <strong> <h2>CREDIT CHECK</h2></strong>  </caption>
                             <tr>
-                                <td class="big_heading heading">Customer Name</td>
+                                <td class="big_heading">Customer Name</td>
                                 <td>:</td>
-                                <td colspan="5"><span t-field="o.partner_id.name" /></td>
+                                <td  class="big_heading" colspan="5"><span t-field="o.partner_id.name" /></td>
                             </tr>
                             <tr>
                                 <td colspan="7"> </td>
                             </tr>
                             <tr>
-                                <td class="heading">Customer Status</td>
+                                <td>Customer Status</td>
                                 <td>:</td>
                                 <td colspan="5">
                                     <span t-esc="o.status or 'Unknown'" />
                                 </td>
                             </tr>
                             <tr>
-                                <td class="heading">Cases of Holding of Cheque</td>
+                                <td>Cheque Holded</td>
                                 <td>:</td>
                                 <td><span t-field="o.cheque_hold" /></td>
                                 <td>  </td>
-                                <td class="heading">Payment Term</td>
+                                <td>Payment Term</td>
                                 <td>:</td>
                                 <td><span t-field="o.payment_terms.name" /></td>
                             </tr>
                             <tr>
-                                <td class="heading">Cases of Check Bounce</td>
+                                <td>Check Bounced</td>
                                 <td>:</td>
                                 <td><span t-field="o.cheque_bounce" /></td>
                                 <td> </td>
-                                <td class="heading">Sales Person</td>
+                                <td>Sales Person</td>
                                 <td>:</td>
                                 <td><span t-field="o.partner_id.user_id.name" /></td>
                             </tr>
@@ -57,21 +57,21 @@
                                     <td colspan="7">
                                         <table class="table_border">
                                             <tr>
-                                                <td class="cell_border table_heading heading">Account Name</td>
-                                                <td class="cell_border table_heading heading amount_column">Account Balance</td>
-                                                <td class="cell_border table_heading heading amount_column">Account Due</td>
+                                                <td class="cell_border">Account Name</td>
+                                                <td class="cell_border amount_column">Account Balance</td>
+                                                <td class="cell_border amount_column">Account Due</td>
                                             </tr>
                                             <t t-foreach="o.sun_credit_details_ids" t-as="line">
                                                 <tr>
-                                                    <td class="cell_border"><span t-field="line.project_id.name" /></td>
-                                                    <td class="cell_border amount amount_column"><span t-field="line.proj_account_balance" /></td>
-                                                    <td class="cell_border amount amount_column"><span t-field="line.proj_account_due" /></td>
+                                                    <td class="cell_border heading"><span t-field="line.project_id.name" /></td>
+                                                    <td class="cell_border heading amount amount_column"><span t-field="line.proj_account_balance" /></td>
+                                                    <td class="cell_border heading amount amount_column"><span t-field="line.proj_account_due" /></td>
                                                 </tr>
                                             </t>
 
                                             <tr>
-                                                <td class="cell_border heading amount">Total</td>
-                                                <td ><span t-esc="sum([x.proj_account_balance for x in o.sun_credit_details_ids])" /></td>
+                                                <td class="cell_border amount">Total</td>
+                                                <td><span t-esc="sum([x.proj_account_balance for x in o.sun_credit_details_ids])" /></td>
                                                 <td><span t-esc="sum([x.proj_account_due for x in o.sun_credit_details_ids])" /></td>
                                             </tr>
                                         </table>
@@ -79,19 +79,19 @@
                                 </tr>
                             </t>
                             <tr>
-                                <td class="heading" colspan="7">Remarks :</td>
+                                <td colspan="7">Remarks :</td>
                             </tr>
                             <tr>
                                 <td colspan="7" class="remarks"><span  t-esc="o.remarks"/></td>
                             </tr>
                              <tr>
-                                <td class="heading" colspan="7">Verification Remarks :</td>
+                                <td colspan="7">Verification Remarks :</td>
                             </tr>
                              <tr>
                                 <td colspan="7" class="remarks"> <span t-esc="o.verification_remarks"/></td>
                             </tr>
                              <tr>
-                                <td class="heading" colspan="7">Management Note :</td>
+                                <td colspan="7">Management Note :</td>
                             </tr>
                              <tr>
                                 <td colspan="7" ><span t-esc ="o.management_note" /></td>
@@ -102,16 +102,16 @@
                         </table>
                         <table class="table_border">
                             <tr>
-                                <td colspan="2">
-                                    <b>Date</b> : <span t-field="o.date_create" />
-                                </td>
-                            </tr>
-                            <tr>
                                 <td class="footer_table"><b>Credit check conducted by</b>:<br/><br/>
                                     <span t-field="o.user_id.name" /><br/>
                                 </td>
                                 <td class="footer_table"><b>Approved by</b>:<br/><br/><br/>
                                    SAMEER BALOCH
+                                </td>
+                            </tr>
+                             <tr>
+                                <td colspan="2">
+                                    <b>Date</b> : <span t-field="o.date_create" />
                                 </td>
                             </tr>
                         </table>
