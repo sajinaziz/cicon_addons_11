@@ -35,7 +35,7 @@
                                 <td>Cheque Holded</td>
                                 <td>:</td>
                                 <td><span t-field="o.cheque_hold" /></td>
-                                <td>  </td>
+                                <!--<td>  </td>-->
                                 <td>Payment Term</td>
                                 <td>:</td>
                                 <td><span t-field="o.payment_terms.name" /></td>
@@ -44,7 +44,7 @@
                                 <td>Check Bounced</td>
                                 <td>:</td>
                                 <td><span t-field="o.cheque_bounce" /></td>
-                                <td> </td>
+                                <!--<td> </td>-->
                                 <td>Sales Person</td>
                                 <td>:</td>
                                 <td><span t-field="o.partner_id.user_id.name" /></td>
