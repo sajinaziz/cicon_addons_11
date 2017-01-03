@@ -25,6 +25,7 @@
                                     <field name="name" readonly="1"/>
                                     <field name="element" placeholder="eg:- Building C - Column/Wall" />
                                     <field name="level" placeholder="eg:- Ground Floor" />
+                                    <field name="consultant_id"  options="{'no_create':True,'no_open': True}"/>
                                 </group>
                                 <group>
                                     <field name="rfi_count_on_job_site" invisible="1" />

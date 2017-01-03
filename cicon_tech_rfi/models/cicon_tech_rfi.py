@@ -22,7 +22,9 @@ class CiconTechRfi(models.Model):
     created_by = fields.Many2one('res.users', string="Raised By", default=lambda self: self.env.user, required=True)
     coordinator_id = fields.Many2one('res.users', 'Co-ordinated By', help="Site Coordinator",
                                      readonly=True,related='job_site_id.coordinator_id',store=False)
-    attachment_count = fields.Integer('Attachment No:')
+    consultant_id = fields.Many2one('tech.consultant', string="Consultant")
+    #attachment_count = fields.Integer('Attachment No:')
+    attachment_count = fields.Char('Attachment No:')
     response_last_date = fields.Date("Response Required Date")
     contractor_remarks = fields.Text('Contractor Remarks')
     contractor_subject = fields.Text('Contractor Subject')

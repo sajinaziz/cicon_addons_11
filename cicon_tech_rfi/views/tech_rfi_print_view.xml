@@ -25,7 +25,7 @@
 
                         <div class="row" style="outline: 1px solid;min-height:40px" >
                             <div class="col-xs-2"> CONSULTANT : </div>
-                            <div class="col-xs-5"> </div>
+                            <div class="col-xs-5"> <span t-field="o.consultant_id"/> </div>
                             <div class="col-xs-5 text-center"> ATTENTION  </div>
                         </div>
 
