@@ -21,7 +21,8 @@
              'views/cicon_tech_view.xml',
              'views/tech_submittal_doc_view.xml',
              'wizard/document_revision_wizard_view.xml',
-             'views/submittal_email.xml'
+             'views/submittal_email.xml',
+             'views/tech_consultant_view.xml'
             ],
     'update_xml': [],
     'description': 'Cicon Modules', 'active': False, 'installable': True, 'application': False, 'auto_install': False
