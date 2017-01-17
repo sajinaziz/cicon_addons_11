@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 
+
 class CiconHelpDesk(models.Model):
     _name = 'cicon.help.desk'
     _inherit = ['mail.thread']
