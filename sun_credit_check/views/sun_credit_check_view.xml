@@ -42,6 +42,7 @@
                          <button name="action_reset" type="object" string="Reset" states='verified' class="oe_highlight"/>
                          <button name="action_approved" type="object" string="Approved" states='verified' class="oe_highlight"/>
                          <button name="action_rejected" type="object" string="Rejected" states='verified' class="oe_highlight"/>
+                         <button  name="action_print" type="object" string="Print Check" class="oe_highlight"/>
                          <field name="state" widget="statusbar" statusbar_visible='new,draft,verified,approved,rejected'/>
                      </header>
                                 <group>

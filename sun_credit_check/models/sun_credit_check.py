@@ -7,6 +7,9 @@ import time
 #from datetime import datetime
 from datetime import datetime,date,timedelta
 from odoo.exceptions import UserError
+import cStringIO
+import base64
+from docx import Document
 
 
 class SunCreditCheck(models.Model):
@@ -169,6 +172,92 @@ class SunCreditCheck(models.Model):
     @api.multi
     def action_rejected(self):
         return self.write({'state': 'rejected'})
+
+    @api.multi
+    def action_print(self):
+        _check_result = self.env['sun.credit.check'].search([('partner_id','=',self.partner_id.id)])
+        ####python docs####
+        _r_name = 'Sun Credit Check Report -' + datetime.today().strftime('%d-%b-%Y')
+        _file_name = "credit_check_report.docx"
+
+
+        source_stream = cStringIO.StringIO()
+        document = Document()
+        table = document.add_table(rows=4, cols=4,style="TableNormal")
+
+        for _sun_check in _check_result:
+            row_cells = table.rows[0].cells
+            row_cells[0].text = 'Customer Name:'
+            row_cells[1].text = str(_sun_check.partner_id.name)
+            row_cells = table.rows[1].cells
+            row_cells[0].text = 'Customer Status:'
+            row_cells[1].text = str(_sun_check.status)
+            row_cells = table.rows[2].cells
+            row_cells[0].text = 'Cheque Holded:'
+            row_cells[1].text = str(_sun_check.cheque_hold)
+            row_cells[2].text = 'Payment Term'
+            row_cells[3].text = str(_sun_check.payment_terms.name)
+            row_cells = table.rows[3].cells
+            row_cells[0].text = 'Check Bounced:'
+            row_cells[1].text = str(_sun_check.cheque_bounce)
+            row_cells[2].text = 'Sales Person:'
+            row_cells[3].text = str(_sun_check.partner_id.user_id.name)
+
+            table = document.add_table(rows=1, cols=3,style="ColorfulShading")
+            hdr_cells = table.rows[0].cells
+            hdr_cells[0].text = 'Account Name'
+            hdr_cells[1].text = 'Account Balance'
+            hdr_cells[2].text = 'Account Due'
+            for line in _sun_check.sun_credit_details_ids:
+                row_cells = table.add_row().cells
+                row_cells[0].text = str(line.project_id.name)
+                row_cells[1].text = str(line.proj_account_balance)
+                row_cells[2].text = line.proj_account_due
+
+            table = document.add_table(rows=6, cols=2, style="TableNormal")
+            row_cells = table.rows[0].cells
+            row_cells[0].text = 'Remarks:'
+            row_cells[1].text = str(_sun_check.remarks)
+            row_cells = table.rows[1].cells
+            row_cells[0].text = 'Verification Comments:'
+            row_cells[1].text = str(_sun_check.verification_remarks)
+            row_cells = table.rows[2].cells
+            row_cells[0].text = 'Management Note:'
+            row_cells[1].text = str(_sun_check.management_note)
+            row_cells = table.rows[3].cells
+            row_cells[0].text = 'Credit Check Conducted by:'
+            row_cells[1].text = 'Approved By:'
+
+            row_cells = table.rows[4].cells
+            row_cells[0].text = str(_sun_check.user_id.name)
+            row_cells[1].text = 'SAMEER BALOCH'
+
+            row_cells = table.rows[5].cells
+            row_cells[0].text = 'Date:'+ str(_sun_check.date_create)
+
+        document.add_page_break()
+
+        document.save(source_stream)
+        source_stream.seek(0)
+
+        vals = {
+            'name': _r_name,
+            'datas_fname': _file_name,
+            'description': 'Sun Credit Check Report',
+            'type': 'binary',
+            'db_datas': base64.encodestring(source_stream.read()),
+            #'res_name': self.report_list,
+            'res_model': 'sun.credit.check',
+            'res_id': self.id
+        }
+        source_stream.close()
+        file_id = self.env['ir.attachment'].create(vals)
+        return file_id
+
+
+        #return self.write({'state': 'rejected'})
+
+
 
     # ######Overriding create to pass values to openerp table
     # def create(self, cr, uid, ids, context=None):
@@ -600,14 +689,18 @@ class SunCreditCheck(models.Model):
                 if proj_payment.project_credit_limit > 0:
                     prj_cr_limit= proj_payment.project_credit_limit
 
-        query = "EXEC dbo.GetSunAccountBalanceCombined @SunAccountNo = '" + sun_account['sun_acc_no'] + \
-                "', @SunDb = '" + sun_account['sun_db'] + "', @ToPeriod = " + ibm_period  #
-        result = self.env['import.odbc.dbsource'].fetch_data(dbsource='SQL', query=query)
-        for x in result:
-            x.update({'prj_period':str(ibm_period),
-                      'prj_pay_days':payment_term_days,
-                      'prj_cr_limit':prj_cr_limit})
-            data.append(x)
+
+            # query = "SELECT * FROM dbo.sun_account WHERE sun_account_no = '" +  sun_account['sun_acc_no'] + \
+            #         "', sun_db = '" + sun_account['sun_db'] + "'"
+
+            query = "EXEC dbo.GetSunAccountBalanceCombined @SunAccountNo = '" + sun_account['sun_acc_no'] + \
+                    "', @SunDb = '" + sun_account['sun_db'] + "', @ToPeriod = " + ibm_period  #
+            result = self.env['import.odbc.dbsource'].fetch_data(dbsource='SQL', query=query)
+            for x in result:
+                x.update({'prj_period':str(ibm_period),
+                          'prj_pay_days':payment_term_days,
+                          'prj_cr_limit':prj_cr_limit})
+                data.append(x)
 
         # print 'gggg'
         # print data
@@ -838,6 +931,7 @@ class SunCreditCheck(models.Model):
                 _a = 'A'
             query = "EXEC dbo.GetSunAccountBalanceDetails @SunAccountNo = '" + sun_acc.account_code + \
                     "', @SunDb = '" + sun_acc.sun_db + "'" + ",@A= '" + _a + "'"
+
             # query = "EXEC dbo.sun_account @SunAccountNo = '" + sun_acc['account_code'] + \
             #         "', @SunDb = '" + sun_acc['sun_db'] + "'" + ",@A= '" + _a + "'"
             result = self.env['import.odbc.dbsource'].fetch_data(dbsource='SQL', query=query)
