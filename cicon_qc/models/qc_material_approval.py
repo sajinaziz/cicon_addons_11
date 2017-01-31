@@ -26,3 +26,12 @@ class QcMaterialApproval(models.Model):
     remarks = fields.Text('Remarks')
 
     _sql_constraints = [('uniq_rec', 'UNIQUE(job_site_id,origin_attrib_value_id)', 'Origin must be unique for Job Site!')]
+
+
+class CiconJobSite(models.Model):
+    _inherit = 'cicon.job.site'
+
+    qc_material_approval_ids = fields.One2many('qc.material.approval', 'job_site_id', string="Material Approvals")
+
+
+
