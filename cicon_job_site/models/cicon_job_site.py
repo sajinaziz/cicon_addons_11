@@ -17,9 +17,17 @@ class CiconJobSite(models.Model):
     consultant_id = fields.Many2one('res.partner', string='Consultant' )
     client_id = fields.Many2one('res.partner', string = 'Client')
     company_id = fields.Many2one('res.company', string='Company')
+    active = fields.Boolean('Active', default=True)
+    archive = fields.Boolean('Archive', help="This will hide project from reports",  default=False)
 
     _sql_constraints = [
         ('unique_cust_project', 'unique(partner_id,name)', 'Project Name must be unique for each customer')]
+
+    @api.multi
+    def toggle_archive(self):
+        """ Inverse the value of the field ``active`` on the records in ``self``. """
+        for record in self:
+            record.archive = not record.archive
 
 CiconJobSite()
 
