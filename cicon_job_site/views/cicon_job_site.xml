@@ -58,6 +58,19 @@
 			</field>
 		</record>
 
+         <record id="res_partner_extn" model="ir.ui.view">
+                <field name="name">res.partner.extn</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.view_partner_form"/>
+                 <field name="arch" type="xml">
+                     <field name="ref" position="after">
+                         <field name="is_consultant"/>
+                         <field name="is_client"/>
+                     </field>
+                 </field>
+        </record>
+
+
         <record model="ir.actions.act_window" id="action_jobsite_tree_view">
             <field name="name">Manage Customer Projects</field>
             <field name="type">ir.actions.act_window</field>
