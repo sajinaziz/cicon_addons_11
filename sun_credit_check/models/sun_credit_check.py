@@ -212,7 +212,7 @@ class SunCreditCheck(models.Model):
                 row_cells = table.add_row().cells
                 row_cells[0].text = str(line.project_id.name)
                 row_cells[1].text = str(line.proj_account_balance)
-                row_cells[2].text = line.proj_account_due
+                row_cells[2].text = str(line.proj_account_due)
 
             table = document.add_table(rows=6, cols=2, style="TableNormal")
             row_cells = table.rows[0].cells
