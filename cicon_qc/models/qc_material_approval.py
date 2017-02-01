@@ -15,10 +15,11 @@ class QcMaterialApproval(models.Model):
     _description = "QC Material Approval"
     _inherit = ['mail.thread']
 
+
     job_site_id = fields.Many2one('cicon.job.site', string="Job Site")
     date = fields.Date('Date', default=fields.Date.context_today)
     partner_id = fields.Many2one('res.partner', related='job_site_id.partner_id', string='Customer', readonly=True)
-    consultant_id = fields.Many2one('res.partner', related='job_site_id.consultant_id', string='Consultant', readonly=True  )
+    consultant_id = fields.Many2one('res.partner', related='job_site_id.consultant_id', string='Consultant', readonly=True)
     client_id = fields.Many2one('res.partner', related='job_site_id.consultant_id', string='Client' , readonly=True)
     origin_attrib_value_id = fields.Many2one('product.attribute.value',
                                              domain="[('attribute_id.name','=','Steel Origin' )]", string='Origin')

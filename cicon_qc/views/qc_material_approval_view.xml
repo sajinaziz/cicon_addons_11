@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="qc_material_grade_tree_view">
+			<field name="name">qc.material.grade.tree</field>
+			<field name="model">qc.material.grade</field>
+			<field name="arch" type="xml" >
+				<tree string="QC Material Quide">
+                    <field name="name" />
+
+				</tree>
+			</field>
+		</record>
+
+        <record model="ir.ui.view" id="qc_material_grade_form_view">
+		<field name="name">qc.material.grade.form</field>
+        <field name="model">qc.material.grade</field>
+			<field name="arch" type="xml">
+                <form string="QC Material Quide">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cicon_qc_material_approval_form">
+		<field name="name">cicon.qc.material.approval.form</field>
+        <field name="model">qc.material.approval</field>
+			<field name="arch" type="xml">
+                <form string="QC Material Approval">
+                        <header>
+                        <!--<button name="re_open_action" states="new" string="In Progress" type="object" class="oe_highlight" />-->
+                        <!--<button name="close_action" confirm="Confirm Change Status of report to Closed ? "  states="open" string="Close" type="object" />-->
+                        <!--<button name="re_open_action" states="close" string="Re Open" type="object" />-->
+                        <field name="state"  widget="statusbar" />
+                        </header>
+                    <sheet>
+                        <group>
+                            <field name="job_site_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group col="4">
+                            <field name="consultant_id"/>
+                            <field name="client_id"/>
+                        </group>
+                         <group col="4">
+                            <field name="date"/>
+                            <field name="origin_attrib_value_id"/>
+                        </group>
+                        <group>
+                            <field name="remarks" />
+                        </group>
+                    </sheet>
+                      <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="cicon_qc_material_approval_tree_view">
+			<field name="name">cicon.qc.material.approval.tree</field>
+			<field name="model">qc.material.approval</field>
+			<field name="arch" type="xml" >
+				<tree string="Qc Material Approval">
+                    <field name="partner_id"/>
+                    <field name="job_site_id"  />
+                    <field name="consultant_id" />
+                    <field name="origin_attrib_value_id" />
+                </tree>
+			</field>
+		</record>
+
+         <record model="ir.ui.view" id="cicon_qc_material_approval_search">
+			<field name="name">qc.material_approval.search</field>
+			<field name="model">qc.material.approval</field>
+			<field name="arch" type="xml" >
+                <search string="QC Material Approval" >
+                    <field name="job_site_id" widget="selection"/>
+                    <field name="partner_id" widget="selection"/>
+                    <field name="consultant_id" widget="selection" />
+                    <field name="client_id" widget="selection" />
+                    <field name="origin_attrib_value_id" widget="selection"/>
+                </search>
+			</field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="cicon_qc_approval_action">
+            <field name="name">Manage Material Approval</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">qc.material.approval</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+         <record model="ir.actions.act_window" id="cicon_qc_material_grade_action">
+            <field name="name">Manage QC Material Grade</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">qc.material.grade</field>
+            <field name="view_mode">tree,form</field>
+         </record>
+
+
+        <menuitem  name="QC Material Approval" parent="cicon_menu_qa_qc" id="cic_qc_material_approval" sequence="80" />
+        <menuitem  name="Material Approval" parent="cic_qc_material_approval" id="cic_qc_material" action="cicon_qc_approval_action" sequence="10" />
+        <menuitem  parent="cicon_menu_qa_qc" id="cic_qc_config" name="Configuration"  sequence="100" />
+        <menuitem  name="Qc Material Grade" parent="cic_qc_config" id="cic_qc_material_grade" action="cicon_qc_material_grade_action" sequence="10" />
+
+    </data>
+</odoo>
