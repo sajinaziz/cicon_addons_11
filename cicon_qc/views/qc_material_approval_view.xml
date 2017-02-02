@@ -88,8 +88,16 @@
                 </search>
 			</field>
         </record>
-
-
+        <record id="cicon_job_site_extn" model="ir.ui.view">
+            <field name="name">cicon.job.site.extn</field>
+            <field name="model">cicon.job.site</field>
+            <field name="inherit_id" ref="cicon_job_site.cicon_job_site_form_view"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//group" position="after">
+                     <field name="qc_material_approval_ids" string='Material Approvals'/>
+                 </xpath>
+             </field>
+        </record>
         <record model="ir.actions.act_window" id="cicon_qc_approval_action">
             <field name="name">Manage Material Approval</field>
             <field name="type">ir.actions.act_window</field>
