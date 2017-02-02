@@ -33,10 +33,11 @@
 			<field name="arch" type="xml">
                 <form string="QC Material Approval">
                         <header>
-                        <!--<button name="re_open_action" states="new" string="In Progress" type="object" class="oe_highlight" />-->
-                        <!--<button name="close_action" confirm="Confirm Change Status of report to Closed ? "  states="open" string="Close" type="object" />-->
-                        <!--<button name="re_open_action" states="close" string="Re Open" type="object" />-->
-                        <field name="state"  widget="statusbar" />
+                        <button name="set_approve"  states="pending" string="Approve" type="object" class="oe_highlight" icon="fa-check" />
+                        <button name="set_verbal" states="pending" string="Verbal Approve" type="object" class="oe_highlight" icon="fa-check-circle-o" />
+                        <button name="set_reject"  confirm="Confirm status change to Reject ? "  states="pending" string="Reject" type="object"  icon="fa-times" />
+                        <button name="set_pending" confirm="Confirm status change to Pending ? " states="approve,verbal,reject" string="Pending" type="object"  icon="fa-hourglass" />
+                        <field name="state"  widget="statusbar"  statusbar_visible="pending,approve,verbal" />
                         </header>
                     <sheet>
                         <group>

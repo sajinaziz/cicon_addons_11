@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
             <menuitem name="CMMS " id="cmms_menu" sequence="60"/>
 
             <record model="ir.ui.view" id="cmms_machine_tree_view">
@@ -32,7 +31,6 @@
                     </header>
                     <sheet>
                          <div name="btn_box" class="oe_right oe_button_box">
-
                         </div>
                         <div class="oe_left">
                             <label for="code"/>

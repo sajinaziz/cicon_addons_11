@@ -1,6 +1,8 @@
 from odoo import fields,models,api
 
 
+
+
 _inv_lines = None
 
 
