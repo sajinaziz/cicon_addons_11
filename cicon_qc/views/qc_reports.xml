@@ -16,5 +16,15 @@
             report_type="qweb-pdf"/>
 
 
+        <report
+            id="report_steel_approval_list"
+            string="Steel Approval List"
+            model="qc.common.report.wizard"
+            report_type="qweb-pdf"
+            file="cicon_qc.qc_material_approval_report"
+            name="cicon_qc.qc_material_approval_report_template"
+        />
+
+
     </data>
  </odoo>

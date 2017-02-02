@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="qc_common_report_wizard_form_view" model="ir.ui.view">
+            <field name="name">QC Report</field>
+            <field name="model">qc.common.report.wizard</field>
+            <field name="arch" type="xml">
+            <form string="QC Report" create="false" edit="false">
+                <group>
+                    <field name="report_list"/>
+  				</group>
+
+                <group>
+                    <field name="company_id" options="{'no_create':True, 'no_open': True}"/>
+                </group>
+                <footer>
+
+                    <button name="show_report" string="Show Report" type="object" class="oe_highlight"/>
+                    <button name="close_report" string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+
+        <record id="action_steel_approval_report" model="ir.actions.act_window">
+            <field name="name" >Report Wizard</field>
+            <field name="res_model">qc.common.report.wizard</field>
+            <field name="view_mode">form</field>
+            <!--<field name="context">{'default_report_list': 'expense_report'}</field>-->
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Reports" parent="cicon_menu_qa_qc" id="qc_steel_approval_report" sequence="110" />
+        <menuitem parent="qc_steel_approval_report" id="cmms_menu_steel_report" action="action_steel_approval_report"/>
+
+    </data>
+</odoo>
+
+
