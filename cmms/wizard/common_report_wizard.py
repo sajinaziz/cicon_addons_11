@@ -96,14 +96,21 @@ class CmmsCommonReportWizard(models.TransientModel):
 
 
     ''' fill year select box values '''
-    current_year = datetime.today().strftime("%Y")
-    last_year = int(current_year) - 1
-    prev_last_year = int(last_year) - 1
-    prev_year = int(prev_last_year) - 1
 
-    report_year = fields.Selection(
-        [(current_year, current_year), (last_year, last_year), (prev_last_year, prev_last_year),
-         (prev_year, prev_year)],string="Year",default=current_year)
+    def _get_year(self):
+        current_year = datetime.today().strftime("%Y")
+        last_year = int(current_year) - 1
+        prev_last_year = int(last_year) - 1
+        prev_year = int(prev_last_year) - 1
+        _year = [(current_year, current_year), (last_year, last_year), (prev_last_year, prev_last_year),
+         (prev_year, prev_year)]
+        return _year
+
+    # report_year = fields.Selection(
+    #     [(current_year, current_year), (last_year, last_year), (prev_last_year, prev_last_year),
+    #      (prev_year, prev_year)],string="Year",default=current_year)
+
+    report_year = fields.Selection(_get_year, string="Year")
 
     @api.onchange('report_year')
     def _fill_date(self):
