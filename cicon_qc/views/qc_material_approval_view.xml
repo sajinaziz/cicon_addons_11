@@ -99,6 +99,8 @@
                  </xpath>
              </field>
         </record>
+
+
         <record model="ir.actions.act_window" id="cicon_qc_approval_action">
             <field name="name">Manage Material Approval</field>
             <field name="type">ir.actions.act_window</field>

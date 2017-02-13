@@ -18,7 +18,7 @@ class QcMaterialApproval(models.Model):
 
     def _display_name(self):
         for rec in self:
-            rec.display_name = rec.job_site_id.name + ' / ' + rec.origin_attrib_value_id.name
+            rec.display_name = str(rec.job_site_id.name) + ' / ' + str(rec.origin_attrib_value_id.name)
 
     display_name = fields.Char("Record", compute=_display_name)
     job_site_id = fields.Many2one('cicon.job.site', string="Job Site")
