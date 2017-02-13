@@ -95,9 +95,6 @@
             </field>
         </record>
 
-
-
-
         <record id="cicon_job_site_tech_form_view" model="ir.ui.view">
             <field name="name">cicon.job.site.tech.form</field>
             <field name="model">cicon.job.site</field>
@@ -117,6 +114,10 @@
                             <field name="po_box" />
                             <field name="telephone" />
                             <field name="fax" />
+                        </group>
+                        <group>
+                            <field name="consultant_id" />
+                            <field name="client_id" />
                         </group>
                         <group col="4" >
                             <field name="site_ref_no" required="True"/>
@@ -158,6 +159,23 @@
                 <!--</xpath>-->
             </field>
         </record>
+
+
+         <!-- cicon tech job site form -->
+
+         <record id="cicon_job_site_extn" model="ir.ui.view">
+            <field name="name">cicon.job.site.tech.extn</field>
+            <field name="model">cicon.job.site</field>
+            <field name="inherit_id" ref="cicon_tech.cicon_job_site_tech_form_view"/>
+             <field name="arch" type="xml">
+                 <field name="site_contact_ids" position="after">
+                      <!--<field name="qc_material_approval_ids" string='Material Approvals'/>-->
+                 </field>
+                 <!--<xpath expr="//sheet/field[@name='site_contact_ids']" position="after">-->
+                     <!--<field name="qc_material_approval_ids" string='Material Approvals'/>-->
+                 <!--</xpath>-->
+             </field>
+         </record>
 
 
         <!--<record id="cic_job_site_tech_form_view" model="ir.ui.view">-->
