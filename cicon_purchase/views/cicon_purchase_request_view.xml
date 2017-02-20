@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Placing fields in purchase order table -->
+
+         <record id="cicon_purchase_order_extn" model="ir.ui.view">
+                <field name="name">cicon.purchase.order.extn</field>
+                <field name="model">purchase.order</field>
+                <field name="inherit_id" ref="purchase.purchase_order_form"/>
+                <field name="arch" type="xml">
+                     <!--<field name="currency_id" position="after">-->
+                     <xpath expr="//sheet/group" position="after">
+                         <group col="8" states="purchase_req">
+                              <field name="issue_date"/>
+                              <field name="received_date"/>
+                         </group>
+                          <group states="purchase_req">
+                              <field name="employee_id"/>
+                          </group>
+                          <group col="8" states="purchase_req">
+                              <field name="department_id"/>
+                              <field name="job_id"/>
+                          </group>
+                          <group col="8" states="purchase_req">
+                              <field name="user_id" />
+                              <field name="approved_by"/>
+                          </group>
+                     </xpath>
+
+                     <xpath expr="//header/field[@name='state']" position="attributes">
+                         <attribute name="statusbar_visible">purchase_req,draft,sent,purchase,done</attribute>
+                     </xpath>
+
+                     <xpath expr="//header/button[@name='action_rfq_send']" position="after">
+                         <button name="approve_request" states="purchase_req" string="Approve Request" type="object" class="oe_highlight"/>
+                     </xpath>
+
+                     <xpath expr="//header/button[@name='button_cancel']" position="attributes">
+                        <attribute name="states">purchase_req</attribute>
+                     </xpath>
+
+                     <xpath expr="//div[@class='oe_title']" position="inside">
+                          <t t-if="state==purchase_req">
+                             <label string="Request for Quotation "  invisible="1"/>
+                          </t>
+                          <!--<label string="Request for Quotation " attrs="{'invisible': [('state','not in',('draft','sent','bid'))]}"/>-->
+                     </xpath>
+                     <!--<xpath expr="//div/label" position="replace">
+                           <label string="Purchase Order " attrs="{'invisible': [('state','in',('draft','sent','purchase_req'))]}"/>
+                     </xpath>-->
+                     <xpath expr="//field[@name='name']" position="before">
+                         <label string="Purchase Request" attrs="{'invisible': [('state','in',('draft','sent','purchase','done'))]}"/>
+                     </xpath>
+
+                    <xpath expr="//header/button[@name='print_quotation']" position="replace">
+                         <button name="print_request_quotation" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user"/>
+                    </xpath>
+                    <xpath expr="//header/button[@name='print_quotation']" position="replace">
+                         <button name="print_request_quotation" string="Re-Print RFQ" type="object" states="sent" groups="base.group_user"/>
+                     </xpath>
+                   </field>
+        </record>
+       </data>
+    </odoo>
