@@ -171,8 +171,8 @@
 			<field name="model">cic.qc.mill.cert.file</field>
 			<field name="arch" type="xml" >
 				<tree string="Mill Certificate File">
+                    <field name="page_number"/>
                     <field name="name" />
-                    <field name="cert_type_id"/>
                     <field name="issued_date"/>
                     <field name="dia_ids"/>
                     <field name="length_ids"/>

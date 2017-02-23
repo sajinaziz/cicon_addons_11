@@ -1,10 +1,7 @@
 from odoo import models, fields, api
-from datetime import datetime,date,timedelta
-import xlsxwriter
-import cStringIO
-import base64
 
-class CmmsCommonReportWizard(models.TransientModel):
+
+class QcCommonReportWizard(models.TransientModel):
     _name = 'qc.common.report.wizard'
     _description = "QC Reports"
 

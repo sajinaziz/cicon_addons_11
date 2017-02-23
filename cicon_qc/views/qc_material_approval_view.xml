@@ -31,7 +31,7 @@
 		<field name="name">cicon.qc.material.approval.form</field>
         <field name="model">qc.material.approval</field>
 			<field name="arch" type="xml">
-                <form string="QC Material Approval">
+                <form string="QC Material Approval" create="false">
                         <header>
                         <button name="set_approve"  states="pending" string="Approve" type="object" class="oe_highlight" icon="fa-check" />
                         <button name="set_verbal" states="pending" string="Verbal Approve" type="object" class="oe_highlight" icon="fa-check-circle-o" />
@@ -67,11 +67,12 @@
 			<field name="name">cicon.qc.material.approval.tree</field>
 			<field name="model">qc.material.approval</field>
 			<field name="arch" type="xml" >
-				<tree string="Qc Material Approval">
+				<tree string="Qc Material Approval" create="false">
                     <field name="partner_id"/>
                     <field name="job_site_id"  />
                     <field name="consultant_id" />
                     <field name="origin_attrib_value_id" />
+                    <field name="state" />
                 </tree>
 			</field>
 		</record>
@@ -89,16 +90,33 @@
                 </search>
 			</field>
         </record>
-        <record id="cicon_job_site_extn" model="ir.ui.view">
-            <field name="name">cicon.job.site.extn</field>
+
+           <record id="cicon_job_site_qc_form_view" model="ir.ui.view">
+            <field name="name">cicon.job.site.qc.form</field>
             <field name="model">cicon.job.site</field>
             <field name="inherit_id" ref="cicon_job_site.cicon_job_site_form_view"/>
-             <field name="arch" type="xml">
-                 <xpath expr="//group" position="after">
-                     <field name="qc_material_approval_ids" string='Material Approvals'/>
-                 </xpath>
-             </field>
-        </record>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="inside">
+                    <notebook>
+                        <page string="Approved Materials"  >
+                            <field name="id" invisible="1"/>
+                            <group attrs="{'invisible': [('id','=', False)]}" >
+                                <field name="qc_material_approval_ids" nolabel="1"  colspan="4"  context="{'default_job_site_id': id}" >
+                                    <tree>
+                                        <field name="origin_attrib_value_id" />
+                                        <field name="state"/>
+                                        <field name="remarks" />
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+
+                    </notebook>
+                </xpath>
+            </field>
+           </record>
+
+
         <record model="ir.actions.act_window" id="cicon_qc_approval_action">
             <field name="name">Manage Material Approval</field>
             <field name="type">ir.actions.act_window</field>

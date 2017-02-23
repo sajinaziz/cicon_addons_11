@@ -26,11 +26,17 @@
             <field name="arch" type="xml">
                 <form string="Project Details" >
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-toggle-on" confirm="Confirm Activate/Deactivate ?" groups="base.group_no_one">
+                                <field name="active" widget="boolean_button" options="{'terminology': 'active'}"/>
+                            </button>
+                        </div>
+
                        <group >
-                            <field name="partner_id" options="{'no_create':True,'no_open': True}" />
+                            <field name="partner_id" options="{'no_create':True,'no_open': True}" ain="[('customer','=', True)]" />
                             <field name="name"  placeholder="Project Name" />
-                            <field name="consultant_id" />
-                            <field name="client_id" />
+                            <field name="consultant_id" domain="[('is_consultant','=', True)]" options="{'no_create':True,'no_open': True}"/>
+                            <field name="client_id"  domain="[('is_client','=', True)]" options="{'no_create':True,'no_open': True}"/>/>
                             <field name="company_id" options="{'no_create':True,'no_open': True}" />
                         </group>
                         <group col="4">
@@ -38,8 +44,7 @@
                             <field name="telephone" />
                             <field name="fax" />
                         </group>
-                        <group col="4">
-                            <field name="active" readonly="True"/>
+                        <group >
                             <field name="archive" readonly="True"/>
                         </group>
                     </sheet>

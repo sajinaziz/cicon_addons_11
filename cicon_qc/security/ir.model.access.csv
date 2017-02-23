@@ -17,3 +17,7 @@ qc_check_operation_user,qc.check.op User,model_cicon_qc_check_operation,group_qc
 qc_check_operation_admin,qc.check.op Admin,model_cicon_qc_check_operation,group_qc_admin,1,1,1,1
 qc_check_user,qc.check User,model_cicon_qc_check,group_qc_user,1,1,1,0
 qc_check_admin,qc.check admin,model_cicon_qc_check,group_qc_admin,1,1,1,1
+qc_material_approve_user,cicon.material.approve.user,model_qc_material_approval,base.group_user,1,0,0,0
+qc_material_grade_user,cicon.material.grade.user,model_qc_material_grade,base.group_user,1,0,0,0
+qc_material_approve_admin,cicon.material.approve.user,model_qc_material_approval,group_qc_admin,1,1,1,1
+qc_material_grade_admin,cicon.material.grade.user,model_qc_material_grade,group_qc_admin,1,1,1,0
