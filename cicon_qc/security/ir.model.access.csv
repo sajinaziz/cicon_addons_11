@@ -2,7 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 qc_user_summary,qc.summary User,model_cic_qc_summary,group_qc_user,1,1,1,0
 qc_user_cert_line,qc.cert.line User,model_cic_qc_cert_line,group_qc_user,1,1,1,1
 qc_user_dn_line,qc.dn.line User,model_cic_qc_dn_line,group_qc_user,1,1,1,1
-qc_user_order_code,qc.order.code User,model_cic_qc_order_code,group_qc_user,1,1,1,1
 qc_user_cert_file,qc.cert User,model_cic_qc_mill_cert_file,group_qc_user,1,1,1,0
 qc_user_cert_file_line,qc.cert.line User,model_cic_qc_mill_cert_line,group_qc_user,1,1,1,1
 qc_user_cert_type,qc.cert.type User,model_cic_qc_cert_type,group_qc_user,1,0,0,0
