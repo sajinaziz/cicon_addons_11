@@ -18,7 +18,7 @@ class QcMaterialApproval(models.Model):
 
     def _display_name(self):
         for rec in self:
-            rec.display_name = rec.job_site_id.name or '' + ' / ' + rec.origin_attrib_value_id.name or ''
+            rec.display_name = str(rec.job_site_id.name) + ' / ' + str(rec.origin_attrib_value_id.name)
 
     display_name = fields.Char("Record", compute=_display_name)
     job_site_id = fields.Many2one('cicon.job.site', string="Job Site")
@@ -28,13 +28,13 @@ class QcMaterialApproval(models.Model):
     client_id = fields.Many2one('res.partner', related='job_site_id.consultant_id', string='Client' , readonly=True)
     origin_attrib_value_id = fields.Many2one('product.attribute.value',
                                              domain="[('attribute_id.name','=','Steel Origin' )]", string='Origin')
-    product_tmpl_ids = fields.Many2many('product.template', string="Product Templates")
     state = fields.Selection([('pending', 'Pending'),
                               ('verbal', 'Verbal'), ('approve', 'Approved'),
                               ('reject', 'Rejected')], string='Status', default='pending', track_visibility='onchange')
     remarks = fields.Text('Remarks')
 
     _sql_constraints = [('uniq_rec', 'UNIQUE(job_site_id,origin_attrib_value_id)', 'Origin must be unique for Job Site!')]
+
 
     @api.multi
     def set_pending(self):

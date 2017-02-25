@@ -30,6 +30,8 @@ class CiconCustJobSite(models.Model):
     submittal_count = fields.Integer(compute=_get_submittal_count, string="Submittal Count")
 
 
+
+
     _sql_constraints = [('unique_site_ref', 'UNIQUE(site_ref_no)', 'Unique Site Reference')]
 
 CiconCustJobSite()
