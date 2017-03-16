@@ -20,10 +20,7 @@
 ##############################################################################
 
 from odoo import models, fields, api
-#from openerp.osv import osv,fields,orm
-import time
 from datetime import date
-from odoo.tools.translate import _
 from odoo.tools import amount_to_text_en
 
 
@@ -145,6 +142,45 @@ from odoo.tools import amount_to_text_en
 #             return None
 #
 # AccountVoucherExt()
+
+
+class AccountPayment(models.Model):
+    _inherit = 'account.payment'
+
+    @api.depends('partner_id')
+    def _get_previos_checks(self):
+        _check_ids = self.env['account.payment'].search([('partner_id', '=', self.partner_id)])
+        self.previous_check_ids = _check_ids
+
+    is_check = fields.Boolean('Check Payment')
+    check_number = fields.Char('Check Number', size=32, help="Check Sequence Based on last check created for Bank")
+    bank_id = fields.Many2one('res.bank', string="Bank", help="Bank for selected Company")
+    pv_number = fields.Char('Payment Voucher No', size=10, help="Payment Voucher Number Sequence Based on last Created for Company ")
+    check_format_id = fields.Many2one('ir.actions.report.xml',  ondelete='set null', string='Check Format')
+    payment_info_ids = fields.One2many('cic.check.info', 'account_voucher_id', string="Check Payment Informations(CICON)",help="Check payment informations")
+    # Dummy field to list Previously Created Checks for the selected Customer
+    previous_check_ids = fields.One2many('account.payment', compute=_get_previos_checks, string="Previous Check For Supplier", help="Previously Created Check Details for Selected Customer")
+    stamp_id = fields.Many2one('cic.check.stamp', 'Stamp Name')
+    company_id = fields.Many2one('res.company', related=False, string="Company", readonly=False)
+
+    @api.onchange('company_id')
+    def company_change(self):
+        if self.company_id:
+            _last_pv_id = self.env['account.payment'].search([('company_id','=', self.company_id.id)], limit=1, order='id desc')
+            try:
+                _int_pv_no = int(_last_pv_id.pv_number)
+                self.pv_number = _int_pv_no + 1
+            except Exception:
+                _warn = {
+                    'title': 'Warning!',
+                    'message': 'Last PV Number is not Number.'
+                    }
+                return {'warning':  _warn}
+
+    _sql_constraints = [('unique_check_number', 'unique(check_number,bank_account_id)', 'Check Number Must be unique Per Bank Account')]
+
+AccountPayment()
+
 
 class CicCheckStamp(models.Model):
     _name = 'cic.check.stamp'

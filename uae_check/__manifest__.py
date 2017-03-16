@@ -28,7 +28,7 @@ Module for the UAE Check Writing and Check Printing.
     """,
     'website': 'http://www.openerp.com',
    # 'depends' : ['account_check_writing','project','cic_sun'],
-    'depends' : ['account_voucher','project','cic_sun'],
+    'depends' : ['account','project','cic_sun'],
     # "data":[ "security/uae_check_security.xml" , "security/ir.model.access.csv", "uae_check_view.xml", "cic_res_partner_view.xml",
     #          "check_replace_view.xml",'cic_check_aging_view.xml','report.xml' ],
     "data": ['views/uae_check_view.xml',
