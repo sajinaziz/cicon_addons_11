@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="check_print_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!--<t t-call="cicon_tech.tech_cicon_external_layout">-->
+
+                        <div class="page" style="font-size:14px;">
+                            <div class="oe_structure"/>
+                                <div class="row" style="text-align:center;"><h2><strong>Check Print</strong></h2></div>
+                                <div class="row" style="min-height:40px;margin-top:15px;border:1px solid;cell-padding:2px;">
+                                    <div class="col-xs-4 text-right" style="border-right:1px solid;min-height:40px;"><span t-field="o.partner_id" /></div>
+                                    <div class="col-xs-8 text-center"><span t-field="o.bank_id" /></div>
+                                </div>
+
+                        </div>
+                 </t>
+
+            </t>
+
+        </template>
+    </data>
+</odoo>

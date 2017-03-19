@@ -71,25 +71,55 @@
             <field name="arch" type="xml">
                   <xpath expr="//field[@name='journal_id']" position="attributes">
                     <attribute name="domain">[('company_id','=',company_id)]</attribute>
-                </xpath>
+                  </xpath>
                 <field name="journal_id" position="before">
                     <field name="company_id"/>
                 </field>
                 <xpath expr="//form/sheet/group" position="after">
                     <group>
-
-
                         <group>
-                           <field name="is_check"/>
-                           <field name="check_number" attrs="{'invisible':[('is_check','=',False)]}"/>
-                           <field name="bank_id"  attrs="{'invisible':[('is_check','=',False)]}"/>
+                            <field name="is_check"/>
                         </group>
-                        <group>
-                            <!--<field name="account_no"  attrs="{'invisible':[('is_check','=',False)]}"/>-->
-                           <field name="pv_number" string="PV Number"  attrs="{'invisible':[('is_check','=',False)]}"/>
-                            <field name="stamp_id"/>
+                        <group colspan="4" col="4" attrs="{'invisible':[('is_check','=',False)]}">
+                           <field name="check_number"/>
+                           <field name="bank_id"/>
+                           <field name="pv_number" string="PV Number"/>
+                           <field name="stamp_id"/>
+                           <field name="check_format_id"/>
+                           <field name="payment_reference"/>
                         </group>
+                        <!--<group>-->
+                            <!--&lt;!&ndash;<field name="account_no"  attrs="{'invisible':[('is_check','=',False)]}"/>&ndash;&gt;-->
+                           <!--<field name="pv_number" string="PV Number"  attrs="{'invisible':[('is_check','=',False)]}"/>-->
+                            <!--<field name="stamp_id"/>-->
+                        <!--</group>-->
                     </group>
+                    <notebook attrs="{'invisible':[('is_check','=',False)]}">
+                        <page string="Check Information">
+                             <group>
+                                <field name="payment_info_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="sun_account"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                         <page string="Previous Check">
+                             <group>
+                                 <field name="previous_check_ids" nolabel="1">
+                                    <tree>
+                                        <!--<field name="name"/>-->
+                                        <!--<field name="payment_type"/>-->
+                                        <!--<field name="payment_reference"/>-->
+                                        <field name="check_number"/>
+                                        <field name="bank_id"/>
+                                    </tree>
+                                 </field>
+                             </group>
+                        </page>
+                    </notebook>
                 </xpath>
             </field>
          </record>

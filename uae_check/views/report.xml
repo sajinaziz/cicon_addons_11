@@ -10,6 +10,17 @@
             report_type="qweb-pdf"
             header="False"
             />
+
+       <report id="uae_check.check_print"
+            name="uae_check.check_print_template"
+            auto="False"
+            model="account.payment"
+            file="uae_check.check_print"
+            string="Print Check"
+            report_type="qweb-pdf"
+            header="False"
+            />
+
       <!--If header is True then enable below line inside report id -->
       <!--webkit_header="base_headers_webkit.cerp_reports_portrait_header"-->
       <!--webkit_header="base_headers_webkit.without_header_a5_landscape"-->

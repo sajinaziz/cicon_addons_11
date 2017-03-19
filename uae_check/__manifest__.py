@@ -36,6 +36,7 @@ Module for the UAE Check Writing and Check Printing.
              'views/cic_check_aging_view.xml',
              'views/report.xml',
              'report/cheque_receipt_voucher.xml',
+             'report/check_print.xml',
              'security/uae_check_security.xml',
              'security/ir.model.access.csv'],
     'test': [],
