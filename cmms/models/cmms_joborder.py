@@ -227,7 +227,7 @@ class CmmsJobOrderCode(models.Model):
     cancelled = fields.Boolean('Is Cancelled')
     company_id = fields.Many2one('res.company', "Company", required=True)
 
-    _sql_constraint = [("unique_name", "unique(name)", "Job Order Code must be Unique")]
+    _sql_constraints = [("unique_name", "unique(name)", "Job Order Code must be Unique")]
 
 CmmsJobOrderCode()
 
