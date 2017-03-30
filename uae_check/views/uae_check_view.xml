@@ -81,7 +81,6 @@
                             <field name="is_check"/>
                         </group>
                         <group colspan="4" col="4" attrs="{'invisible':[('is_check','=',False)]}">
-                           <field name="check_number"/>
                            <field name="bank_id"/>
                            <field name="pv_number" string="PV Number"/>
                            <field name="stamp_id"/>
