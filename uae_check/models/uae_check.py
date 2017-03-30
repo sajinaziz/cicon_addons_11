@@ -148,19 +148,19 @@ class AccountPayment(models.Model):
 
 
     @api.depends('partner_id')
-    def _get_previos_checks(self):
+    def _get_previous_checks(self):
         for rec in self:
             _check_ids = self.env['account.payment'].search([('partner_id', '=', rec.partner_id.id)])
             rec.previous_check_ids = _check_ids._ids
 
-    is_check = fields.Boolean('Check Payment')
+    is_check = fields.Boolean('Check Payment',default=True)
     check_number = fields.Char('Check Number', size=32, help="Check Sequence Based on last check created for Bank")
     bank_id = fields.Many2one('res.bank', string="Bank", help="Bank for selected Company")
     pv_number = fields.Char('Payment Voucher No', size=10, help="Payment Voucher Number Sequence Based on last Created for Company ")
     check_format_id = fields.Many2one('ir.actions.report.xml',  ondelete='set null', string='Check Format')
     payment_info_ids = fields.One2many('cic.check.info', 'account_voucher_id', string="Check Payment Informations(CICON)",help="Check payment informations")
     # Dummy field to list Previously Created Checks for the selected Customer
-    previous_check_ids = fields.One2many('account.payment', compute=_get_previos_checks, string="Previous Check For Supplier", help="Previously Created Check Details for Selected Customer")
+    previous_check_ids = fields.One2many('account.payment', compute=_get_previous_checks, string="Previous Check For Supplier", help="Previously Created Check Details for Selected Customer")
     stamp_id = fields.Many2one('cic.check.stamp', 'Stamp Name')
     company_id = fields.Many2one('res.company', related=False, string="Company", readonly=False, default= lambda self: self.env.user.company_id)
 
