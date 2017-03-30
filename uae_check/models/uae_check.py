@@ -151,7 +151,7 @@ class AccountPayment(models.Model):
     def _get_previous_checks(self):
         for rec in self:
             _check_ids = self.env['account.payment'].search([('partner_id', '=', rec.partner_id.id)])
-            rec.previous_check_ids = _check_ids._ids
+            rec.previous_check_ids = _check_ids
 
     is_check = fields.Boolean('Check Payment',default=True)
     check_number = fields.Char('Check Number', size=32, help="Check Sequence Based on last check created for Bank")
@@ -178,6 +178,24 @@ class AccountPayment(models.Model):
                     }
                 return {'warning':  _warn}
             return {'domain': {'journal_id': [('company_id','=', self.company_id.id), ('type', '=', 'bank')]}}
+
+
+    @api.onchange('bank_id')
+    def bank_change(self):
+        if self.bank_id:
+            _last_check_id = self.env['account.payment'].search([('bank_id', '=', self.bank_id.id)], limit=1,
+                                                             order='id desc')
+            try:
+                _int_check_no = int(_last_check_id.check_number)
+                self.check_number = _int_check_no + 1
+
+            except Exception:
+                _warn = {
+                    'title': 'Warning!',
+                    'message': 'Last Check Number is not Number.'
+                }
+                return {'warning': _warn}
+            return {'domain': {'journal_id': [('bank_id', '=', self.bank_id.id), ('type', '=', 'bank')]}}
 
 _sql_constraints = [('unique_check_number', 'unique(check_number,journal_id)', 'Check Number Must be unique Per Bank Account')]
 
