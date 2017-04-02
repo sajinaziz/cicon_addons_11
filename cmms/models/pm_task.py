@@ -46,7 +46,7 @@ class CmmsBaseSchedule(models.Model):
     count = fields.Integer('Repeat', help="Repeat x times")
     select1 = fields.Selection([('date', 'Date of month'), ('day', 'Day of month')], 'Option')
     day = fields.Integer('Date of month', default=1)
-    week_list = fields.Selection(_week_list, 'Weekday')
+    week_list = fields.Selection(_week_list, 'WeekList')
     byday = fields.Selection([
             ('1', 'First'),
             ('2', 'Second'),
