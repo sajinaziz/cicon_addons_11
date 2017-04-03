@@ -39,9 +39,6 @@ class CmmsCommonReportWizard(models.TransientModel):
             self.start_date = saturday - timedelta(7 + sat_day - 6) # find  and assign the last saturday
             self.end_date = this_saturday #assign  the current day before  saturday
 
-
-
-
     report_by = fields.Selection([('this_month','This Month'),('this_week','This Week'),('last_month','Last Month'),('last_week','Last Week')],string='Report By')
     report_list = fields.Selection([('expense_report', 'Expense Summary'),
                                    ('expense_detailed', 'Expense Detailed'),
@@ -201,7 +198,6 @@ class CmmsCommonReportWizard(models.TransientModel):
         file_id = self.env['ir.attachment'].create(vals)
         return file_id
 
-
     @api.multi
     def show_report(self,data):
         self.ensure_one()
@@ -240,6 +236,7 @@ class CmmsCommonReportWizard(models.TransientModel):
             
         if self.report_list == 'parts_by_producttype_report':
             ctx['report_option'] = self.report_option
+            ctx['company_id'] = self.company_id.id
             if self.report_option == 'summary':
                 ctx['heading'] = "Spare Parts Summary by Product Type" + "(" + start_date + ' to ' + end_date + ' )'
             elif self.report_option == 'detail':

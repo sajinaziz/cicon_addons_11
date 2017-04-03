@@ -55,8 +55,8 @@ class InventoryExpenseReports(models.AbstractModel): # Report File Name
         _total = sum(x.amount for x in self._inv_lines.filtered(lambda r: r.machine_id == _machine))
         return _total
 
-    def _get_invoice_total_categ(self, _categ):
-        _total = sum(x.amount for x in self._inv_lines.filtered(lambda r: r.machine_id.category_id == _categ))
+    def _get_invoice_total_categ(self, _categ, _type):
+        _total = sum(x.amount for x in self._inv_lines.filtered(lambda r: r.machine_id.category_id == _categ and r.machine_id.type_id == _type))
         return _total
 
     def _get_invoice_total_type(self, _type):

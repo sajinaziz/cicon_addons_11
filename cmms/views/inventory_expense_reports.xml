@@ -20,7 +20,7 @@
                          <t t-foreach="categs" t-as="c">
                              <tr>
                                 <td> <span t-field="c.name" />  </td>
-                                <td class="text-right"> <span t-esc="get_total_categ(c)" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/>  </td>
+                                <td class="text-right"> <span t-esc="get_total_categ(c,o)" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/>  </td>
                              </tr>
                          </t>
                              <tr>
