@@ -8,13 +8,13 @@
                 <table class="table table-bordered">
                     <caption class="text-uppercase" style="text-align:center;"> <strong> <h3><span t-esc="heading" /> </h3></strong>  </caption>
                     <thead>
+                        <th class="text-center">SAT</th>
                         <th class="text-center">SUN</th>
                         <th class="text-center">MON</th>
                         <th class="text-center">TUE</th>
                         <th class="text-center">WED</th>
                         <th class="text-center">THU</th>
                         <th class="text-center">FRI</th>
-                        <th class="text-center">SAT</th>
                     </thead>
                     <tbody>
                     <tr>
