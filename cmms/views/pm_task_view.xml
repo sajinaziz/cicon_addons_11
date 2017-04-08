@@ -85,6 +85,21 @@
 
 
 
+          <record model="ir.ui.view" id="cmms_pm_schedule_search">
+			<field name="name">cmms.pm.schedule.search</field>
+            <field name="model">cmms.pm.schedule.master</field>
+			<field name="arch" type="xml" >
+                <search string="PM Schedule" >
+                    <field name="pm_scheme_id" widget="selection"/>
+                    <field name="interval_id" widget="selection"/>
+                    <field name="machine_ids" filter_domain="[('machine_ids.code', 'ilike', self)]" />
+                    <field name="next_date"/>
+                </search>
+            </field>
+          </record>
+
+
+
 
 
 

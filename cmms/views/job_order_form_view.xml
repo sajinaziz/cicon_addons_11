@@ -524,7 +524,12 @@
                         <td class="text-center"> <span t-field="t.pm_task_id.duration_str"/> </td>
                         <td> <span t-field="t.remarks"/> </td>
                         <td class="text-center">
-                             <input type="checkbox" t-att-checked="'checked' if t.state == 'done' else ''"  />
+                            <t t-if="t.state == 'done'">
+                                <input type="checkbox"  checked="checked" />
+                            </t>
+                            <t t-if="t.state != 'done'">
+                                <input type="checkbox" />
+                            </t>
                         </td>
                     </tr>
                     </t>
