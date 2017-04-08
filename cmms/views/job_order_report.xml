@@ -26,7 +26,7 @@
                                 <tr style="page-break-inside: avoid !important;">
                                    <td> <span t-esc="o_index +1"/> </td>
                                    <td style="width:8%"> <span t-field="o.name"/> </td>
-                                   <td style="width:8%"> <span t-field="o.job_order_date"/> </td>
+                                   <td style="width:10%"> <span t-field="o.job_order_date"/> </td>
                                    <td> <span t-field="o.machine_id.code"/> </td>
                                    <td style="width:20%"> <span t-field="o.reason"/> </td>
                                    <td style="width:20%"> <span t-field="o.corrective_action"/> </td>
@@ -45,7 +45,7 @@
                                             <table style="border:1px solid gray;" width="100%" >
                                                 <caption>Spare Parts : <span t-field="o.name"/> </caption>
                                                 <thead style="border:1px lightgray;">
-                                                    <tr>
+                                                    <tr style="page-break-inside: avoid !important;">
                                                         <th> Ref </th>
                                                         <th> Date </th>
                                                         <th> Product </th>
@@ -54,10 +54,10 @@
                                                         <th class="text-right" > Amount </th>
                                                         <th colspan="3" class="text-center" style="border:1px solid gray;"> History </th>
                                                     </tr>
-                                                    <tr>
+                                                    <tr style="page-break-inside: avoid !important;">
                                                         <th colspan="6"/>
                                                         <th class="text-center" style="border-left:1px solid gray;"> Used </th>
-                                                        <th class="text-center" > Last Date </th>
+                                                        <th style="padding:2px; width:10%;"> Last Date </th>
                                                         <th class="text-center" > Life Span (Days) </th>
                                                     </tr>
 
@@ -65,7 +65,7 @@
                                                 <tbody>
                                                 <tr t-foreach="o.spare_part_ids" t-as="p" style="border:1px solid lightgray;page-break-inside: avoid !important;">
                                                     <td style="height:20px;padding:2px; width:8%;"> <span t-esc="p.invoice_id.qb_inv_ref or p.name" /></td>
-                                                    <td style="height:20px;padding:2px; width:8%;"> <span t-field="p.invoice_id.invoice_date" /></td>
+                                                    <td style="height:20px;padding:2px; width:10%;"> <span t-field="p.invoice_id.invoice_date" /></td>
                                                     <td style="height:20px;padding:2px; width:34%;"> <span t-field="p.product_desc"/> </td>
                                                     <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-field="p.quantity"/> </td>
                                                     <td class="text-right" style="height:20px;padding:2px;width:8%;"> <span t-esc="p.unit_price" t-esc-options='{"widget": "monetary", "display_currency": "res_company.currency_id"}'/> </td>
