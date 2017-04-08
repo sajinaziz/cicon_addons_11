@@ -159,6 +159,10 @@
                     <filter name="this_month" string="This Month" domain="[('job_order_date','&gt;=',(context_today()).strftime('%%Y-%%m-01')),('job_order_date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01'))]" />
                     <seperator/>
                     <filter name="last_month" string="Last Month" domain="[('job_order_date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('job_order_date','&lt;',time.strftime('%%Y-%%m-01'))]" />
+                    <seperator/>
+                    <filter string="This Year" domain="[('job_order_date','&gt;=',(context_today()).strftime('%%Y-01-01')),('job_order_date','&lt;=', (context_today()+relativedelta(years=1)).strftime('%%Y-01-01'))]"/>
+                    <seperator/>
+                    <filter string="Last Year" domain="[('job_order_date','&gt;=',(context_today()-relativedelta(years=1)).strftime('%%Y-01-01')),('job_order_date','&lt;=', time.strftime('%%Y-01-01'))]"/>
                 </search>
 			</field>
         </record>

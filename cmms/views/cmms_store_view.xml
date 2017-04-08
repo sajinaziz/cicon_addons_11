@@ -194,6 +194,10 @@
                     <seperator/>
                     <filter name="this_month" string="This Month" domain="[('invoice_id.invoice_date','&gt;=',(context_today()).strftime('%%Y-%%m-01')),('invoice_id.invoice_date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01'))]" />
                     <seperator/>
+                    <filter string="Last Year" domain="[('invoice_id.invoice_date','&gt;=',(context_today()-relativedelta(years=1)).strftime('%%Y-01-01')),('invoice_id.invoice_date','&lt;=', time.strftime('%%Y-01-01'))]"/>
+                    <seperator/>
+                    <filter string="This Year" domain="[('invoice_id.invoice_date','&gt;=',(context_today()).strftime('%%Y-01-01')),('invoice_id.invoice_date','&lt;=', (context_today()+relativedelta(years=1)).strftime('%%Y-01-01'))]"/>
+                    <seperator/>
                     <filter name="pending" string="Without Job Order" domain="[('job_order_id','=',False)]" help="Not Mapped To any Job Order" />
                     <seperator/>
                     <filter name="part_type" string="Part Type- Un-Assigned" domain="[('spare_part_type_id','=',False)]" help="Not Assigned to Part Type" />

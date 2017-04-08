@@ -20,6 +20,8 @@ class CmmsCommonReportWizard(models.TransientModel):
         first_day = today.replace(day=1) # find the first day of the current date or current month
         last_day = today.replace(day=calendar.monthrange(today.year, today.month)[1]) # find the last day of the current date or current month
         week_day = (today.weekday()+1)% 7 # find the current day number: 1=monday, 6= saturday
+        current_year = datetime.today().strftime("%Y")
+        last_year = int(current_year) - 1
 
         saturday = today - timedelta(7 + week_day - 6) #find the current day before  saturday  and convert to the date format
         this_saturday = '{:%Y-%m-%d}'.format(saturday)
@@ -38,8 +40,14 @@ class CmmsCommonReportWizard(models.TransientModel):
             sat_day = (saturday.weekday() + 1) % 7  # find the last week  saturday number
             self.start_date = saturday - timedelta(7 + sat_day - 6) # find  and assign the last saturday
             self.end_date = this_saturday #assign  the current day before  saturday
+        elif self.report_by == "this_year":
+            self.start_date = date(int(current_year), 1, 1)
+            self.end_date = date(int(current_year), 12, 31)
+        elif self.report_by == "last_year":
+            self.start_date = date(int(last_year), 1, 1)
+            self.end_date = date(int(last_year), 12, 31)
 
-    report_by = fields.Selection([('this_month','This Month'),('this_week','This Week'),('last_month','Last Month'),('last_week','Last Week')],string='Report By')
+    report_by = fields.Selection([('this_month','This Month'),('this_week','This Week'),('this_year','This Year'),('last_month','Last Month'),('last_week','Last Week'),('last_year','Last Year')],string='Report By')
     report_list = fields.Selection([('expense_report', 'Expense Summary'),
                                    ('expense_detailed', 'Expense Detailed'),
                                     ('job_order_report','Job Order Report'),
@@ -93,7 +101,7 @@ class CmmsCommonReportWizard(models.TransientModel):
 
 
     ''' fill year select box values '''
-
+    #
     def _get_year(self):
         current_year = datetime.today().strftime("%Y")
         last_year = int(current_year) - 1
@@ -103,11 +111,27 @@ class CmmsCommonReportWizard(models.TransientModel):
          (prev_year, prev_year)]
         return _year
 
+    # @api.onchange('report_by_year')
+    # def _fill_year(self):
+    #     current_year = datetime.today().strftime("%Y")
+    #     last_year = int(current_year) - 1
+    #     prev_last_year = int(last_year) - 1
+    #     prev_year = int(prev_last_year) - 1
+    #
+    #     if self.report_by_year == "this_year":
+    #         self.report_year = [(current_year, current_year)]
+    #     elif self.report_by_year == "last_year":
+    #         self.report_year = [(last_year, last_year)]
+
+
+
+
     # report_year = fields.Selection(
     #     [(current_year, current_year), (last_year, last_year), (prev_last_year, prev_last_year),
     #      (prev_year, prev_year)],string="Year",default=current_year)
 
     report_year = fields.Selection(_get_year, string="Year")
+
 
     @api.onchange('report_year')
     def _fill_date(self):
