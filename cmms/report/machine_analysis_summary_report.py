@@ -70,7 +70,7 @@ class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
         _start_date = self._context.get('from_date')
         _end_date = self._context.get('to_date')
         _machine_list = []
-        _machines = self._machines.filtered(lambda r: r.category_id == _categ and r.type_id == _type)
+        _machines = self._machines.filtered(lambda r: r.category_id == _categ and r.type_id == _type).sorted(key=lambda r: r.set_code)
 
         for _mac in _machines.sorted(lambda a:a.code):
             _machine_entry = {}

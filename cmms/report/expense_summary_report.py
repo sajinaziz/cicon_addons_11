@@ -44,7 +44,8 @@ class InventoryExpenseReports(models.AbstractModel): # Report File Name
         return _categs
 
     def _get_machines(self, _type, _categ):
-        _machines = self._inv_lines.filtered(lambda r: r.machine_id.category_id == _categ and r.machine_id.type_id == _type).mapped('machine_id')
+        _machines = self._inv_lines.filtered(lambda r: r.machine_id.category_id == _categ and r.machine_id.type_id == _type).\
+            mapped('machine_id').sorted(key=lambda r: r.set_code)
         return _machines
 
     def _get_invoices(self, _machine):

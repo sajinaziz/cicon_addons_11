@@ -7,6 +7,7 @@ import xlsxwriter
 import cStringIO
 import base64
 
+
 JOB_ORDER_TYPE = [('breakdown', 'BREAKDOWN'), ('general', 'GENERAL'),('preventive','PREVENTIVE')]
 
 
@@ -147,7 +148,7 @@ class CmmsCommonReportWizard(models.TransientModel):
 
     def _gen_depreciation_report(self, end_date):
         _types = self.env['cmms.spare.part.type'].search([('is_asset', '=', True)])
-        _domain = [('invoice_date' ,'<=' , end_date), ('spare_part_type_id', 'in' , _types.ids), ('job_order_id','!=', False)]
+        _domain = [('invoice_date' ,'<=' , end_date), ('spare_part_type_id', 'in' , _types.ids), ('job_order_id','!=', False), ('company_id', '=', self.company_id.id)]
         _fields = ['machine_id','invoice_date', 'amount']
         _group_by = [('machine_id'),('invoice_date:month')]
         _store_lines = self.env['cmms.store.invoice.line'].read_group(domain=_domain, fields=_fields, groupby=_group_by,lazy=False)
@@ -163,7 +164,7 @@ class CmmsCommonReportWizard(models.TransientModel):
                 _invoice_date = datetime.strptime(_d_str, '%B %Y %d')
                 _invoice_amount = float(_r['amount'])
                 _run_amount = _invoice_amount
-                _dep_value =  float(_invoice_amount /24)
+                _dep_value = float(_invoice_amount /24)
                 for x in range(0,25,1):
                     _month = _invoice_date + relativedelta(months=x)
                     if _val.get(_month):
@@ -181,6 +182,8 @@ class CmmsCommonReportWizard(models.TransientModel):
 
         output = cStringIO.StringIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        format1 = workbook.add_format()
+        format1.set_num_format('###0.00')
         worksheet = workbook.add_worksheet()
         row = 0
         col = 3
@@ -188,6 +191,7 @@ class CmmsCommonReportWizard(models.TransientModel):
         worksheet.write(row, 1, 'Code')
         worksheet.write(row, 2, 'Name')
         worksheet.write(row, 3, 'Category')
+
         for _d in _date_list:
            col += 1
            worksheet.write(row, col, _d.strftime('%b %Y'))
@@ -196,14 +200,16 @@ class CmmsCommonReportWizard(models.TransientModel):
             worksheet.write(row, 0, row)
             worksheet.write(row, 1, rec.code)
             worksheet.write(row, 2, rec.name)
+            worksheet.write(row, 3, rec.category_id.name)
             col = 3
             for _d in _date_list:
                 col += 1
                 v = (_records[rec]).get(_d, '')
                 if v:
-                    v_amount = round(float(v),2)
+                    #v_amount = round(float(v),2)
+                    v_amount = format(float(v), '.2f')
                     #print v_amount
-                    worksheet.write(row, col, v_amount)
+                    worksheet.write(row, col, float(v_amount), format1)
 
         workbook.close()
         output.seek(0)
