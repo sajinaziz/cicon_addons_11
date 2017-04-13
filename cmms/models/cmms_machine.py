@@ -81,6 +81,24 @@ class CmmsMachine(models.Model):
         for _rec in self:
             _rec.job_order_open_count = self.env['cmms.job.order'].search_count([('machine_id','=',_rec.id),('job_order_type','=','breakdown'),('state','=','open')])
 
+    @api.one
+    @api.depends('group_id')
+    def _get_last_machines(self):
+        if self.group_id:
+            _res = []
+            machines = self.sudo().search([('group_id', '=', self.group_id.id)])
+            companies = machines.mapped('company_id')
+            for company in companies:
+                _codes = machines.filtered(lambda a: a.company_id.id == company.id).mapped('code')
+                if _codes:
+                    _max_codes = [filter(str.isdigit, str(x)) for x in _codes]
+                    if _max_codes:
+                        _max_code = max(_max_codes)
+                        _machine = machines.filtered(lambda m:  str(_max_code) in str(m.code))
+                        if _machine:
+                            _res.append(_machine[0].id)
+            self.previous_machine_ids = _res
+
     #code, store the machine code
     code = fields.Char('Code', size=10, help="Machine Code", required=True, track_visibility='always')
     name = fields.Char('Name', help="Machine Name", required=True)
@@ -113,8 +131,8 @@ class CmmsMachine(models.Model):
                              required=True, track_visibility='onchange')
     active = fields.Boolean('Active in System', default=True,   help="Is Machine Active in System")
     is_active = fields.Boolean('Is Active Machine', default=True, help="Is Machine Active or  Stand by", track_visibility='onchange')
-    last_machine_code = fields.Char('Last Machine Code',  store=False, help="Show Last Machine Code Created, "
-                                                                            "Please Select a group to show !.")
+    # last_machine_code = fields.Char('Last Machine Code',  store=False, help="Show Last Machine Code Created, "
+    #                                                                         "Please Select a group to show !.")
     #pm scheme id, relate to scheme table and store the scheme name
     pm_scheme_id = fields.Many2one('cmms.pm.scheme', string='PM Scheme', track_visibility='onchange')
     #pm task ids, relate to task view table and store the tasks
@@ -127,21 +145,21 @@ class CmmsMachine(models.Model):
     parts_cost = fields.Float('Parts Cost', compute=_job_order_count)
     #location id, relate to machine location table and store the location
     location_id = fields.Many2one('cmms.machine.location', string="Location",  track_visibility='onchange')
-
-    job_order_open_count = fields.Integer('Pending Job Orders', compute = compute_joborder_open_count)
+    previous_machine_ids = fields.Many2many('cmms.machine', compute=_get_last_machines, readonly=True,  strore=False, string="Last Created Machines" )
+    job_order_open_count = fields.Integer('Pending Job Orders', compute=compute_joborder_open_count)
 
     _sql_constraints = [("unique_machine_code", "UNIQUE(code)", "Machine Code Must be Unique")]
 
     _order = 'set_code'
 
-    @api.onchange('group_id')
+    # @api.onchange('group_id')
     #find out the last stored machine code
-    def onchange_group_id(self):
-        self.last_machine_code = ''
-        if self.group_id:
-            dm = [('group_id', '=', self.group_id.id)]
-            _machines = self.env['cmms.machine'].search(dm, order='id DESC', limit=1)
-            self.last_machine_code = _machines.code
+    # def onchange_group_id(self):
+    #     self.last_machine_code = ''
+    #     if self.group_id:
+    #         dm = [('group_id', '=', self.group_id.id)]
+    #         _machines = self.env['cmms.machine'].sudo().search(dm, order='id DESC', limit=1)
+    #         self.last_machine_code = _machines.code
 
 #store pmtask master data
 class CmmsPmTaskMaster(models.Model):
@@ -178,6 +196,7 @@ class CmmsPmTaskMaster(models.Model):
     duration_str = fields.Char(string='Duration', store=False, compute=_calc_str_duration)
 
     _order = 'pm_scheme_id,interval_id'
+
 
 
 class CmmsMachineTaskView(models.Model):

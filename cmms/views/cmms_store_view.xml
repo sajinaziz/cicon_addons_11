@@ -2,19 +2,19 @@
 <odoo>
     <data>
 
-    <record model="ir.ui.view" id="cmms_store_invoice_tree">
-            <field name="name">cmms.store.invoice.tree</field>
-            <field name="model">cmms.store.invoice</field>
-           <field name="arch" type="xml" >
-                <tree string="Store Invoice">
-                    <field name="name" />
-                    <field name="invoice_date"/>
-                    <field name="qb_ref"/>
-                    <field name="qb_inv_name"/>
-                    <field name="state" invisible="1"/>
-                </tree>
-            </field>
-    </record>
+        <record model="ir.ui.view" id="cmms_store_invoice_tree">
+                <field name="name">cmms.store.invoice.tree</field>
+                <field name="model">cmms.store.invoice</field>
+               <field name="arch" type="xml" >
+                    <tree string="Store Invoice">
+                        <field name="name" />
+                        <field name="qb_inv_ref"/>
+                        <field name="invoice_date"/>
+                        <field name="qb_inv_name"/>
+                        <field name="state" invisible="1"/>
+                    </tree>
+                </field>
+        </record>
 
 
      <record model="ir.ui.view" id="cmms_store_invoice_form">
@@ -94,6 +94,17 @@
         </field>
     </record>
 
+            <record model="ir.ui.view" id="cmms_store_invoice_search">
+                <field name="name">cmms.store.invoice.search</field>
+                <field name="model">cmms.store.invoice</field>
+                    <field name="arch" type="xml" >
+                        <search string="Store Invoice Line">
+                            <field name="name"/>
+                            <field name="qb_inv_ref"/>
+                            <field name="qb_inv_name"/>
+                        </search>
+                    </field>
+            </record>
 
 
 
@@ -182,12 +193,13 @@
 
 
 
-          <record model="ir.ui.view" id="cmms_store_invoice_line_search">
-			  <field name="name">cmms.store.invoice.line.search</field>
+            <record model="ir.ui.view" id="cmms_store_invoice_line_search">
+            <field name="name">cmms.store.invoice.line.search</field>
             <field name="model">cmms.store.invoice.line</field>
 			<field name="arch" type="xml" >
                 <search string="Store Invoice Line" >
                     <field name="invoice_id"/>
+
                     <field name="job_order_id"/>
                     <field name="machine_id"/>
                     <filter name="last_month" string="Last Month" domain="[('invoice_id.invoice_date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('invoice_id.invoice_date','&lt;',time.strftime('%%Y-%%m-01'))]" />

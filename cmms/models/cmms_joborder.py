@@ -170,10 +170,10 @@ class CmmsJobOrder(models.Model):
             self.name = _latest_rec.name
             _dm = {}
             if self.job_order_type == 'general':
-               _dm['machine_id'] = [('is_machinery', '=', False),('company_id', '=', self.company_id.id)]
-            elif self.job_order_type == 'breakdown' or self.job_order_type== 'preventive':
+                _dm['machine_id'] = [('company_id', '=', self.company_id.id)]
+            elif self.job_order_type == 'breakdown' or self.job_order_type == 'preventive':
                 _dm['machine_id'] = [('is_machinery', '=', True), ('company_id', '=', self.company_id.id)]
-            return {'domain': _dm }
+            return {'domain': _dm}
 
 
     @api.multi
