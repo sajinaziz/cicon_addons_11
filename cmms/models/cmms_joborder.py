@@ -144,7 +144,7 @@ class CmmsJobOrder(models.Model):
     #work hour, calulate the wrk hour using _calc_total function
     work_hour = fields.Float(string='Work Hours', compute=_calc_total)
 
-    _order = 'job_order_date desc'
+    _order = 'name desc'
 
     _sql_constraints = [("unique_code", "unique(name)", "Job Order Code must be Unique")]
 
@@ -161,10 +161,6 @@ class CmmsJobOrder(models.Model):
         if self.job_order_type:
             _last_rec = self.search([], order='id desc', limit=1)
             _last_id = _last_rec.job_order_code_id.id or 0
-            _last_job = self.search([], order='id desc', limit=1)
-            self.technician = _last_job.technician
-            self.foreman = _last_job.foreman
-            self.attended_by = _last_job.attended_by
             _latest_rec = self.env['cmms.job.order.code'].search([('printed', '=', True), ('created', '=', False), ('cancelled', '=', False), ('company_id', '=', self.env.user.company_id.id), ('job_order_type', '=',  self.job_order_type), ('id', '>', _last_id)], order='id',   limit=1)
             self.job_order_code_id = _latest_rec.id
             self.name = _latest_rec.name
@@ -175,6 +171,18 @@ class CmmsJobOrder(models.Model):
                 _dm['machine_id'] = [('is_machinery', '=', True), ('company_id', '=', self.company_id.id)]
             return {'domain': _dm}
 
+    @api.onchange('job_order_date')
+    def _onchange_job_date(self):
+        if self.job_order_date and self.job_order_type == 'breakdown':
+            _dt = datetime.strptime(self.job_order_date + ' 06:00:00', tools.DEFAULT_SERVER_DATETIME_FORMAT)
+            if not self.reported_datetime:
+                self.reported_datetime = _dt.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT)
+            if not self.breakdown_datetime:
+                self.breakdown_datetime = self.reported_datetime
+            if not self.work_start_datetime:
+                self.work_start_datetime = self.reported_datetime
+            if not self.work_end_datetime:
+                self.work_end_datetime = _dt + timedelta(minutes=15)
 
     @api.multi
     def unlink(self):

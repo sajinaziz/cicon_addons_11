@@ -59,12 +59,7 @@
                             </group>
                          </group>
                           <group>
-                            <field name="previous_machine_ids" attrs="{'invisible':[('id','!=',False)]}">
-                                    <tree default_order="company_id">
-                                        <field name="code"/>
-                                        <field name="company_id"/>
-                                    </tree>
-                                </field>
+                            <field name="previous_machines" attrs="{'invisible':[('id','!=',False)]}"/>
                           </group>
                         <notebook>
                             <page string="Description">

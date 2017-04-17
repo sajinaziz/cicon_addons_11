@@ -10,7 +10,7 @@ class CmmsJobOrderMasterWizard(models.TransientModel):
 
     job_order_type = fields.Selection(JOB_ORDER_TYPE, "Job Order Type", required=True)
     last_code = fields.Char('Last Job Code', readonly=True, store=False)
-    to_number = fields.Integer('Number of Job Order Required (Max 20)', default=20)
+    to_number = fields.Integer('Number of Job Order Required (Max 50)', default=20)
 
     @api.onchange('job_order_type')
     def _get_last(self):
@@ -23,7 +23,7 @@ class CmmsJobOrderMasterWizard(models.TransientModel):
 
     @api.multi
     def generate_job_order(self):
-        if self.to_number < 21:
+        if self.to_number < 51:
             _job_obj = self.env['cmms.job.order.code']
             _j_ids = []
             for x in range(1, self.to_number + 1):

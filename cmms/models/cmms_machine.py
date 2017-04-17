@@ -96,8 +96,11 @@ class CmmsMachine(models.Model):
                         _max_code = max(_max_codes)
                         _machine = machines.filtered(lambda m:  str(_max_code) in str(m.code))
                         if _machine:
-                            _res.append(_machine[0].id)
-            self.previous_machine_ids = _res
+                            _res.append(_machine[0])
+            self.previous_machines = ''
+            for r in _res:
+                self.previous_machines += r.code + " / " + r.company_id.name
+                self.previous_machines += "\n"
 
     #code, store the machine code
     code = fields.Char('Code', size=10, help="Machine Code", required=True, track_visibility='always')
@@ -145,7 +148,7 @@ class CmmsMachine(models.Model):
     parts_cost = fields.Float('Parts Cost', compute=_job_order_count)
     #location id, relate to machine location table and store the location
     location_id = fields.Many2one('cmms.machine.location', string="Location",  track_visibility='onchange')
-    previous_machine_ids = fields.Many2many('cmms.machine', compute=_get_last_machines, readonly=True,  strore=False, string="Last Created Machines" )
+    previous_machines = fields.Text(compute=_get_last_machines, readonly=True,  strore=False, string="Last Created Machines" )
     job_order_open_count = fields.Integer('Pending Job Orders', compute=compute_joborder_open_count)
 
     _sql_constraints = [("unique_machine_code", "UNIQUE(code)", "Machine Code Must be Unique")]
