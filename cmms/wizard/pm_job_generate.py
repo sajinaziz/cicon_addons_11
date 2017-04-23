@@ -23,7 +23,7 @@ class CmmsPmGenerateWizard(models.TransientModel):
         _pm_job_ids = []
         if _sch_recs:
             _machines = _sch_recs.mapped('machine_ids')
-            for m in _machines.filtered(lambda m: m.company_id.id == self.env.user.company_id.id).sorted(key=lambda r: r.code):
+            for m in _machines.filtered(lambda m: m.company_id.id == self.env.user.company_id.id and  m.is_active == True).sorted(key=lambda r: r.code):
                 _exist = self.env['cmms.job.order'].search([('machine_id', '=', m.id),
                                                             ('job_order_type', '=', 'preventive'),
                                                             ('job_order_date', '=', self.pm_date)], limit=1)
@@ -51,11 +51,11 @@ class CmmsPmGenerateWizard(models.TransientModel):
                         'company_id': m.company_id.id
 
                     }
-                    _job_order =  _job_obj.create(_pm_job_order)
+                    _job_order = _job_obj.create(_pm_job_order)
                     if _job_order:
                         _pm_job_ids.append(_job_order.id)
         if len(_pm_job_ids) > 0:
-            _pm_jobs =_job_obj.search([('id','in',_pm_job_ids)])
+            _pm_jobs =_job_obj.search([('id', 'in', _pm_job_ids)])
             return self.env['report'].get_action(_pm_jobs, 'cmms.cmms_job_order_template')
         else:
             return False
