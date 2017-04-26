@@ -62,10 +62,21 @@
         model="cmms.machine"
         report_type="qweb-pdf"
         file="cmms.report_machine_summary"
-        name="cmms.report_machine_summary_template"
+        name="cmms.report_machine_summary_main_template"
     />
 
-         <report
+
+     <report
+        id="report_cmms_machine_breakdown_summary"
+        string="Machine Summary By Breakdown"
+        model="cmms.machine"
+        report_type="qweb-pdf"
+        file="cmms.report_machine_summary"
+        name="cmms.report_machine_breakdown_summary_main_template"
+     />
+
+
+     <report
         id="report_cmms_pratsby_producttype_summary"
         string="Parts By Product Type Summary"
         model="cmms.common.report.wizard"
