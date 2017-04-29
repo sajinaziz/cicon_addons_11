@@ -58,7 +58,7 @@
 
      <report
         id="report_cmms_machine_summary"
-        string="Machine Summary"
+        string="Machine History"
         model="cmms.machine"
         report_type="qweb-pdf"
         file="cmms.report_machine_summary"
@@ -68,7 +68,7 @@
 
      <report
         id="report_cmms_machine_breakdown_summary"
-        string="Machine Summary By Breakdown"
+        string="Machine History (Breakdown)"
         model="cmms.machine"
         report_type="qweb-pdf"
         file="cmms.report_machine_summary"

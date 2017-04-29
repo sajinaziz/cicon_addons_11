@@ -2,7 +2,7 @@
 <odoo>
 <data>
 <template id="report_machine_summary_template">
-     <tbody>
+
           <tr style="page-break-inside:avoid!important;page-break-after:auto">
                 <td t-att-rowspan="partcount" style="width:8%"><span t-field="r.name" /> </td>
                 <td t-att-rowspan="partcount" style="width:8%"><span t-field="r.job_order_date" /></td>
@@ -30,59 +30,44 @@
                     <td></td>
                 </t>
           </tr>
-     </tbody>
+
 
 </template>
 
-<template id="report_machine_summary_main_template">
-    <style type="text/css">
-         .col-xs-2  text-left,col-xs-4  text-left{
-            border: 1px solid;
-        }
-    </style>
-     <t t-call="report.html_container">
-          <t t-foreach="docs" t-as="o">
-             <t t-call="cmms.cmms_internal_layout">
-                <div class="page" style="padding-top:20px;">
-                    <h3 class="text-center" style="color:red;">Machine History Card</h3>
-                     <div class="row" style="outline: 1px solid;">
-                         <div class="col-xs-2 text-left">Name:</div>
-                         <div class="col-xs-2 text-left" style="border-right:1px solid;"><span t-field="o.name"/></div>
-                         <div class="col-xs-2 text-left">Supplier:</div>
-                         <div class="col-xs-2 text-left" style="border-right:1px solid;"><span t-field="o.supplier_id" /></div>
-                         <div class="col-xs-2  text-left">Type:</div>
-                         <div class="col-xs-2  text-left"><span t-field="o.type_id"/></div>
-                     </div>
-                     <div class="row" style="outline: 1px solid;">
-                         <div class="col-xs-2  text-left">Machine No.:</div>
-                         <div class="col-xs-2  text-left" style="border-right:1px solid;"><span t-field="o.code"/></div>
-                         <div class="col-xs-2  text-left">Mfg Year:</div>
-                         <div class="col-xs-2  text-left" style="border-right:1px solid;"><span t-field="o.mfg_year" /></div>
-                         <div class="col-xs-2  text-left">Category:</div>
-                         <div class="col-xs-2  text-left"><span t-field="o.category_id" /></div>
-                     </div>
-                     <div class="row" style="outline: 1px solid;">
-                           <div class="col-xs-2  text-left">Model.:</div>
-                           <div class="col-xs-2  text-left" style="border-right:1px solid;"><span t-field="o.model"/></div>
-                           <div class="col-xs-2  text-left">Serial No.:</div>
-                           <div class="col-xs-2  text-left" style="border-right:1px solid;"><span t-field="o.serial_no" /></div>
-                           <div class="col-xs-2  text-left">Group:</div>
-                           <div class="col-xs-2  text-left"><span t-field="o.group_id" /></div>
+<template id="report_machine_summary_machine_info">
 
-                     </div>
-                     <div class="row" style="outline: 1px solid;min-height:15px;">
-                           <div class="col-xs-2  text-left">Company:</div>
-                           <div class="col-xs-4  text-left"><span t-field="o.company_id"/></div>
-                           <div class="col-xs-2  text-left">Location:</div>
-                           <div class="col-xs-4  text-left"><span t-field="o.location_id" /></div>
-                     </div>
+        <table class="table table-condensed">
+            <caption class="text-center"> <h3> Machine History Card  </h3> </caption>
+           <tbody>
+               <tr>
+                   <th style="width:15%" > Name &amp; Code:</th>
+                   <td class="text-left">  <span t-field="o.code"/>  / <span t-field="o.name"/>  </td>
+               </tr>
+               <tr>
+                   <th>Type &amp; Category :</th>
+                   <td class="text-left">  <span t-field="o.type_id.name"/>  / <span t-field="o.category_id.name"/>  </td>
+               </tr>
+               <tr>
+                   <th> Supplier &amp; Mfg Year :</th>
+                   <td class="text-left">  <span t-field="o.supplier_id.name"/>  / <span t-field="o.mfg_year"/>  </td>
+               </tr>
+               <tr>
+                   <th> Model &amp; Serial :</th>
+                   <td class="text-left">   <span t-field="o.model"/>  / <span t-field="o.serial_no"/>  </td>
+               </tr>
+                <tr>
+                   <th> Company  &amp; Location :</th>
+                   <td class="text-left">  <span t-field="o.company_id.name"/>  / <span t-field="o.location_id.name"/>  </td>
+               </tr>
+           </tbody>
+        </table>
+        <div class="row"  style="margin-top:15px;"/>
+</template>
 
-                <div class="row"  style="margin-top:15px;"/>
-                <div class="row">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr><th colspan="11" style="text-align:right;margin-right:50px;">PARTS USED</th></tr>
-                            <tr>
+<template id="report_machine_summary_table_head">
+    <thead>
+        <tr><th colspan="11" style="text-align:right;margin-right:50px;">PARTS USED</th></tr>
+        <tr>
                                 <th> Code</th>
                                 <th> Date </th>
                                 <th> Cause/reason </th>
@@ -95,7 +80,23 @@
                                 <th> Amount </th>
                                 <th>Total</th>
                             </tr>
-                        </thead>
+    </thead>
+</template>
+
+<template id="report_machine_summary_main_template">
+    <style type="text/css">
+         .col-xs-2  text-left,col-xs-4  text-left{
+            border: 1px solid;
+        }
+    </style>
+     <t t-call="report.html_container">
+          <t t-foreach="docs" t-as="o">
+             <t t-call="cmms.cmms_internal_layout">
+                <div class="page">
+                <t t-call="cmms.report_machine_summary_machine_info"/>
+                <div class="row">
+                    <table class="table table-bordered">
+                        <t t-call="cmms.report_machine_summary_table_head"/>
                         <tbody>
                            <t t-foreach="o.job_order_ids" t-as="r">
                                <t t-set="partcount" t-value="len(r.spare_part_ids)" />
@@ -121,59 +122,11 @@
      <t t-call="report.html_container">
           <t t-foreach="docs" t-as="o">
              <t t-call="cmms.cmms_internal_layout">
-                <div class="page" style="padding-top:20px;">
-                    <h3 class="text-center" style="color:red;">Machine History Card</h3>
-                     <div class="row" style="outline: 1px solid;">
-                         <div class="col-xs-2 text-left">Name:</div>
-                         <div class="col-xs-2 text-left" style="border-right:1px solid;"><span t-field="o.name"/></div>
-                         <div class="col-xs-2 text-left">Supplier:</div>
-                         <div class="col-xs-2 text-left" style="border-right:1px solid;"><span t-field="o.supplier_id" /></div>
-                         <div class="col-xs-2  text-left">Type:</div>
-                         <div class="col-xs-2  text-left"><span t-field="o.type_id"/></div>
-                     </div>
-                     <div class="row" style="outline: 1px solid;">
-                         <div class="col-xs-2  text-left">Machine No.:</div>
-                         <div class="col-xs-2  text-left" style="border-right:1px solid;"><span t-field="o.code"/></div>
-                         <div class="col-xs-2  text-left">Mfg Year:</div>
-                         <div class="col-xs-2  text-left" style="border-right:1px solid;"><span t-field="o.mfg_year" /></div>
-                         <div class="col-xs-2  text-left">Category:</div>
-                         <div class="col-xs-2  text-left"><span t-field="o.category_id" /></div>
-                     </div>
-                     <div class="row" style="outline: 1px solid;">
-                           <div class="col-xs-2  text-left">Model.:</div>
-                           <div class="col-xs-2  text-left" style="border-right:1px solid;"><span t-field="o.model"/></div>
-                           <div class="col-xs-2  text-left">Serial No.:</div>
-                           <div class="col-xs-2  text-left" style="border-right:1px solid;"><span t-field="o.serial_no" /></div>
-                           <div class="col-xs-2  text-left">Group:</div>
-                           <div class="col-xs-2  text-left"><span t-field="o.group_id" /></div>
-
-                     </div>
-                     <div class="row" style="outline: 1px solid;min-height:15px;">
-                           <div class="col-xs-2  text-left">Company:</div>
-                           <div class="col-xs-4  text-left"><span t-field="o.company_id"/></div>
-                           <div class="col-xs-2  text-left">Location:</div>
-                           <div class="col-xs-4  text-left"><span t-field="o.location_id" /></div>
-                     </div>
-
-                <div class="row"  style="margin-top:15px;"/>
+                <div class="page">
+                 <t t-call="cmms.report_machine_summary_machine_info"/>
                 <div class="row">
                     <table class="table table-bordered">
-                        <thead>
-                            <tr><th colspan="11" style="text-align:right;margin-right:50px;">PARTS USED</th></tr>
-                            <tr>
-                                <th> Code</th>
-                                <th> Date </th>
-                                <th> Cause/reason </th>
-                                <th> Work Done </th>
-                                <th> Category</th>
-                                <th> Type </th>
-                                <th> Description</th>
-                                <th> Quantity </th>
-                                <th> Unit Price </th>
-                                <th> Amount </th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
+                            <t t-call="cmms.report_machine_summary_table_head"/>
                         <tbody>
                            <t t-foreach="o.job_order_ids" t-as="r">
                                <t t-set="partcount" t-value="len(r.spare_part_ids)" />
