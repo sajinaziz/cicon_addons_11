@@ -17,7 +17,7 @@
                         <th class="text-center">FRI</th>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr style="page-break-inside: avoid">
                         <t t-foreach="docs" t-as="o">
                             <td >
                                 <div class="text-center" style="min-height:100px;">
@@ -38,7 +38,7 @@
                             </td>
                             <t t-if="int(o_index+1)%7 == 0">
                                   &lt;/tr &gt;
-                                  &lt;tr &gt;
+                                  &lt;tr style="page-break-inside: avoid" &gt;
                             </t>
                         </t>
                      </tr>
