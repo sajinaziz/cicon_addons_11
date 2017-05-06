@@ -147,7 +147,7 @@
                             <field name="amount" />
                         </group>
                         <group col="4">
-                             <field name="qb_prod_desc" invisible="1"/>
+                             <field name="qb_prod_desc" string="QB Description" />
                              <field name="job_order_id"/>
                              <field name="machine_id"/>
                              <field name="spare_part_type_id"/>
@@ -222,23 +222,23 @@
 
 
 
-          <!--<record id="action_recon_job_order" model="ir.actions.server">-->
-            <!--<field name="name">Re-Check Job Order</field>-->
-            <!--<field name="model_id" ref="model_cmms_store_invoice_line"/>-->
-            <!--<field name="state">code</field>-->
-            <!--<field name="code">-->
-                <!--self.set_job_order(cr,uid,context.get('active_ids'),context=context)-->
-            <!--</field>-->
-        <!--</record>-->
+          <record id="action_recon_job_order" model="ir.actions.server">
+            <field name="name">Re-Check Job Order</field>
+            <field name="model_id" ref="model_cmms_store_invoice_line"/>
+            <field name="state">code</field>
+            <field name="code">
+                records.set_job_order()
+            </field>
+        </record>
 
-        <!--<record model="ir.values" id="action_recon_job_order_key">-->
-            <!--<field name="name">Re-Calculate - Job Order</field>-->
-            <!--<field name="action_id" ref="action_recon_job_order" />-->
-            <!--<field name="value" eval="'ir.actions.server,' + str(ref('action_recon_job_order'))" />-->
-            <!--<field name="key">action</field>-->
-            <!--<field name="model">cmms.store.invoice.line</field>-->
-            <!--<field name="key2">client_action_multi</field>-->
-        <!--</record>-->
+        <record model="ir.values" id="action_recon_job_order_key">
+            <field name="name">Re-Check - Job Order</field>
+            <field name="action_id" ref="action_recon_job_order" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_recon_job_order'))" />
+            <field name="key">action</field>
+            <field name="model">cmms.store.invoice.line</field>
+            <field name="key2">client_action_multi</field>
+        </record>
 
 
 

@@ -130,8 +130,8 @@ class CmmsStoreInvoice(models.Model):
         """To Get Last updated  """
         #_updated_datetime = '2015-11-29 00:00:00'
         _updated_datetime = ''
-        qry = "SELECT MAX(qb_last_updated) FROM cmms_store_invoice WHERE company_id = %s" % (
-            self.env.user.company_id.id)
+        qry = "SELECT MAX(qb_last_updated) FROM cmms_store_invoice WHERE company_id = %s and user_id = %d" % (
+            self.env.user.company_id.id, self.env.user.id)
         self.env.cr.execute(qry)
         last_updated = self.env.cr.fetchone()
         if last_updated[0] is not None:
@@ -369,6 +369,14 @@ class CmmsStoreInvoiceLine(models.Model):
 #     #                     rec.write({'job_order_id': _job[0]})
 #
 #     _sql_constraints = [('uniq_name', 'UNIQUE(qb_line_ref)', 'Unique Line Reference')]
+
+    def set_job_order(self):
+        for rec in self:
+            if rec.job_code:
+                _job = self.env['cmms.job.order'].search([('name', '=', rec.job_code), ('company_id', '=', self.env.user.company_id.id) ])
+                if _job:
+                    rec.job_order_id = _job.id
+
 #
 # CmmsStoreInvoiceLine()
 
