@@ -114,11 +114,11 @@ class CmmsStoreInvoice(models.Model):
     @api.multi
     def unlink(self):
         self.ensure_one()
-        if self.state == 'draft':
+        if self.state == 'draft' and (self.user_id.id == self.env.user.id or self.env.user.id == 1):
             res = super(CmmsStoreInvoice, self).unlink()
             return res
         else:
-            raise UserError('Delete can perform only in draft state !')
+            raise UserError('Delete can perform only in draft state and by created User!')
 
     _sql_constraints = [('uniq_ref', 'UNIQUE(qb_ref)', 'Unique QB Reference'),
                         ('uniq_name', 'UNIQUE(name)', 'Unique Reference')]
@@ -320,6 +320,8 @@ class CmmsStoreInvoiceLine(models.Model):
     qb_amount = fields.Float('QB Total Amount', help='Sale Price in QB')
     qb_parent_product = fields.Char('QB Parent Product')
 
+    _sql_constraints = [('uniq_name', 'UNIQUE(qb_line_ref)', 'Unique Line Reference')]
+
 
 
 
@@ -357,19 +359,7 @@ class CmmsStoreInvoiceLine(models.Model):
             self.write({'move_id': scrap_move.id})
             scrap_move.action_done()
 
-#     # @api.v7 # Server Action for re-construct job order link
-#     # def set_job_order(self, cr, uid, ids, context=None):
-#     #     if ids:
-#     #         lines = self.browse(cr, uid, ids)
-#     #         for rec in lines:
-#     #             if rec.job_code:
-#     #                 _job_obj = self.pool['cmms.job.order']
-#     #                 _job = _job_obj.search(cr, uid, [('name', '=', rec.job_code)], limit=1)
-#     #                 if _job:
-#     #                     rec.write({'job_order_id': _job[0]})
-#
-#     _sql_constraints = [('uniq_name', 'UNIQUE(qb_line_ref)', 'Unique Line Reference')]
-
+    # Server Action to Re-Check Job Order for Invoice Lines
     def set_job_order(self):
         for rec in self:
             if rec.job_code:
@@ -377,6 +367,13 @@ class CmmsStoreInvoiceLine(models.Model):
                 if _job:
                     rec.job_order_id = _job.id
 
-#
-# CmmsStoreInvoiceLine()
+    @api.multi
+    def unlink(self):
+        self.ensure_one()
+        if self.state == 'draft' and (self.invoice_id.user_id.id == self.env.user.id or self.env.user.id == 1):
+            res = super(CmmsStoreInvoice, self).unlink()
+            return res
+        else:
+            raise UserError('Delete can perform only in draft state and by created User!')
+
 

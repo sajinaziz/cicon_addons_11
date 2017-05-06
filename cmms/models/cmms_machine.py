@@ -155,19 +155,11 @@ class CmmsMachine(models.Model):
 
     _order = 'set_code'
 
-    # @api.onchange('group_id')
-    #find out the last stored machine code
-    # def onchange_group_id(self):
-    #     self.last_machine_code = ''
-    #     if self.group_id:
-    #         dm = [('group_id', '=', self.group_id.id)]
-    #         _machines = self.env['cmms.machine'].sudo().search(dm, order='id DESC', limit=1)
-    #         self.last_machine_code = _machines.code
 
-#store pmtask master data
 class CmmsPmTaskMaster(models.Model):
     _name = "cmms.pm.task.master"
     _description = "Preventive Maintenance Tasks"
+    _inherit = ['mail.thread']
 
     def _str_hour(self, _duration):
         duration_str ='00:00'
@@ -176,30 +168,30 @@ class CmmsPmTaskMaster(models.Model):
             duration_str = str(_duration_to_hour)
         return duration_str
 
-
-
     @api.multi
     @api.depends('duration')
     def _calc_str_duration(self):
         for rec in self:
             rec.duration_str = self._str_hour(rec.duration)
 
-    name = fields.Char('PM Task Description', size=200, required=True)
+    name = fields.Char('PM Task Description', size=200, required=True, track_visibility='onchange' )
     #pm scheme id, relate to scheme table and store the pm scheme names
-    pm_scheme_id = fields.Many2one('cmms.pm.scheme', 'PM Scheme', required=True)
+    pm_scheme_id = fields.Many2one('cmms.pm.scheme', 'PM Scheme', required=True, track_visibility='onchange')
     #interval id, relate to pm interval table and store the interval
-    interval_id = fields.Many2one('cmms.pm.interval', "Interval",required=True)
+    interval_id = fields.Many2one('cmms.pm.interval', "Interval",required=True, track_visibility='onchange')
     #action by, store the action like operator or technician
     action_by = fields.Selection([('operator', 'Operator'), ('technician', 'Technician')], string='Action By', default='technician')
-    active = fields.Boolean('Is Active', default=True)
+    active = fields.Boolean('Is Active', default=True, track_visibility='onchange')
     material_required = fields.Text('Materials / Tools Required')
     #approx. cost , approximate cost for performing the task.
     approx_cost = fields.Float('Approx. Cost', digits=(10, 2), help="Approx. Cost to perform this Task")
     duration = fields.Float('Duration', digits=(4, 2), help="Approx. Duration to perform Task")
     duration_str = fields.Char(string='Duration', store=False, compute=_calc_str_duration)
+    user_id = fields.Many2one('res.users', "Created By", default=lambda self: self.env.user.id)
+
+    _sql_constraints = [("unique_task", "UNIQUE(name,pm_scheme_id,interval_id)", "Task Must be Unique in Scheme")]
 
     _order = 'pm_scheme_id,interval_id'
-
 
 
 class CmmsMachineTaskView(models.Model):
