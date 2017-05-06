@@ -24,7 +24,7 @@
             <form string="Store Invoice">
                 <header>
                     <button name="set_confirm"  icon="fa-check-circle" class="oe_highlight" string="Confirm" states="draft" type="object"/>
-                    <button name="set_draft"  icon="fa-check-circle" string="Set Draft" states="confirmed,done" groups="cmms.group_cmms_supervisor" type="object"/>
+                    <button name="set_draft"  icon="fa-check-circle" string="Set Draft" states="confirmed,done" groups="cmms.group_cmms_user" type="object"/>
                     <button name="move_consume" icon="fa-forward" class="oe_highlight" string="Post" states="confirmed" type="object" />
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"   />
                 </header>

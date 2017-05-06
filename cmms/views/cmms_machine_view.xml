@@ -255,7 +255,7 @@
                 <group>
                     <field name="name"/>
                     <field name="pm_tasks_ids">
-                        <tree string="PM Tasks" editable="bottom">
+                        <tree string="PM Tasks" >
                             <field name="name"/>
                             <field name="interval_id"/>
                         </tree>
@@ -265,6 +265,7 @@
                     </field>
                 </group>
                 </sheet>
+
             </form>
         </field>
     </record>
@@ -279,7 +280,6 @@
                     <field name="interval_id"/>
                     <field name="duration" widget="float_time"/>
                     <field name="action_by"/>
-
                 </tree>
             </field>
         </record>
@@ -307,6 +307,9 @@
                                 <field name="material_required"/>
                             </group>
                         </sheet>
+                         <div class="oe_chatter">
+                           <field name="message_ids" widget="mail_thread"/>
+                         </div>
                     </form>
                 </field>
             </record>
