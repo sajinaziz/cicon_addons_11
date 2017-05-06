@@ -255,7 +255,7 @@
                 <group>
                     <field name="name"/>
                     <field name="pm_tasks_ids">
-                        <tree string="PM Tasks" >
+                        <tree string="PM Tasks" editable="bottom" >
                             <field name="name"/>
                             <field name="interval_id"/>
                         </tree>
