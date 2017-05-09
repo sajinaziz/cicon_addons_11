@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <record id="drawing_type" model="tech.document_type">
+        <record id="drawing_type_1" model="tech.document_type">
             <field name="name">Drawing</field>
             <field name="suffix">DWG</field>
+        </record>
+        <record id="drawing_type_2" model="tech.document_type">
+            <field name="name">BBS</field>
+            <field name="suffix">BBS</field>
         </record>
     </data>
 </odoo>

@@ -19,6 +19,5 @@ access_tech_drawing_register_admin,tech.drawing.register admin,model_tech_drawin
 access_res_partner_user,res.partner.tech user,base.model_res_partner,group_tech_user,1,0,0,0
 access_revision_reason_user,revision.reason User,model_tech_submittal_revision_reason,group_tech_user,1,0,0,0
 access_revision_reason_admin,revision.reason Admin,model_tech_submittal_revision_reason,group_tech_admin,1,1,1,0
-access_tech_consultant_admin,tech.consultant Admin,model_tech_consultant,group_tech_admin,1,1,1,0
-access_tech_consultant_user,tech.consultant User,model_tech_consultant,group_tech_user,1,0,0,0
+
 
