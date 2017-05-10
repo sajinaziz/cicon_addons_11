@@ -85,7 +85,7 @@
 
                  <br/>
 
-                 <table  style="font-size: 12px; margin: 3px; width:100%; border: 1px solid; border-collapse:collapse ;" >
+                 <table border="1" style="font-size: 12px; margin: 3px; width:100%; border: 1px solid; border-collapse:collapse ;" >
                    <thead>
                         <th  style="border: 1px solid;height: 25px; text-align:center" > SL No. </th>
                         <th   style="border: 1px solid;height: 25px; text-align:center"> Drawing Number </th>
