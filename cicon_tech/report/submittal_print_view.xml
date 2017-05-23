@@ -98,13 +98,17 @@
         <div class="page">
             <div class="oe_structure"/>
             <div class="row col-xs-12" >
-              <strong> Ref: <span  t-field="o.ref_no" /> </strong>
+                 <strong> Ref: <span  t-field="o.ref_no" /> </strong>
                     <br/>
                     <br/>
                     Date : <span t-field="o.submittal_date" />
                     <br/>
                     <br/>
             </div>
+            <!--<div class="row col-xs-4 text-right">-->
+                <!--<img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.ref_no , 600, 100)" style="width:300px;height:30px;"/>-->
+            <!--</div>-->
+
              <div class="row col-xs-12">
                     <strong t-field="o.partner_id.name" /> <br/>
                     P.O Box: <span t-field="o.job_site_id.po_box"/>  <br/>
@@ -171,7 +175,7 @@
                  <tbody>
                     <t t-foreach="o.document_ids" t-as="d" >
                         <!--<tr t-att-class=" 'info' if o.revision_number &lt; d.rev_no else '' ">-->
-                        <tr t-att-class=" 'warning' if d.parent_id in o.revised_document_ids else '' ">
+                        <tr style="page-break-inside:avoid;" t-att-class=" 'warning' if d.parent_id in o.revised_document_ids else '' ">
                         <td class="text-center"> <span t-esc="d_index +1"/> </td>
                         <td> <span t-field="d.name"/> </td>
                         <td  class="text-center"> <span t-field="d.document_status"/> </td>
@@ -198,7 +202,7 @@
                     </t>
                  </thead>
                  <tbody>
-                    <t t-foreach="o.revised_document_ids" t-as="d" >
+                    <t t-foreach="o.revised_document_ids" t-as="d" style="page-break-inside:avoid;" >
                         <!--<tr t-att-class=" 'info' if o.revision_number &lt; d.rev_no else '' ">-->
                         <tr t-att-class=" 'warning' if d.parent_id in o.revised_document_ids else '' ">
                         <td class="text-center"> <span t-esc="d_index +1"/> </td>
@@ -226,7 +230,7 @@
                 For <strong> <span t-field="o.company_id.company_registry" /> </strong>
             </div>
             </div>
-           <div class="row">
+           <div class="row" style="page-break-inside:avoid;">
                 <div class="col-xs-2">
                     <img t-if="o.signed_by.signature_image" t-att-src="'data:image/png;base64,%s' % o.signed_by.signature_image" style="max-height: 75px;"/>
                 </div>
@@ -255,16 +259,21 @@
                           <span t-esc="o.enclosures"/>
                 </div>
             </div>
+            <!--<div class="row">-->
+                  <!--<div class="col-xs-4">-->
+                       <!--&lt;!&ndash;<img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.ref_no , 600, 100)" style="width:300px;height:30px;"/>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.ref_no , 600, 600)" style="width:300px;height:300px;"/>&ndash;&gt;-->
+                  <!--</div>-->
+            <!--</div>-->
 
 
-
-        </div>
+       </div>
         </t>
      </t>
 
 
     </t>
-</template>
+    </template>
 
     </data>
 </odoo>
