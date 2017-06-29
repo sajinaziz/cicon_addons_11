@@ -142,7 +142,8 @@
             <field name="context">{'search_default_to_day':1}</field>
       </record>
 
-    <menuitem name="CICON Attendance" id="menu_cicon_hr_root" parent="hr.menu_hr_root" groups="hr.group_hr_user,base.group_hr_hse_user" sequence="76"/>
+    <menuitem name="CICON HR" id="menu_cicon_hr_attendance_root" parent="hr.menu_hr_root" groups="hr.group_hr_user,base.group_hr_hse_user" sequence="99"/>
+    <menuitem name="CICON Attendance" id="menu_cicon_hr_root" parent="menu_cicon_hr_attendance_root" />
     <menuitem action="cicon_attendance_log_action" id="cicon_menu_attendance_log"  parent="cicon_hr.menu_cicon_hr_root" sequence="1" />
     <menuitem action="cicon_attendance_sheet_action" id="cicon_menu_attendance_sheet" parent="menu_cicon_hr_root" sequence="2" />
     <menuitem action="cicon_attendance_action" id="cicon_menu_attendance" parent="menu_cicon_hr_root" sequence="3" />
