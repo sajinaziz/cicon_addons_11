@@ -13,6 +13,7 @@
         'security/ir.model.access.csv',
         'views/cicon_hr_equipment_view.xml',
         'views/cicon_hr_equipment_property_view.xml',
+        'views/cicon_user_identity_view.xml',
         'views/cicon_hr_equipment_seq.xml',
     ],
     'update_xml': [],

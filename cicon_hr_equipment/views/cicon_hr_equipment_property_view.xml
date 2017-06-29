@@ -5,7 +5,7 @@
             <field name="name"> hr.equipment.prop.value.tree.view </field>
             <field name="model">hr.equipment.property.value</field>
             <field name="arch" type="xml">
-                <tree string="Equipment Property Values" create="false">
+                <tree string="Equipment Property Values" >
                      <field name="equipment_id"/>
                      <field name="property_id"/>
                      <field name="property_value"/>
@@ -74,7 +74,7 @@
                  parent="maintenance.menu_maintenance_configuration"
                  action="action_hr_equip_request_categ"
                  groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
-                 sequence="1"
+                 sequence="90"
                  />
 
 
@@ -84,7 +84,7 @@
                  parent="maintenance.menu_maintenance_title"
                  action="action_hr_equip_property"
                  groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
-                 sequence="1"
+                 sequence="90"
                  />
 
     </data>

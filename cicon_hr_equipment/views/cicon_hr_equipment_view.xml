@@ -63,6 +63,12 @@
                             </tree>
                         </field>
                     </page>
+                    <page string="Related Equipments">
+                        <group>
+                            <field name="connected_to_equip_ids" widget="many2many_tags"/>
+                            <field name="connected_from_equip_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
                 </xpath>
 
                  <field name="serial_no" position="after">
@@ -126,14 +132,14 @@
                 </xpath>
                 <xpath expr="//sheet/field[@name='description']" position="replace">
                     <notebook>
-                        <page string="Internal Note">
-                           <field name='description' placeholder="Internal Note ......."/>
+                        <page string="Description">
+                           <field name='description' placeholder="Detailed Description"/>
                         </page>
                     </notebook>
                 </xpath>
                <xpath expr="//notebook" position="inside">
-                   <page string="Diagnostic and Recommendation solution">
-                       <field name="solution" placeholder="Diagnostic and Recommendation solution ......." />
+                   <page string="Solution">
+                       <field name="solution" placeholder="Solution" />
                     </page>
                 </xpath>
                <!-- <xpath expr="//group/field[@name='equipment_id']" position="attributes">

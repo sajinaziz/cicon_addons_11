@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+          <record model="ir.ui.view" id="cicon_user_identity_tree">
+            <field name="name">cicon.user.identity.tree</field>
+            <field name="model">cicon.user.identity</field>
+            <field name="arch" type="xml">
+                <tree string="User Identity">
+                    <field name="identity_type_id" />
+                    <field name="name"/>
+                    <field name="user_name"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="cicon_user_identity_form">
+         <field name="name">cicon.user.identity.form</field>
+            <field name="model">cicon.user.identity</field>
+            <field name="arch" type="xml">
+                <form string="User Identity">
+                    <sheet>
+                    <group>
+                        <field name="identity_type_id" />
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="user_name"/>
+                    </group>
+                        <group>
+                            <group>
+                               <field name="pword_type" widget="radio"/>
+                                <field name="user_id"/>
+                            </group>
+                              <group>
+                                <field name="pword_text" attrs="{'invisible': [('pword_type','=','code')]}"/>
+                                <field name="pass_code_id" attrs="{'invisible':[('pword_type','=','text')]}"/>
+                                <field name="company_id"/>
+                              </group>
+                         </group>
+                        <group>
+                             <field name="notes" />
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+         <record id="cicon_user_identity_action" model="ir.actions.act_window">
+            <field name="name">User Identity</field>
+            <field name="res_model">cicon.user.identity</field>
+       </record>
+
+
+               <menuitem
+                 name="User Identity"
+                 id="cicon_user_identity_main_menu"
+                 parent="maintenance.menu_maintenance_title"
+                 action="cicon_user_identity_action"
+                 groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+                 sequence="99"
+                 />
+
+    </data>
+</odoo>

@@ -77,7 +77,10 @@ class MaintenanceEquipment(models.Model):
     asset_code = fields.Char(compute=_get_asset_name, string="Asset Code", store=True)
     #store the equipment staus
     status_id = fields.Many2one('hr.equipment.status', string='Status', track_visibility='onchange', default=_get_default_status)
-
+    connected_to_equip_ids = fields.Many2many('maintenance.equipment', 'equipment_equip_rel', 'con_from_equip_id'
+                                        ,'con_to_equip_id', string="Connected to")
+    connected_from_equip_ids = fields.Many2many('maintenance.equipment', 'equipment_equip_rel', 'con_to_equip_id'
+                                              , 'con_from_equip_id', string="Connected from ", readonly=True)
     employee_id = fields.Many2one('hr.employee', string='Employee')
     #department_id = fields.Many2one('hr.department', string='Department', related='employee_id.department_id')
 
@@ -152,6 +155,7 @@ class MaintenanceEquipmentRequest(models.Model):
     #ref_no, store maintenance request ref. no.
     ref_no = fields.Char(string="ITMRF No.", default="new")
     department_id = fields.Many2one('hr.department', string='Department', related='employee_id.department_id',track_visibility='onchange')
+
 
     @api.onchange('request_sub_categ_id')
     def onchange_request_categ(self):
