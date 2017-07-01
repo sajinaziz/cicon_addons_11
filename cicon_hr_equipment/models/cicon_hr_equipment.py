@@ -64,7 +64,7 @@ class MaintenanceEquipment(models.Model):
 
     #take the default status of the equipment
     def _get_default_status(self):
-        _status = self.env['hr.equipment.status'].search([], order='sequence desc', limit=1)
+        _status = self.env['hr.equipment.status'].search([], order='sequence', limit=1)
         return _status
 
     #create a many2many relation nd store property ids
