@@ -35,5 +35,14 @@ class CiconUserIdentity(models.Model):
     notes = fields.Text('Notes')
     user_id = fields.Many2one('res.users', string="Created By", default=lambda self: self.env.user.id, required=True)
     company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.user.company_id.id)
+    related_equipment_ids = fields.Many2many('maintenance.equipment', 'cicon_equipment_user_identity_rel',
+                                         'user_identity_id', 'equipment_id', string='Equipments' , readonly=True)
 
     _sql_constraints = [('unique_name', 'UNIQUE(name)', 'Title should be Unique!')]
+
+
+class MaintenanceEquipment(models.Model):
+    _inherit = 'maintenance.equipment'
+
+    user_identity_ids = fields.Many2many('cicon.user.identity', 'cicon_equipment_user_identity_rel',
+                                         'equipment_id', 'user_identity_id', string='User Identities')

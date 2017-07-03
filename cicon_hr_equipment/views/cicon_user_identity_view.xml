@@ -43,6 +43,9 @@
                         <group>
                              <field name="notes" />
                         </group>
+                        <group>
+                            <field name="related_equipment_ids"/>
+                        </group>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_ids" widget="mail_thread"/>
@@ -50,6 +53,35 @@
                 </form>
             </field>
         </record>
+
+
+
+        <record id="cicon_user_identity_search_view" model="ir.ui.view">
+            <field name="name">cicon.user.identity.search</field>
+            <field name="model">cicon.user.identity</field>
+			<field name="arch" type="xml">
+                <search string="User Identity">
+                    <field name="identity_type_id"  widget="selection"/>
+                    <field name="user_name" />
+                    <field name="company_id"  widget="selection"/>
+                </search>
+            </field>
+
+        </record>
+
+
+       <record id="hr_equipment_view_form_iden_etxn" model="ir.ui.view">
+            <field name="name">maintenance.equipment.form.iden.extn</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="cicon_hr_equipment.hr_equipment_view_form_etxn"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="User Identities">
+                        <field name="user_identity_ids"/>
+                    </page>
+                </xpath>
+            </field>
+       </record>
 
 
          <record id="cicon_user_identity_action" model="ir.actions.act_window">
