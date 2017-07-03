@@ -76,7 +76,7 @@
             <field name="inherit_id" ref="cicon_hr_equipment.hr_equipment_view_form_etxn"/>
             <field name="arch" type="xml">
                 <xpath expr="//notebook[last()]" position="inside">
-                    <page string="User Identities">
+                    <page string="User Identities" groups="maintenance.group_equipment_manager">
                         <field name="user_identity_ids"/>
                     </page>
                 </xpath>
