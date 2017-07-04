@@ -36,7 +36,7 @@ class HrEquipmentPropertyValue(models.Model):
     _description = "Equipment Category Property"
 
     #store equipment id , relate to equipment table
-    equipment_id = fields.Many2one('maintenance.equipment', string="Equipment")
+    equipment_id = fields.Many2one('maintenance.equipment', string="Equipment", ondelete='cascade')
     #store property id, relate to equipment category property
     property_id = fields.Many2one('hr.equipment.category.property', "Property")
     # store property value
