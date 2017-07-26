@@ -24,7 +24,10 @@ class hr_employee(models.Model):
         if name.isdigit():
             ids = self.search([('cicon_employee_id', operator, name)])
         else:
-            ids = self.search([('name', operator, name)] + args)
+            if args:
+                ids = self.search([('name', operator, name)] + args)
+            else:
+                ids = self.search([('name', operator, name)])
         return ids.name_get()
 
 hr_employee()
