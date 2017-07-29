@@ -33,12 +33,13 @@ class QcSummary(models.Model):
         return [('id', 'in', _summary_ids)]
 
     def _get_attachments(self):
-        if self.certificate_line_ids:
-            _cert_ids = self.certificate_line_ids.mapped('certificate_id')
-            _file_ids = _cert_ids.mapped('cert_file_id')
-            _attach_ids = self.env['ir.attachment'].search([('res_model', '=', 'cic.qc.mill.cert.file'),
-                                                            ('res_id', 'in', _file_ids._ids)])
-            self.attachment_ids = list(_attach_ids._ids)
+        for rec in self:
+            if rec.certificate_line_ids:
+                _cert_ids = rec.certificate_line_ids.mapped('certificate_id')
+                _file_ids = _cert_ids.mapped('cert_file_id')
+                _attach_ids = self.env['ir.attachment'].search([('res_model', '=', 'cic.qc.mill.cert.file'),
+                                                                ('res_id', 'in', _file_ids._ids)])
+                rec.attachment_ids = list(_attach_ids._ids)
 
     name = fields.Char('Trip Reference', readonly=True,default='New')
     dn_date = fields.Date('DN Date', required=True, default=fields.Date.context_today)
