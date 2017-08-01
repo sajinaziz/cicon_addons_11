@@ -102,5 +102,14 @@
         file="cmms.report_machine_preventive_status"
         name="cmms.report_machine_preventive_status_template"
     />
+
+        <report
+            id="report_cmms_machine_transfer"
+            string="Machine Transfer Form"
+            model="cmms.machine.transfer"
+            report_type="qweb-pdf"
+            file="cmms.report_machine_transfer_form"
+            name="cmms.report_machine_transfer_form_template"
+        />
     </data>
 </odoo>

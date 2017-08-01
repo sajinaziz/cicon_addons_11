@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_machine_transfer_form_template">
+             <t t-call="report.html_container">
+             <t t-foreach="docs" t-as="o">
+             <t t-call="cmms.cmms_internal_layout">
+                <div class="page">
+                    <div class="row">
+                        <table class="table table-condensed">
+                            <caption> <h4 class="text-center">  MACHINE TRANSFER PRE-APPROVAL FORM </h4></caption>
+                            <tr>
+                                <th style="width:20%">REF No.</th>
+                                <td style="width:30%"> <span t-field="o.name" /></td>
+                                <th style="width:20%"> VEHICLE PLATE NO.</th>
+                                <td style="width:30%">  </td>
+                            </tr>
+                            <tr>
+                                <th style="width:20%">FROM :</th>
+                                <td style="width:30%"> <span t-field="o.source_company_id.name" /></td>
+                                <th style="width:20%"> DELIVERED TO:</th>
+                                <td style="width:30%"> <span t-field="o.destination_location_id.name" /></td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <th style="width:10%">SN</th>
+                                <th style="width:15%">CODE</th>
+                                <th style="width:25%">MACHINE</th>
+                                <th style="width:50%">REMARKS</th>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.line_ids" t-as="m">
+                                    <td> <span t-esc="m_index + 1" /> </td>
+                                    <td> <span t-field="m.machine_id.code" /> </td>
+                                    <td> <span t-esc="m.machine_id.name" /> </td>
+                                    <td> <span t-esc="m.remarks" /> </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="row mt64">
+                            <div class="col-xs-6">
+                                Prepared by :  <span t-field="o.user_id.name"/>
+                                <br/>
+                                Date :  <span t-field="o.request_date"/>
+                            </div>
+                            <div class="col-xs-6">
+                                Approved by :  <span t-field="o.approved_by_id.name"/>
+                                <br/>
+                                Date :  <span t-field="o.request_date"/>
+                            </div>
+                         </div>
+                        <div class="row mt64">
+                            <div class="col-xs-12">
+                                Received  by :  <span t-field="o.received_by_id.name"/>
+                                <br/>
+                                Date :  <span t-field="o.received_date"/>
+                            </div>
+
+                         </div>
+                    </div>
+                </div>
+             </t>
+             </t>
+             </t>
+        </template>
+    </data>
+</odoo>

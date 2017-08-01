@@ -1,5 +1,6 @@
 from odoo import models, fields, api, tools
 from odoo import _, tools
+from odoo.exceptions import  UserError
 
 #To store machine location
 class CmmsMachineLocation(models.Model):
@@ -7,7 +8,7 @@ class CmmsMachineLocation(models.Model):
     _description = 'Machine Location'
 
     name = fields.Char("Location", required=True, help="Current Machine Location Ex: Factory 1,Factory 2")
-    company_id = fields.Many2one('res.company', 'Company')
+    company_id = fields.Many2one('res.company', 'Company', required=True)
 
     _sql_constraints = [('uniq_location', 'UNIQUE(name)', "Location Must be unique")]
 
@@ -175,15 +176,15 @@ class CmmsPmTaskMaster(models.Model):
             rec.duration_str = self._str_hour(rec.duration)
 
     name = fields.Char('PM Task Description', size=200, required=True, track_visibility='onchange' )
-    #pm scheme id, relate to scheme table and store the pm scheme names
+    # pm scheme id, relate to scheme table and store the pm scheme names
     pm_scheme_id = fields.Many2one('cmms.pm.scheme', 'PM Scheme', required=True, track_visibility='onchange')
-    #interval id, relate to pm interval table and store the interval
+    # interval id, relate to pm interval table and store the interval
     interval_id = fields.Many2one('cmms.pm.interval', "Interval",required=True, track_visibility='onchange')
-    #action by, store the action like operator or technician
+    # action by, store the action like operator or technician
     action_by = fields.Selection([('operator', 'Operator'), ('technician', 'Technician')], string='Action By', default='technician')
     active = fields.Boolean('Is Active', default=True, track_visibility='onchange')
     material_required = fields.Text('Materials / Tools Required')
-    #approx. cost , approximate cost for performing the task.
+    # approx. cost , approximate cost for performing the task.
     approx_cost = fields.Float('Approx. Cost', digits=(10, 2), help="Approx. Cost to perform this Task")
     duration = fields.Float('Duration', digits=(4, 2), help="Approx. Duration to perform Task")
     duration_str = fields.Char(string='Duration', store=False, compute=_calc_str_duration)
@@ -200,7 +201,7 @@ class CmmsMachineTaskView(models.Model):
     _auto = False
     _order = 'interval_id'
 
-    #find out next task  run date and task completed date
+    # find out next task  run date and task completed date
     def _get_next_date(self):
         _sch_obj = self.env['cmms.pm.schedule.master']
         _task_line_obj = self.env['cmms.pm.task.job.order.line']
@@ -242,14 +243,77 @@ class CmmsMachineTaskView(models.Model):
             )""" % (self._table, self._select(), self._from(), self._group_by()))
 
 
+class CmmsMachineTransfer(models.Model):
+    _name = 'cmms.machine.transfer'
+    _description = "Machine Transfer Requests"
+
+    _inherit = ['mail.thread']
+
+    name = fields.Char("Reference #", readonly=True)
+
+    source_location_id = fields.Many2one('cmms.machine.location',  required=True, readonly=True,
+                                         string="Source Location", states={'draft': [('readonly', False)]},
+                                         domain="[('company_id', '=', source_company_id)]")
+    source_company_id = fields.Many2one('res.company', default=lambda self: self.env.user.company_id.id,  required=True, readonly=True,
+                                        string="Source Company")
+    destination_location_id = fields.Many2one('cmms.machine.location', string="Destination Location", readonly=True, states={'draft': [('readonly', False)]}, required=True)
+    destination_company_id = fields.Many2one('res.company', string="Destination Company")
+
+    user_id = fields.Many2one('res.users', string="Prepared By", default=lambda self: self.env.user.id)
+    approved_by_id = fields.Many2one('res.users', string="Approved By",readonly=True, states={'draft': [('readonly', False)]})
+    request_date = fields.Date('Request Date', readonly=True, default=fields.Date.context_today,  states={'draft': [('readonly', False)]})
+    transfer_date = fields.Date('Transfer Date', readonly=True, states={'approve': [('readonly', False)]} )
+    received_by_id = fields.Many2one('res.users', string="Received By", readonly=True, states={'approve': [('readonly', False)]})
+    received_date = fields.Date(string="Received Date", readonly=True, states={'approve': [('readonly', False)]})
+    state = fields.Selection([('draft', 'Pending'), ('approve', 'Approved'), ('done', 'Transferred'),
+                              ('cancel', 'Cancel')], string="Status", default='draft', track_visibility='onchange')
+    line_ids = fields.One2many('cmms.machine.transfer.line', 'transfer_request_id', string='Machines', readonly=True, states={'draft': [('readonly', False)]})
+
+    _sql_constraints = [('uniq_name', 'UNIQUE(name)', 'Reference Should Be Unique !')]
+
+    @api.model
+    def create(self, vals):
+        _seq_mt = self.env['ir.sequence'].search([('code', '=', 'cmms.machine.transfer.code')])
+        vals['name'] = _seq_mt.next_by_id() or 'MT/New'
+        return super(CmmsMachineTransfer, self).create(vals)
+
+    @api.multi
+    def set_approve(self):
+        self.ensure_one()
+        self.write({'state': 'approve'})
+
+    @api.multi
+    def set_draft(self):
+        self.ensure_one()
+        self.write({'state': 'draft'})
+
+    @api.multi
+    def set_cancel(self):
+        self.ensure_one()
+        self.write({'state': 'cancel'})
+
+    @api.multi
+    def set_done(self):
+        self.ensure_one()
+        if self.destination_location_id.company_id.id == self.env.user.company_id.id:
+            _machines = self.line_ids.mapped('machine_id')
+            _machines.sudo().write({'company_id': self.destination_location_id.company_id.id,
+                                            'location_id': self.destination_location_id.id})
+            self.write({'destination_company_id': self.destination_location_id.company_id.id, 'state': 'done'})
+        else:
+            raise UserError("Please log in to Destination Company to complete Transfer !")
+
+    @api.multi
+    def copy(self):
+        raise UserError('You cannot duplicate an Transfer.')
 
 
+class CmmsMachineTransferLine(models.Model):
+    _name = 'cmms.machine.transfer.line'
+    _description = "Machine Transfer Request Lines"
 
+    transfer_request_id = fields.Many2one('cmms.machine.transfer', string='Transfer Request')
+    machine_id = fields.Many2one('cmms.machine', string="Machine", required=True)
+    remarks = fields.Text("Remarks")
 
-
-
-
-
-
-
-
+    _sql_constraints = [('uniq_machine_form', 'UNIQUE(transfer_request_id,machine_id)', 'One Machine per request !')]

@@ -58,5 +58,21 @@
 
 
 
+        <record id="sequence_machine_transfer_code" model="ir.sequence">
+            <field name="name">CMMS Machine Transfer Request</field>
+            <field name="code">cmms.machine.transfer.code</field>
+            <field name="prefix">MT/</field>
+            <field name="padding">4</field>
+            <field name="suffix">/%(year)s</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+             <field name="implementation">no_gap</field>
+        </record>
+
+
+
+
+
     </data>
 </odoo>

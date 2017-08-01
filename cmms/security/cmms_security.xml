@@ -33,6 +33,11 @@
             <field name="name">CMMS See Machines for allowed Company</field>
             <field name="model_id" ref="model_cmms_machine"/>
             <field name="groups" eval="[(4, ref('group_cmms_user'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_create" eval="True"/>
+
             <!--<field name="domain_force">[('company_id', 'in', user.company_ids._ids)]</field>-->
             <field name="domain_force"> ['|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
         </record>
@@ -41,6 +46,10 @@
             <field name="name">CMMS See Locations for allowed Company</field>
             <field name="model_id" ref="model_cmms_machine_location"/>
             <field name="groups" eval="[(4, ref('group_cmms_user'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_create" eval="True"/>
             <!--<field name="domain_force">[('company_id', 'in', user.company_ids._ids)]</field>-->
             <field name="domain_force"> ['|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
         </record>

@@ -51,6 +51,7 @@ Required modules:
         'wizard/spare_part_type_wizard_view.xml',
         'wizard/common_report_wizard_view.xml',
         'views/report_machine_preventive_status.xml',
+        'views/report_machine_transfer_form.xml',
         # 'wizard/consume_product_wizard_view.xml',
         'views/cmms_report.xml'],
     "init_xml": [],
