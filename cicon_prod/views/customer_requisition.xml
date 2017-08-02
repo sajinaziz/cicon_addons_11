@@ -2,14 +2,7 @@
 <odoo>
 <data>
     <template id="customer_requisition_template">
-     <style type="text/css">
-     .table tbody > tr > td
-         {
-         border: 1px solid;
-         }
-         .table { border: 1px solid; }
-         .table thead > tr > th {  border: 1px solid;; }
-     </style>
+
     <t t-call="report.html_container">
         <t t-foreach="docs" t-as="o">
         <!--<t t-call="cicon_prod.cicon_prod_external_layout"/>-->
@@ -30,10 +23,18 @@
         </div>
     </div>
         <div class="page">
+             <style type="text/css">
+                .table tbody > tr > td
+                {
+                border: 1px solid;
+                }
+                .table { border: 1px solid; }
+                .table thead > tr > th {  border: 1px solid;}
+            </style>
             <div class="oe_structure"/>
 
             <table class="table table-bordered">
-                <caption> <h4> Customer's Requisition Form </h4> </caption>
+                <caption class="text-center"> <h4> Customer's Requisition Form </h4> </caption>
                 <thead>
                     <th style="width:56%" class="text-center" >To be filled by Technical Dept.</th>
                     <th style="width:44%" class="text-center">To be filled by Production Dept.</th>
@@ -226,7 +227,7 @@
 
             </table>
             <table class="table table-bordered">
-                <caption> <h4> Job Work Status / Account Details </h4> </caption>
+                <caption class="text-center"> <h4> Job Work Status / Account Details </h4> </caption>
                  <thead>
                      <tr>
                         <th rowspan="2" class="text-center" style="width:15%"> File Code</th>
@@ -249,23 +250,23 @@
 
                     <t t-if="o.prod_order_count ==0">
                      <tr t-foreach="range(1,16)" t-as="l">
-                        <th style="height:30px;  border: 1px solid;" t-foreach="range(1,12)" t-as="c">
+                        <th style="height:30px;" t-foreach="range(1,12)" t-as="c">
                         </th>
                     </tr>
                     </t>
                     <t t-if="o.prod_order_count > 0">
                         <tr t-foreach="o.prod_order_ids" t-as="po">
                             <th style="height:30px; border:1px solid;"> <span t-esc="po.name"/> </th>
-                            <th style="height:30px; border: 1px solid;"> <small t-esc="po.template_str"/>  </th>
-                            <th style="height:30px; border: 1px solid;"/>
-                            <th style="height:30px; border: 1px solid;"/>
-                            <th style="height:30px; border: 1px solid;"/>
-                            <th style="height:30px; border: 1px solid;"/>
-                            <th style="height:30px; border: 1px solid;"/>
-                            <th style="height:30px; border: 1px solid;"/>
-                            <th style="height:30px; border: 1px solid;"> <span t-esc="po.total_tonnage"/> </th>
-                            <th style="height:30px; border: 1px solid;"/>
-                            <th style="height:30px; border: 1px solid;"/>
+                            <th style="height:30px;"> <small t-esc="po.template_str"/>  </th>
+                            <th style="height:30px;"/>
+                            <th style="height:30px;"/>
+                            <th style="height:30px;"/>
+                            <th style="height:30px;"/>
+                            <th style="height:30px;"/>
+                            <th style="height:30px;"/>
+                            <th style="height:30px;"> <span t-esc="po.total_tonnage"/> </th>
+                            <th style="height:30px;"/>
+                            <th style="height:30px;"/>
 
                         </tr>
 
