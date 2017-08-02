@@ -24,12 +24,8 @@
     </div>
         <div class="page">
              <style type="text/css">
-                .table tbody > tr > td
-                {
-                border: 1px solid;
-                }
                 .table { border: 1px solid; }
-                .table thead > tr > th {  border: 1px solid;}
+                .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td { border: 1px solid ; }
             </style>
             <div class="oe_structure"/>
 
@@ -256,7 +252,7 @@
                     </t>
                     <t t-if="o.prod_order_count > 0">
                         <tr t-foreach="o.prod_order_ids" t-as="po">
-                            <th style="height:30px; border:1px solid;"> <span t-esc="po.name"/> </th>
+                            <th style="height:30px;"> <span t-esc="po.name"/> </th>
                             <th style="height:30px;"> <small t-esc="po.template_str"/>  </th>
                             <th style="height:30px;"/>
                             <th style="height:30px;"/>
