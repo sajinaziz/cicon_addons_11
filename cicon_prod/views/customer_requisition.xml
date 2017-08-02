@@ -34,7 +34,7 @@
             <div class="oe_structure"/>
 
             <table class="table table-bordered">
-                <caption class="text-center"> <h4> Customer's Requisition Form </h4> </caption>
+                <caption> <h4> Customer's Requisition Form </h4> </caption>
                 <thead>
                     <th style="width:56%" class="text-center" >To be filled by Technical Dept.</th>
                     <th style="width:44%" class="text-center">To be filled by Production Dept.</th>
@@ -227,7 +227,7 @@
 
             </table>
             <table class="table table-bordered">
-                <caption class="text-center"> <h4> Job Work Status / Account Details </h4> </caption>
+                <caption> <h4> Job Work Status / Account Details </h4> </caption>
                  <thead>
                      <tr>
                         <th rowspan="2" class="text-center" style="width:15%"> File Code</th>
