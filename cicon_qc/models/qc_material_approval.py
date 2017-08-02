@@ -63,4 +63,14 @@ class CiconJobSite(models.Model):
     qc_material_approval_ids = fields.One2many('qc.material.approval', 'job_site_id', string="Material Approvals")
 
 
+class CiconProdOrder(models.Model):
+    _inherit = 'cicon.customer.order'
 
+    @api.multi
+    def _get_approved_materials(self):
+        for rec in self:
+            if rec.project_id:
+                _materials = rec.project_id.qc_material_approval_ids.filtered(lambda a: a.state not in ('reject', 'pending')).mapped('origin_attrib_value_id')
+                rec.approved_material_ids = _materials._ids
+
+    approved_material_ids = fields.Many2many('product.attribute.value', string='Approved Materials', compute=_get_approved_materials ,readonly=True)

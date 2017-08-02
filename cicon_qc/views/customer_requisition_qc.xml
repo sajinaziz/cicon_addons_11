@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="customer_requisition_template_qc" inherit_id="cicon_prod.customer_requisition_template">
+            <xpath expr="//span[@t-field='o.production_note']" position="after">
+                <br/>
+                <mark t-esc="','.join(i.name for i in  o.approved_material_ids)"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>

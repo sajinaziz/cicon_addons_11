@@ -117,6 +117,23 @@
            </record>
 
 
+
+		<record model="ir.ui.view" id="cicon_customer_order_qc_form_view">
+			<field name="name">cicon.customer.order.form</field>
+			<field name="model">cicon.customer.order</field>
+            <field name="inherit_id" ref="cicon_prod.cicon_customer_order_form_view"/>
+			<field name="arch" type="xml">
+                <xpath expr="//notebook/page[last()]" position="after">
+                    <page string="Approved Materials">
+                        <group>
+                            <field name="approved_material_ids"  widget="many2many_tags"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
         <record model="ir.actions.act_window" id="cicon_qc_approval_action">
             <field name="name">Manage Material Approval</field>
             <field name="type">ir.actions.act_window</field>
