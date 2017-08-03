@@ -12,12 +12,11 @@ class QcCommonReportWizard(models.TransientModel):
     def show_report(self, data):
         self.ensure_one()
         ctx = dict(self._context)
-        datas = {'ids': self.env.context.get('active_ids', [])}
+        job_sites = self.env['qc.material.approval'].search([]).mapped('job_site_id')
         if self.company_id:
             ctx['company_id'] = self.company_id.id
         if self.report_list == 'steel_approval_report':
             ctx['heading'] = "Steel Approval Report"
-            print 'hhhh'
-            #return self.with_context(ctx).env['report'].get_action(self, '',data=datas)
+            return self.with_context(ctx).env['report'].get_action(job_sites, 'cicon_qc.qc_material_approval_report_template')
 
 

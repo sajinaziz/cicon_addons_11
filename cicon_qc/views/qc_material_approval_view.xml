@@ -110,11 +110,21 @@
                                 </field>
                             </group>
                         </page>
-
                     </notebook>
                 </xpath>
             </field>
            </record>
+
+          <record model="ir.ui.view" id="cicon_jobsite_search_qc_view">
+			<field name="name">cicon.job.site.qc.search</field>
+			<field name="model">cicon.job.site</field>
+              <field name="inherit_id" ref="cicon_job_site.cicon_jobsite_search_view"/>
+               <field name="arch" type="xml">
+                  <field name="partner_id" position="after">
+                      <filter string="Without approved materials" domain="[('qc_material_approval_ids','=', False)]" help="Without Material Approvals" />
+                  </field>
+               </field>
+		    </record>
 
 
 

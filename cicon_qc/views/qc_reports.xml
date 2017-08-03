@@ -18,11 +18,12 @@
 
         <report
             id="report_steel_approval_list"
+            name="cicon_qc.qc_material_approval_report_template"
             string="Steel Approval List"
-            model="qc.common.report.wizard"
+            model="cicon.job.site"
             report_type="qweb-pdf"
             file="cicon_qc.qc_material_approval_report"
-            name="cicon_qc.qc_material_approval_report_template"
+
         />
 
 
