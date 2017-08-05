@@ -5,16 +5,19 @@
         <t t-call="report.html_container">
              <t t-call="cicon_qc.cicon_qc_external_layout">
                 <div class="page">
+                    <div class="row text-right col-xs-12" style="margin-top: 6px;" >
+                            <small t-esc="get_datetime()" />
+                    </div>
                     <div class="row">
 
-
                         <table class="table table-bordered">
+                            <caption class="text-center" > <h4> Steel Approval Status Report </h4> </caption>
                             <thead>
-                                <th style="width:5%">Sno</th>
-                                <th style="width:15%">Customer</th>
-                                <th style="width:20%">Project</th>
+                                <th class="text-center" style="width:5%">Sno</th>
+                                <th class="text-center"  style="width:15%">Customer</th>
+                                <th class="text-center"  style="width:20%">Project</th>
                                 <t t-set="origins" t-value="get_origins()"/>
-                                <th t-foreach="origins" t-as="org">
+                                <th class="text-center"  t-foreach="origins" t-as="org">
                                   <span t-field="org.name"/>
                                 </th>
                             </thead>
@@ -27,7 +30,7 @@
                               <td> <span t-field="o.name"/> </td>
                                <t t-foreach="origins" t-as="org">
                                    <t t-set="stat" t-value="app_list.get(org.id,False)"/>
-                                   <td t-att-class="'warning' if stat == 'pending' else 'info'  if stat == 'verbal' else 'success' if stat == 'approve' else 'danger' if stat == 'reject' else '' ">
+                                   <td class="text-center"  t-att-class="'warning' if stat == 'pending' else 'info'  if stat == 'verbal' else 'success' if stat == 'approve' else 'danger' if stat == 'reject' else '' ">
                                      <span t-esc="states.get(stat)"/>
                                    </td>
                                </t>

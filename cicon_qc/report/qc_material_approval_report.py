@@ -1,4 +1,4 @@
-from odoo import models, api
+from odoo import models, api, fields
 
 _inv_lines = None
 
@@ -17,7 +17,8 @@ class MaterialApprovalReport(models.AbstractModel): # Report File Name
              'docs': _docs,
              'get_origins': self._get_origins,
              'get_approval': self._get_material_approved_project,
-             'get_state_list': self._get_state_list
+             'get_state_list': self._get_state_list,
+             'get_datetime': self._get_current_datetime
         }
         return report_obj.render('cicon_qc.qc_material_approval_report_template', docargs)
 
@@ -34,4 +35,7 @@ class MaterialApprovalReport(models.AbstractModel): # Report File Name
         for _app in _approved_list:
             _res[_app.origin_attrib_value_id.id] = _app.state
         return _res
+
+    def _get_current_datetime(self):
+        return self.env['cicon.customer.order'].get_datetime_current()
 
