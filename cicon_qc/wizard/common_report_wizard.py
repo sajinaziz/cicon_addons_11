@@ -27,7 +27,7 @@ class QcCommonReportWizard(models.TransientModel):
                 elif self.option_select =='exclude':
                     _qry.append(('id', 'not in', self.origin_value_ids._ids))
             _origin_ids = self.env['product.attribute.value'].search(_qry)
-            job_sites = self.with_context(ctx).env['qc.material.approval'].search([]).mapped('job_site_id')
+            job_sites = self.with_context(ctx).env['qc.material.approval'].search([]).mapped('job_site_id').filtered(lambda a: a.archive == False)
             _datas = {'origin_ids': _origin_ids._ids}
             return self.with_context(ctx).env['report'].get_action(job_sites, report_name='cicon_qc.qc_material_approval_report_template',data=_datas)
 
