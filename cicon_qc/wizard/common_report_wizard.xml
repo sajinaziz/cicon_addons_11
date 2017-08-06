@@ -10,6 +10,10 @@
                 <group>
                     <field name="report_list"/>
   				</group>
+                <group>
+                    <field name="origin_value_ids" widget="many2many_tags" options="{'no_create':True, 'no_open': True}" />
+                    <field name="option_select" widget="radio"/>
+                </group>
 
                 <group>
                     <field name="company_id" options="{'no_create':True, 'no_open': True}"/>
