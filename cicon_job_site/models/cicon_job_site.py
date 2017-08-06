@@ -14,8 +14,8 @@ class CiconJobSite(models.Model):
     telephone = fields.Char('Telephone', size=50)
     fax = fields.Char('Fax', size=50)
 
-    consultant_id = fields.Many2one('res.partner', string='Consultant',  track_visibility='onchange' )
-    client_id = fields.Many2one('res.partner', string = 'Client',  track_visibility='onchange')
+    consultant_id = fields.Many2one('res.partner', domain="[('is_consultant','=', True)]", string='Consultant',  track_visibility='onchange' )
+    client_id = fields.Many2one('res.partner',  domain="[('is_client','=', True)]", string='Client',  track_visibility='onchange')
     company_id = fields.Many2one('res.company', string='Company')
     active = fields.Boolean('Active', default=True,  track_visibility='onchange')
     archive = fields.Boolean('Archive', help="This will hide project from reports",  default=False,  track_visibility='onchange')

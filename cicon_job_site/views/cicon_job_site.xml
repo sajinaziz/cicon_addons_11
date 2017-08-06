@@ -35,8 +35,8 @@
                        <group >
                             <field name="partner_id" options="{'no_create':True,'no_open': True}" ain="[('customer','=', True)]" />
                             <field name="name"  placeholder="Project Name" />
-                            <field name="consultant_id" domain="[('is_consultant','=', True)]" options="{'no_create':True,'no_open': True}"/>
-                            <field name="client_id"  domain="[('is_client','=', True)]" options="{'no_create':True,'no_open': True}"/>/>
+                            <field name="consultant_id"  options="{'no_create':True,'no_open': True}"/>
+                            <field name="client_id"  options="{'no_create':True,'no_open': True}"/>/>
                             <field name="company_id" options="{'no_create':True,'no_open': True}" />
                         </group>
                         <group col="4">
@@ -85,6 +85,8 @@
 				<search string="Projects">
                      <field name="name"/>
                     <field name="partner_id" widget="selection"/>
+                    <field name="consultant_id" widget="selection"/>
+                    <field name="client_id" widget="selection"/>
 				</search>
 			</field>
 		</record>
