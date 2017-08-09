@@ -58,7 +58,7 @@ class cicon_hr_employee_leave(models.Model):
     #     print args
     #     return super(cicon_hr_employee_leave,self).search( args=args, offset=offset,limit=limit, order= order, count= count)
 
-    _sql_constraints = [('date_check1', "CHECK (start_date <= end_date)", "The start date must be anterior to the end date.")]
+    _sql_constraints = [('date_check1', "CHECK (start_date <= end_date)", "The start date must be an greater to the end date.")]
 
 cicon_hr_employee_leave()
 

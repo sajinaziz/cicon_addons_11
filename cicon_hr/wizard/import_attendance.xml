@@ -7,16 +7,18 @@
             <field name="arch" type="xml">
                 <form string="Import Attendance" version="7.0">
                     <group>
-                        <field name="log_files">
+                        <field name="log_files" invisible="context.get('hide_import',False)">
                             <tree editable="bottom">
-                                <field name="log_file"/>
+                                <field name="log_file" filename="name" widget="binary"/>
+                                <field name="name"/>
                             </tree>
                         </field>
+                        <field name="emp_id_list" invisible="not context.get('hide_import',False)" />
                     </group>
                     <footer>
-                        <button name="import_log" string="Import" type="object"  class="oe_highlight"/>
-                        or
-                        <button string="Cancel" special="cancel" class="oe_link"/>
+                        <button name="import_log" string="Import" type="object"  invisible="context.get('hide_import',False)"  class="oe_highlight"/>
+
+                        <button string="Cancel" special="cancel" />
                     </footer>
                 </form>
             </field>

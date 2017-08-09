@@ -25,11 +25,9 @@ class cicon_hr_process_attendance_wizard(models.TransientModel):
         _selected_dates = list(rrule.rrule(rrule.DAILY, dtstart=datetime.strptime(self.start_date, '%Y-%m-%d'), until=datetime.strptime(self.end_date, '%Y-%m-%d')))
         _selected_dates.sort()
         if self.emp_selection == 'emp_dept':
-            _emp = self.env['hr.employee'].search([('department_id', 'in', self.dept_ids._ids)])
+            _emp = self.env['hr.employee'].search([('department_id', 'in', self.dept_ids._ids),('company_id', '=', self.env.user.company_id.id)])
         else:
-            _emp = self.env['hr.employee'].search([('category_ids', 'in', self.tag_ids._ids)])
-        print _emp
-        print _selected_dates
+            _emp = self.env['hr.employee'].search([('category_ids', 'in', self.tag_ids._ids), ('company_id', '=', self.env.user.company_id.id)])
         for _date in _selected_dates:
             _date_int = int(time.strftime('%Y%m%d', time.strptime(_date.strftime('%Y-%m-%d'), '%Y-%m-%d')))
             _res = _att_sheet.get_processed_attendance(_date.strftime('%Y-%m-%d'), _emp)
@@ -37,6 +35,7 @@ class cicon_hr_process_attendance_wizard(models.TransientModel):
             _ex_att = _attendance.search([('date_value', '=', _date_int)])
             if self.emp_selection == 'emp_dept':
                 _del_att = _ex_att.filtered(lambda r: r.employee_id.department_id.id in self.dept_ids._ids)
+                _del_att.unlink()
             else:
                 _del_att = _ex_att.filtered(lambda r: r.employee_id.id in _emp._ids)
                 _del_att.unlink()

@@ -1,6 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-from datetime import datetime
+from datetime import datetime , timedelta
 import pytz
 import time
 # import xlsxwriter
@@ -13,25 +13,24 @@ class cicon_hr_attendance_log(models.Model):
     _description = "CICON Attendance Log"
     _rec_name = 'utc_datetime'
 
-    @api.one
+    @api.multi
     @api.depends('date', 'hour', 'minute')
     def gen_log_date(self):
-        self.log_datetime = None
-        self.utc_datetime = None
-        if self.date:
-            utc_z = pytz.utc
-            local_z = pytz.timezone('Asia/Dubai')
-            _str_time = str(self.date) + ' ' + str(self.hour)+ ':' + str(self.minute) + ':' + str(self.second)
-            _strp_local = datetime.strptime(_str_time, "%Y%m%d %H:%M:%S")
-            self.log_datetime = _strp_local.strftime('%Y-%m-%d %H:%M:%S')
-            # _strp_local = _strp_local.replace(tzinfo=local_z)
-            # _strp_local = pytz.timezone('Asia/Dubai').localize(_strp_local)
-            _strp_local = local_z.localize(_strp_local)
-            _strp_local.tzinfo
-            utc = pytz.timezone('UTC')
-            _utc_time = _strp_local.astimezone(utc)
-            _utc_time.tzinfo
-            self.utc_datetime = _utc_time.strftime('%Y-%m-%d %H:%M:%S')
+        for _rec in self:
+            _rec.log_datetime = None
+            _rec.utc_datetime = None
+            if _rec.date:
+                utc_z = pytz.utc
+                local_z = pytz.timezone('Asia/Dubai')
+                _str_time = str(_rec.date) + ' ' + str(_rec.hour)+ ':' + str(_rec.minute) + ':' + str(_rec.second)
+                _strp_local = datetime.strptime(_str_time, "%Y%m%d %H:%M:%S")
+                _rec.log_datetime = _strp_local.strftime('%Y-%m-%d %H:%M:%S')
+                _strp_local = local_z.localize(_strp_local)
+                _strp_local.tzinfo
+                utc = pytz.timezone('UTC')
+                _utc_time = _strp_local.astimezone(utc)
+                _utc_time.tzinfo
+                _rec.utc_datetime = _utc_time.strftime('%Y-%m-%d %H:%M:%S')
 
     log_datetime = fields.Datetime(compute=gen_log_date, store=True, string='Date & Time Local')
     utc_datetime = fields.Datetime(compute=gen_log_date,store=True, string='Date & Time UTC')
@@ -71,6 +70,7 @@ class cicon_hr_attendance_sheet(models.Model):
     filtered_ids = fields.One2many('cicon.hr.attendance', 'sheet_id', string='Attendance', domain=[('work_shift','!=', False)] )
     missing_log_ids = fields.One2many('cicon.hr.attendance', 'sheet_id', string='Missing / Absent', domain=[ '&', ('work_shift','!=', False), '|', ('sign_in','=',False),  ('sign_out','=',False)])
     # employee_type = fields.Selection([('worker', 'Workers'), ('staff', 'Office Staff')], "Show Punches", default='worker')
+    #company_id = fields.Many2one('res.company', string='Company', required=True)
 
     _sql_constraints = [('uniq_sheet', 'UNIQUE(attendance_date)', 'One Sheet per Date')]
 
@@ -105,8 +105,9 @@ class cicon_hr_attendance_sheet(models.Model):
 
     def get_processed_attendance(self, _date , _employees):
         _date_int = int(time.strftime('%Y%m%d', time.strptime(_date, '%Y-%m-%d'))) # Convert date to Int as Log Required date in Int
+        _date_next_int = int((datetime.strptime(_date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y%m%d'))
         res = []
-        _logs = self.env['cicon.hr.attendance.log'].search([('date', '>=', _date_int), ('date', '<=', _date_int + 1)]) #Find all logs for two days For night shift
+        _logs = self.env['cicon.hr.attendance.log'].search([('date', '>=', _date_int), ('date', '<=', _date_next_int)]) #Find all logs for two days to check if night shift
         _leaves = self.env['cicon.hr.employee.leave'].search(['|', ('start_date', '<=', _date), ('end_date', '>=', _date)]) # Find All Leaves for the date
         if _logs:
             for _employee in _employees:
@@ -117,9 +118,9 @@ class cicon_hr_attendance_sheet(models.Model):
                 if _emp_in_log:
                     _emp_log['sign_in'] = _emp_in_log[0]
                     if _emp_log['sign_in'] and _emp_in_log[0].hour < 12: # Day Shift
-                        _emp_out_log = [i for i in _logs if (i['employee_id']) == _employee['cicon_employee_id'] and i['type'] in [3, 4] and i['date'] == _date_int]
+                        _emp_out_log = [i for i in _logs if i.employee_id == _employee.cicon_employee_id and i.type in [3, 4] and i.date == _date_int]
                     elif _emp_log['sign_in'] and _emp_in_log[0].hour > 12:
-                        _emp_out_log = [i for i in _logs if (i['employee_id']) == _employee['cicon_employee_id'] and i['type'] in [3, 4] and i['date'] == _date_int + 1]
+                        _emp_out_log = [i for i in _logs if i.employee_id == _employee.cicon_employee_id and i.type in [3, 4] and i.date == _date_next_int]
                 if _emp_out_log:
                     _emp_log['sign_out'] = _emp_out_log[-1]
                 if _emp_leave:
@@ -197,38 +198,42 @@ class cicon_hr_attendance(models.Model):
     _name = 'cicon.hr.attendance'
     _description = "Attendance"
 
-    @api.one
+    @api.multi
+    @api.depends('sign_in', 'sign_out')
     def _calc_work_hours(self):
-        self.work_hour = 0
-        if self.sign_in and self.sign_out and self.date_value:
-            _in = datetime.strptime(self.sign_in.log_datetime, '%Y-%m-%d %H:%M:%S')
-            _out = datetime.strptime(self.sign_out.log_datetime, '%Y-%m-%d %H:%M:%S')
-            _float_time = str(_out - _in).split(':')
-            if len(_float_time) == 3 and _float_time[0].isdigit() and _float_time[1].isdigit():
-                self.work_hour = float(_float_time[0] + '.' + _float_time[1])
-            self.date = time.strftime('%Y-%m-%d', time.strptime(str(self.date_value), '%Y%m%d'))
-        elif self.date_value > 0:
-            self.date = time.strftime('%Y-%m-%d', time.strptime(str(self.date_value), '%Y%m%d'))
+        for _rec in self:
+            _rec.work_hour = 0
+            if _rec.sign_in and _rec.sign_out and _rec.date_value:
+                _in = datetime.strptime(_rec.sign_in.log_datetime, '%Y-%m-%d %H:%M:%S')
+                _out = datetime.strptime(_rec.sign_out.log_datetime, '%Y-%m-%d %H:%M:%S')
+                _float_time = str(_out - _in).split(':')
+                if len(_float_time) == 3 and _float_time[0].isdigit() and _float_time[1].isdigit():
+                    _rec.work_hour = float(_float_time[0] + '.' + _float_time[1])
+                _rec.date = time.strftime('%Y-%m-%d', time.strptime(str(_rec.date_value), '%Y%m%d'))
+            elif _rec.date_value > 0:
+                _rec.date = time.strftime('%Y-%m-%d', time.strptime(str(_rec.date_value), '%Y%m%d'))
 
-    @api.one
+    @api.multi
     def _get_punch_logs(self):
-        self.punch_log_count = 0
-        if self.date_value:
-            _punch_ids = self.env['cicon.hr.attendance.log'].search([('employee_id','=',self.cicon_employee_id), ('date','=',self.date_value)],count=True)
-            self.punch_log_count = _punch_ids
+        for _rec in self:
+            _rec.punch_log_count = 0
+            if _rec.date_value:
+                _punch_ids = self.env['cicon.hr.attendance.log'].search_count([('employee_id','=',_rec.cicon_employee_id), ('date','=',_rec.date_value)])
+                _rec.punch_log_count = _punch_ids
 
-    @api.one
+    @api.multi
     @api.depends('employee_id', 'date')
     def _get_emp_leave(self):
-        if self.employee_id and self.date:
-            holiday_id = self.env['cicon.hr.employee.leave'].search([('start_date', '<=', self.date), ('end_date', '>=', self.date), ('employee_id', '=', self.employee_id.id)], limit=1)
-            self.leave_id = holiday_id.id
+        for _rec in self:
+            if _rec.employee_id and _rec.date:
+                holiday_id = self.env['cicon.hr.employee.leave'].search([('start_date', '<=', _rec.date), ('end_date', '>=', _rec.date), ('employee_id', '=', _rec.employee_id.id)], limit=1)
+                _rec.leave_id = holiday_id.id
 
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True, ondelete='cascade')
     cicon_employee_id = fields.Integer(related='employee_id.cicon_employee_id', store=True, string='ID')
     work_shift = fields.Many2one('cicon.hr.work.shift', related='employee_id.work_shift', store=False, string="Shift")
     date_value = fields.Integer('Date Integer', required=True, index=True)
-    date = fields.Date(compute=_calc_work_hours, string='Date', store=False)
+    date = fields.Date(compute=_calc_work_hours, string='Date', store=True , index=True)
     sign_in = fields.Many2one('cicon.hr.attendance.log',  string='Sign In')
     sign_out = fields.Many2one('cicon.hr.attendance.log',  string='Sign Out')
     work_hour = fields.Float(compute=_calc_work_hours, string="Work Hour", store=False)

@@ -57,10 +57,10 @@
                         <page string="Attendance">
                              <field name="filtered_ids" >
                                  <tree editable="bottom">
-                                    <field name="cicon_employee_id"  />
+                                    <field name="cicon_employee_id" widget="char"  />
                                     <field name="employee_id" options="{'no_create':True,'no_open':True}" />
                                     <field name="date_value" invisible="1" />
-                                     <field name="work_shift"/>
+                                    <field name="work_shift"/>
                                     <field name="date" invisible="1" />
                                     <field name="sign_in" domain="[('date', '&lt;=', date_value), ('date', '&gt;=', date_value),('type','=',1),('employee_id','=',cicon_employee_id)]"  options="{'no_create':True,'no_open':True}" />
                                     <field name="sign_out" domain="[('date', '&lt;=', date_value), ('date', '&gt;=', date_value),('type','in',(3,4)),('employee_id','=',cicon_employee_id)]" options="{'no_create':True,'no_open':True}" />
@@ -73,7 +73,7 @@
                         <page string="Missing /Absent">
                             <field name="missing_log_ids">
                                  <tree editable="bottom">
-                                    <field name="cicon_employee_id" />
+                                    <field name="cicon_employee_id"  widget="char" />
                                     <field name="employee_id" options="{'no_create':True,'no_open':True}" />
                                     <field name="date_value" invisible="1" />
                                      <field name="work_shift"/>
@@ -126,7 +126,7 @@
             <field name="model">cicon.hr.attendance</field>
             <field name="arch" type="xml">
                 <search string="Attendance">
-                    <filter icon="terp-camera_test" domain="[('date','=',time.strftime('%%Y-%%m-%%d'))]" name="to_day" string="Today" help="Attendance Today"/>
+                    <filter domain="[('date','=',time.strftime('%%Y-%%m-%%d'))]" name="to_day" string="Today" help="Attendance Today"/>
                     <field name="employee_id" widget="selection" string="Employee"/>
                     <field name="cicon_employee_id"  string="Employee ID"/>
                     <field name="date" />

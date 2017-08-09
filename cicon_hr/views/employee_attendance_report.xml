@@ -25,13 +25,13 @@
                                    <th colspan="4" class="text-right" >  <small> Employee ID : <span  t-field="e.cicon_employee_id"/> </small> </th>
                                  </tr>
                                 <tr>
-                                <th> SNo </th>
-                                 <th> Date</th>
-                                <th> Sign In </th>
-                                <th> Sign Out </th>
-                                <th> Work Hour </th>
-                                <th> Leave </th>
-                                 <th> Log Count </th>
+                                    <th> SNo </th>
+                                    <th> Date</th>
+                                    <th> Sign In </th>
+                                    <th> Sign Out </th>
+                                    <th> Work Hour </th>
+                                    <th> Leave </th>
+                                    <th> Log Count </th>
                                  </tr>
                             </thead>
                             <tbody>

@@ -32,7 +32,7 @@
             </div>
             <div class="col-xs-3" >
                 <!--<img t-if="company.iso_logo" t-att-src="'data:image/png;base64,%s' % company.iso_logo" style="max-height: 45px;"/>-->
-                 <span t-esc="formatLang(time.strftime('%Y-%m-%d %H:%M:%S'),date=True)"/>
+                 <span t-esc="time.strftime('%Y-%m-%d %H:%M:%S')"/>
 
             </div>
         <div class="row zero_min_height">
@@ -78,31 +78,30 @@
                     <t t-foreach="w_shifts" t-as="ws">
                     <t t-set="attendance_ids" t-value="[t for t in o.filtered_ids if t.employee_id.department_id.id == d.id and t.employee_id.work_shift.id == ws.id]"/>
                       <t t-if="len(attendance_ids) > 0">
-                        <table class="table table-condensed">
+                        <table class="table table-bordered">
                              <thead>
-                                <th> SNo </th>
-                                <th> ID </th>
-                                <th> Name </th>
-                                <th> Sign In </th>
-                                <th> Sign Out </th>
-                                <th> Work Hour </th>
-                                <th> Leave </th>
-                                 <th> Log Count </th>
+                                <th style="width :2%;"> SNo </th>
+                                <th style="width :5%;"> ID </th>
+                                <th style="width :30%;"> Name </th>
+                                <th style="width :20%;"> Sign In </th>
+                                <th style="width :20%;" > Sign Out </th>
+                                <th style="width :8%;" > Hours </th>
+                                <th style="width :10%;" > Notes </th>
+                                <th style="width :5%;" > Logs </th>
                             </thead>
                             <tbody>
-
                                 <tr>
                                     <td colspan="8"> <h5> <span t-esc="d.name" /> / <span t-esc="ws.name" /> </h5>  </td>
                                 </tr>
                                 <tr t-foreach="attendance_ids" t-as="a">
                                 <td> <span t-esc="a_index + 1"/> </td>
-                                <td > <span t-field="a.employee_id.cicon_employee_id"/> </td>
+                                <td > <span t-field="a.employee_id.cicon_employee_id" t-field-options='{"widget": "char"}' /> </td>
                                 <td > <span t-field="a.employee_id.name"/> </td>
                                 <td > <span t-field="a.sign_in.utc_datetime"/> </td>
                                 <td > <span t-field="a.sign_out.utc_datetime"/> </td>
                                 <td>
                                 <t t-if="a.work_hour > 0">
-                                    <span t-esc="str(a.work_hour).replace('.',':')"/>
+                                    <span t-esc="str('{:.2f}'.format(a.work_hour)).replace('.',':')"/>
                                 </t>
                                 </td>
                                 <td>
@@ -112,8 +111,7 @@
                                 <td>
                                    <span t-esc="a.punch_log_count"/>
                                 </td>
-                                    </tr>
-
+                                </tr>
                             </tbody>
                       </table>
                           <p style="page-break-before:always;"> </p>
