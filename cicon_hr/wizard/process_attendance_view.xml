@@ -32,7 +32,7 @@
         </record>
 
 
-        <menuitem action="process_attendance_action" id="cicon_menu_process_attendance" parent="menu_cicon_hr_root"   groups="hr.group_hr_user" sequence="15" />
+        <menuitem action="process_attendance_action" id="cicon_menu_process_attendance" parent="menu_cicon_hr_root"   groups="hr.group_hr_user" sequence="20" />
 
     </data>
 </odoo>

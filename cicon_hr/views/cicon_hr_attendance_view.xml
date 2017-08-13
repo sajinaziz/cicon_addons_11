@@ -34,6 +34,7 @@
          <field name="arch" type="xml">
              <tree string="Attendance Sheet">
                 <field name="attendance_date"/>
+                 <field name="company_id" />
              </tree>
          </field>
     </record>
@@ -46,6 +47,7 @@
                  <sheet>
                      <group>
                         <field name="attendance_date"/>
+                         <field name="company_id" options="{'no_create':True,'no_open':True}"  readonly="True"/>
                          <button name="fill_log" string="Fill Attendance" type="object" class="oe_link"/>
                         <!--Sample Report Excel-->
                          <!--<button name="export_to_excel" string="Export To Excel" type="object" class="oe_link"/>-->
@@ -136,7 +138,7 @@
 
 
       <record id="cicon_attendance_action" model="ir.actions.act_window">
-            <field name="name">Attendance </field>
+            <field name="name">Attendance</field>
             <field name="res_model">cicon.hr.attendance</field>
              <field name="view_mode">tree,form</field>
             <field name="context">{'search_default_to_day':1}</field>
@@ -144,9 +146,12 @@
 
     <menuitem name="CICON HR" id="menu_cicon_hr_attendance_root" parent="hr.menu_hr_root" groups="hr.group_hr_user,base.group_hr_hse_user" sequence="99"/>
     <menuitem name="CICON Attendance" id="menu_cicon_hr_root" parent="menu_cicon_hr_attendance_root" />
-    <menuitem action="cicon_attendance_log_action" id="cicon_menu_attendance_log"  parent="cicon_hr.menu_cicon_hr_root" sequence="1" />
-    <menuitem action="cicon_attendance_sheet_action" id="cicon_menu_attendance_sheet" parent="menu_cicon_hr_root" sequence="2" />
-    <menuitem action="cicon_attendance_action" id="cicon_menu_attendance" parent="menu_cicon_hr_root" sequence="3" />
+    <menuitem action="cicon_attendance_sheet_action" id="cicon_menu_attendance_sheet" parent="menu_cicon_hr_root" sequence="30" />
+
+    <menuitem name="Logs" id="menu_cicon_hr_logs_main" parent="menu_cicon_hr_root" sequence="50" />
+    <menuitem action="cicon_attendance_log_action" id="cicon_menu_attendance_log"  parent="menu_cicon_hr_logs_main" sequence="10" />
+    <menuitem action="cicon_attendance_action" id="cicon_menu_attendance" parent="menu_cicon_hr_logs_main" sequence="20" />
+
 
     </data>
 </odoo>

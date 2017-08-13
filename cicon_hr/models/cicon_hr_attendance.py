@@ -66,11 +66,11 @@ class cicon_hr_attendance_sheet(models.Model):
 
     attendance_date = fields.Date('Attendance Date', required=True)
     # employee_type = fields.Boolean('Workers')
-    attendance_ids = fields.One2many('cicon.hr.attendance', 'sheet_id', string='Attendance')
-    filtered_ids = fields.One2many('cicon.hr.attendance', 'sheet_id', string='Attendance', domain=[('work_shift','!=', False)] )
-    missing_log_ids = fields.One2many('cicon.hr.attendance', 'sheet_id', string='Missing / Absent', domain=[ '&', ('work_shift','!=', False), '|', ('sign_in','=',False),  ('sign_out','=',False)])
+    attendance_ids = fields.One2many('cicon.hr.attendance', 'sheet_id', string='Attendance' )
+    filtered_ids = fields.One2many('cicon.hr.attendance', 'sheet_id', string='Attendance', domain=[('work_shift', '!=', False)])
+    missing_log_ids = fields.One2many('cicon.hr.attendance', 'sheet_id', string='Missing / Absent', domain=['&', ('work_shift', '!=', False), '|', ('sign_in', '=', False),  ('sign_out', '=', False)])
     # employee_type = fields.Selection([('worker', 'Workers'), ('staff', 'Office Staff')], "Show Punches", default='worker')
-    #company_id = fields.Many2one('res.company', string='Company', required=True)
+    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.user.company_id.id)
 
     _sql_constraints = [('uniq_sheet', 'UNIQUE(attendance_date)', 'One Sheet per Date')]
 
@@ -96,7 +96,7 @@ class cicon_hr_attendance_sheet(models.Model):
             _exits_ids = [x.id for x in self.attendance_ids]
             self.write({'attendance_ids': [(5, 0, _exits_ids)]})
         _date = self.attendance_date
-        _employees = self.env['hr.employee'].search([('cicon_employee_id', '>', 0)])
+        _employees = self.env['hr.employee'].search([('cicon_employee_id', '>', 0), ('company_id', '=', self.env.user.company_id.id)])
         _atts = self.get_processed_attendance(_date, _employees)
         for _att in _atts:
             _att['sheet_id'] = self.id

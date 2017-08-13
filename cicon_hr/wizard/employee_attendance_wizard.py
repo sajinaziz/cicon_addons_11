@@ -38,9 +38,10 @@ class cicon_emp_attendance_wizard(models.TransientModel):
     from_date = fields.Date(string='From Date', required=True, default=_get_first_date)
     to_date = fields.Date(string='To Date', required=True, default=fields.Date.context_today)
     employee_tags = fields.Many2many('hr.employee.category', 'cicon_hr_emp_attendance_tag_rel','wizard_id', 'tag_id', string='Employee Tags')
-    employee_ids = fields.Many2many('hr.employee', 'cicon_hr_employee_attendance_rel', 'wizard_id', 'employee_id', string='Employee')
+    employee_ids = fields.Many2many('hr.employee', 'cicon_hr_employee_attendance_rel', 'wizard_id', 'employee_id', string='Employees')
     leave_type = fields.Selection([('absent', 'Absent'), ('medical', 'Medical Leave'), ('annual', 'Annual Leave'), ('emergency', 'Emergency Leave'),('late_resume', 'Late Resume')], string='Leave Type')
     report_type = fields.Selection([('employee_leave', 'Employee Leave'), ('employee_attendance', 'Attendance'), ('employee_tag', 'Employee Tag')], "Report Type")
+
 
     @api.multi
     def show_report(self,data):
@@ -56,7 +57,7 @@ class cicon_emp_attendance_wizard(models.TransientModel):
         if self.report_type == 'employee_attendance':
             _emp_ids = [e.id for e in self.employee_ids]
         elif self.report_type == 'employee_tag':
-            _dm = []
+            _dm = [('company_id', '=', self.env.user.company_id.id)]
             if self.employee_tags:
                 _dm.append(('category_ids', '=', self.employee_tags._ids))
             if self.work_shift:
