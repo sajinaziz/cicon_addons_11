@@ -145,7 +145,7 @@
       </record>
 
     <menuitem name="CICON HR" id="menu_cicon_hr_attendance_root" parent="hr.menu_hr_root" groups="hr.group_hr_user,base.group_hr_hse_user" sequence="99"/>
-    <menuitem name="CICON Attendance" id="menu_cicon_hr_root" parent="menu_cicon_hr_attendance_root" />
+    <menuitem name="CICON Attendance" id="menu_cicon_hr_root" parent="menu_cicon_hr_attendance_root" sequence="10" />
     <menuitem action="cicon_attendance_sheet_action" id="cicon_menu_attendance_sheet" parent="menu_cicon_hr_root" sequence="30" />
 
     <menuitem name="Logs" id="menu_cicon_hr_logs_main" parent="menu_cicon_hr_root" sequence="50" />
