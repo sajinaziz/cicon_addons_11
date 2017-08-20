@@ -63,6 +63,8 @@ class CmmsCommonReportWizard(models.TransientModel):
     job_order_type = fields.Selection(JOB_ORDER_TYPE, "Job Order Type")
     machine_categ_ids = fields.Many2many('cmms.machine.category','cmms_report_machine_categ_sel_rel', 'wizard_id', 'categ_id',
                                          string="Machine Category")
+    machine_type_ids = fields.Many2many('cmms.machine.type', 'cmmms_report_machine_type_sel_rel', 'wizard_id', 'type_id',
+                                        string="Machine Type")
     report_option = fields.Selection([('summary', 'Summary'), ('detail', 'Detailed')], string='Report Option',default='summary')
 
     #find the end date of the select month in report
@@ -132,7 +134,6 @@ class CmmsCommonReportWizard(models.TransientModel):
     #      (prev_year, prev_year)],string="Year",default=current_year)
 
     report_year = fields.Selection(_get_year, string="Year")
-
 
     @api.onchange('report_year')
     def _fill_date(self):
@@ -277,6 +278,7 @@ class CmmsCommonReportWizard(models.TransientModel):
         if self.report_list == 'machine_analysis_report':
             ctx['year'] = self.report_year
             ctx['machine_categ_ids'] = self.machine_categ_ids._ids
+            ctx['machine_type_ids'] = self.machine_type_ids._ids
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.report_machine_analysis_summary_template',
                                                                    data=datas)

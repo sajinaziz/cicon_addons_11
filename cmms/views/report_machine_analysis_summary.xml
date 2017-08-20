@@ -40,8 +40,8 @@
                                     <t t-foreach="macs" t-as="m">
                                             <tr  style="page-break-inside:avoid !important">
                                                 <t t-set="m_val" t-value="m.get('machine_id')"/>
-                                                <td style="width:15%" rowspan="2"> <span t-esc="m_val.code"/></td>
-                                                <td style="width:10%" rowspan="2">  <span t-esc="m_val.name"/></td>
+                                                <td style="width:7%" rowspan="2"> <span t-esc="m_val.code"/></td>
+                                                <td style="width:18%" rowspan="2">  <span t-esc="m_val.name"/></td>
                                                 <td style="width:5%">Breakdown</td>
                                                 <t t-set="breakdowns" t-value="get_breakdown_count(m_val.id)" />
                                                     <t t-foreach="breakdowns" t-as="b">

@@ -16,8 +16,6 @@ class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
         report = report_obj._get_report_from_name('cmms.report_machine_analysis_summary_template')
         _docs = self._get_report_data(data.get('ids', data.get('active_ids')))
 
-
-
         docargs = {
             'doc_ids': data.get('ids', data.get('active_ids')),
             'doc_model': report.model,
@@ -36,6 +34,8 @@ class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
             _qry.append(('company_id','=',self._context.get('company_id')))
         if self._context.get('machine_categ_ids'):
             _qry.append(('category_id', 'in', self._context.get('machine_categ_ids')))
+        if self._context.get('machine_type_ids'):
+            _qry.append(('type_id', 'in', self._context.get('machine_type_ids')))
         self._machines = self.env['cmms.machine'].search(_qry)
         _types = self._machines.mapped('type_id').sorted(lambda t:t.name)
         return _types
