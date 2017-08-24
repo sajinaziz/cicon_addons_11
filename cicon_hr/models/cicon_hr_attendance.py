@@ -106,8 +106,9 @@ class cicon_hr_attendance_sheet(models.Model):
     def get_processed_attendance(self, _date , _employees):
         _date_int = int(time.strftime('%Y%m%d', time.strptime(_date, '%Y-%m-%d'))) # Convert date to Int as Log Required date in Int
         _date_next_int = int((datetime.strptime(_date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y%m%d'))
+        _date_pre_int = int((datetime.strptime(_date, '%Y-%m-%d') - timedelta(days=1)).strftime('%Y%m%d'))
         res = []
-        _logs = self.env['cicon.hr.attendance.log'].search([('date', '>=', _date_int), ('date', '<=', _date_next_int)]) #Find all logs for two days to check if night shift
+        _logs = self.env['cicon.hr.attendance.log'].search([('date', '>=', _date_pre_int), ('date', '<=', _date_next_int)]) #Find all logs for two days to check if night shift
         _leaves = self.env['cicon.hr.employee.leave'].search(['|', ('start_date', '<=', _date), ('end_date', '>=', _date)]) # Find All Leaves for the date
         if _logs:
             for _employee in _employees:
@@ -123,6 +124,10 @@ class cicon_hr_attendance_sheet(models.Model):
                         _emp_out_log = [i for i in _logs if i.employee_id == _employee.cicon_employee_id and i.type in [3, 4] and i.date == _date_next_int]
                 if _emp_out_log:
                     _emp_log['sign_out'] = _emp_out_log[-1]
+                if not _emp_in_log and _emp_out_log: # Case Only Out log available then check previous date
+                    if _emp_out_log[-1].hour < 12: #Night Shift
+                        _emp_in_log_temp = [i for i in _logs if i.employee_id == _employee.cicon_employee_id and i.type in [1] and i.date == _date_pre_int]
+                        _emp_log['sign_in'] = _emp_in_log_temp[0]
                 if _emp_leave:
                     _emp_log['leave_id'] = _emp_leave[0].id
                 if (_emp_log['sign_in'] and _emp_log['sign_out']) and _emp_log['sign_in'].log_datetime > _emp_log['sign_out'].log_datetime:

@@ -18,20 +18,20 @@
                           <div class="col-xs-8">
                            <span t-field="e.department_id.name"/> / <span t-esc="e.work_shift.name or ''"/> </div>
                       </div>
-                        <table class="table table-condensed">
+                        <table class="table table-bordered">
                              <thead>
                                  <tr>
                                    <th colspan="3" class="text-left" >  <small> Period ( <span  t-esc="fromDate"/> - <span  t-esc="toDate"/> )</small> </th>
                                    <th colspan="4" class="text-right" >  <small> Employee ID : <span  t-field="e.cicon_employee_id"/> </small> </th>
                                  </tr>
                                 <tr>
-                                    <th> SNo </th>
-                                    <th> Date</th>
-                                    <th> Sign In </th>
-                                    <th> Sign Out </th>
-                                    <th> Work Hour </th>
-                                    <th> Leave </th>
-                                    <th> Log Count </th>
+                                    <th class="text-center" style="width:5%;"> SNo </th>
+                                    <th class="text-center" style="width:25%;"> Date</th>
+                                    <th class="text-center" style="width:25%;"> In </th>
+                                    <th class="text-center" style="width:25%;"> Out </th>
+                                    <th class="text-center" style="width:10%;"> Hours </th>
+                                    <th class="text-center" style="width:5%;"> Leave </th>
+                                    <th class="text-center" style="width:5%;"> Logs </th>
                                  </tr>
                             </thead>
                             <tbody>
@@ -65,9 +65,10 @@
                                 <t t-if="a and a.leave_id">
                                     <span t-field="a.leave_id.leave_type"/> </t>
                                 </td>
-                                    <td>
-                                <t t-if="a and a.punch_log_count">
-                                    <span t-esc="a.punch_log_count"/> </t>
+                                <td>
+                                    <t t-if="a and a.punch_log_count">
+                                        <span t-esc="a.punch_log_count"/>
+                                    </t>
                                 </td>
                                 </tr>
 
