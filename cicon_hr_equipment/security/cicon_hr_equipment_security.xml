@@ -2,8 +2,6 @@
 <odoo>
 
 
-
-
     <record id="group_cicon_it_manager" model="res.groups">
         <field name="name">IT Manager</field>
         <field name="implied_ids" eval="[(4, ref('maintenance.group_equipment_manager'))]"/>
@@ -41,6 +39,11 @@
         <field name="model_id" ref="model_cicon_user_identity"/>
         <field name="domain_force">['|',('company_id','=',False),('company_id','in',user.company_ids.ids)]</field>
         <!--<field name="groups" eval="[(4, ref('base.group_equipment_manager'))]"/>-->
+    </record>
+
+
+    <record id="hr.group_hr_user" model="res.groups">
+        <field name="implied_ids" eval="[(3, ref('maintenance.group_equipment_manager'))]"/>
     </record>
 
 </odoo>
