@@ -127,7 +127,8 @@ class cicon_hr_attendance_sheet(models.Model):
                 if not _emp_in_log and _emp_out_log: # Case Only Out log available then check previous date
                     if _emp_out_log[-1].hour < 12: #Night Shift
                         _emp_in_log_temp = [i for i in _logs if i.employee_id == _employee.cicon_employee_id and i.type in [1] and i.date == _date_pre_int]
-                        _emp_log['sign_in'] = _emp_in_log_temp[0]
+                        if _emp_in_log_temp:
+                            _emp_log['sign_in'] = _emp_in_log_temp[0]
                 if _emp_leave:
                     _emp_log['leave_id'] = _emp_leave[0].id
                 if (_emp_log['sign_in'] and _emp_log['sign_out']) and _emp_log['sign_in'].log_datetime > _emp_log['sign_out'].log_datetime:
