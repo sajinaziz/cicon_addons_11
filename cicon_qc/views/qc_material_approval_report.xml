@@ -10,11 +10,7 @@
                           font-size: 9px;
                         }
                     </style>
-                    <div class="row text-right col-xs-12" style="margin-top: 6px;" >
-
-                    </div>
                     <div class="row">
-
                         <table class="table table-bordered">
                             <caption > <h4 class="text-center" > Steel Approval Status Report   <span class="text-right"> ( <small  t-esc="get_datetime()" /> )  </span> </h4>
                             </caption>
