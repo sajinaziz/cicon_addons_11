@@ -47,7 +47,7 @@ class cicon_hr_employee_training(models.Model):
     score = fields.Integer(related='title_id.score', store=False, readonly=True)
     achieved_score = fields.Float('Score')
     file_name = fields.Char('File Name')
-    certificate_file = fields.Binary('Certificate')
+    #certificate_file = fields.Binary('Certificate')
     score_percent = fields.Float('Score', compute=_calc_percentage, store=False)
     grade = fields.Char('Grade', compute=_calc_percentage, store=False)
 
