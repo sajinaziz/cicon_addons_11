@@ -16,10 +16,14 @@ class CmmsPmInterval(models.Model):
     _description = "Interval For PM Tasks"
     _log_access = False
 
+    sequence = fields.Integer('Sequence')
     name = fields.Char('Interval', size=20, required=True)
     rrule_type = fields.Selection(_RRULE_TYPE , 'Recurrency',
             help="Let the event automatically repeat at that interval" , requied=True)
     count = fields.Integer('Repeat', help="Repeat x times", required=True)
+    day_count = fields.Integer('Day Count(Approx.)')
+
+    _order = 'sequence'
 
     _sql_constraints = [('unique_interval', 'unique(name)', 'Scheme Must be unique')]
 CmmsPmInterval()

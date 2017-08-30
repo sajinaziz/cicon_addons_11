@@ -88,6 +88,7 @@
                                         <field name="interval_id"/>
                                         <field name="next_date"/>
                                         <field name="last_date"/>
+                                        <field name="day_diff"/>
                                     </tree>
                                 </field>
                             </page>

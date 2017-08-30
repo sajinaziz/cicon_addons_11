@@ -23,16 +23,17 @@
                                     <t t-if="invcount > 0">
                                         <tr style="page-break-inside: avoid !important;">
                                             <td  t-att-rowspan="invcount" style="width: 3%"> <span t-esc="o_index +1"/>  </td>
-                                            <td  t-att-rowspan="invcount" style="width: 5%"> <span t-field="o.code"/>  </td>
-                                            <td  t-att-rowspan="invcount" style="width: 25%"> <span t-field="o.name"/>  </td>
-                                            <td  t-att-rowspan="invcount" style="width: 10%"> <span t-field="o.pm_scheme_id.name"/>  </td>
+                                            <td  t-att-rowspan="invcount" style="width: 7%"> <span t-field="o.code"/>  </td>
+                                            <td  t-att-rowspan="invcount" style="width: 30%"> <span t-field="o.name"/>  </td>
+                                            <td  t-att-rowspan="invcount" style="width: 15%"> <span t-field="o.pm_scheme_id.name"/>  </td>
                                             <t t-foreach="intervals" t-as="i">
                                                 <t t-if="i_index > 0">
                                                     <![CDATA[<tr>]]>
                                                 </t>
-                                                <td style="width: 10%"> <span t-field="i.name"/> </td>
-                                                <td style="width: 10%"> <span t-esc="get_schedules(o,i)"/></td>
-                                                <td style="width: 10%"> </td>
+                                                <t t-set="_schs" t-value="get_schedules(o,i)" />
+                                                <td style="width: 15%"> <span t-field="i.name"/> (<span t-esc="len(_schs)" />)</td>
+                                                <td style="width: 15%"> <span t-esc= "_schs and _schs[0].next_date"/></td>
+                                                <td style="width: 15%"> <span t-esc="_schs and _schs[0].last_date"/> </td>
                                             </t>
                                         </tr>
                                     </t>

@@ -109,9 +109,11 @@
             <field name="model">cmms.pm.interval</field>
             <field name="arch" type="xml" >
                 <tree string="PM Interval" editable="bottom">
+                    <field name="sequence" widget="handle"/>
                     <field name="name" />
                     <field name="rrule_type"/>
                     <field name="count"/>
+                    <field name="day_count"/>
                 </tree>
             </field>
         </record>
