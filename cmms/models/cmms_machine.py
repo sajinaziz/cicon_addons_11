@@ -1,7 +1,7 @@
 from odoo import models, fields, api, tools
 from odoo import _, tools
 from odoo.exceptions import UserError
-from datetime import datetime
+from datetime import datetime,date
 
 #To store machine location
 class CmmsMachineLocation(models.Model):
@@ -212,7 +212,8 @@ class CmmsMachineTaskView(models.Model):
             _task_line = _task_line_obj.search([('pm_task_id', '=', rec.task_id.id), ('job_order_id.machine_id', '=', rec.machine_id.id), ('state', '=', 'done')], order='date_completed desc', limit=1)
             rec.last_date = _task_line.date_completed
             if rec.last_date and rec.next_date:
-                rec.day_diff = (self._convert_date(rec.next_date) - self._convert_date(rec.last_date)).days
+                actual_days = (self._convert_date(date.today().strftime(tools.DEFAULT_SERVER_DATE_FORMAT)) - self._convert_date(rec.last_date)).days
+                rec.day_diff = rec.interval_id.day_count - actual_days
 
     def _convert_date(self, _date):
         return datetime.strptime(_date, tools.DEFAULT_SERVER_DATE_FORMAT)
@@ -223,7 +224,7 @@ class CmmsMachineTaskView(models.Model):
     interval_id = fields.Many2one('cmms.pm.interval', string="Interval", readonly=True)
     next_date = fields.Date('Next Run Date', readonly=True, compute=_get_next_date)
     last_date = fields.Date('Last Run Date', readonly=True, compute=_get_next_date)
-    day_diff = fields.Integer('Day Difference', readonly=True,compute=_get_next_date, store=False)
+    day_diff = fields.Integer('Day Difference', readonly=True, compute=_get_next_date, store=False)
 
     def _from(self):
         from_str = """

@@ -83,7 +83,7 @@
                             </page>
                             <page string="PM Tasks">
                                 <field name="pm_task_ids">
-                                    <tree>
+                                    <tree decoration-info="day_diff == 0" decoration-danger="day_diff &lt; 0" decoration-warning="next_date == None">
                                         <field name="task_id"/>
                                         <field name="interval_id"/>
                                         <field name="next_date"/>

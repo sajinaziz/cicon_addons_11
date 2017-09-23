@@ -31,9 +31,9 @@
                                                     <![CDATA[<tr>]]>
                                                 </t>
                                                 <t t-set="_schs" t-value="get_schedules(o,i)" />
-                                                <td style="width: 15%"> <span t-field="i.name"/> (<span t-esc="len(_schs)" />)</td>
-                                                <td style="width: 15%"> <span t-esc= "_schs and _schs[0].next_date"/></td>
-                                                <td style="width: 15%"> <span t-esc="_schs and _schs[0].last_date"/> </td>
+                                                <td style="width: 15%" t-att-class="'danger' if _schs and _schs[0].day_diff &lt; 0 or _schs[0].next_date == false else 'active'"> <span t-field="i.name"/> (<span t-esc="len(_schs)" />)</td>
+                                                <td style="width: 15%" t-att-class="'danger' if _schs and _schs[0].day_diff &lt; 0 or _schs[0].next_date == false else 'active'">  <span t-esc= "_schs and _schs[0].next_date"/></td>
+                                                <td style="width: 15%" t-att-class="'danger' if _schs and _schs[0].day_diff &lt; 0 or _schs[0].next_date == false else 'active'">  <span t-esc="_schs and _schs[0].last_date"/> </td>
                                             </t>
                                         </tr>
                                     </t>
