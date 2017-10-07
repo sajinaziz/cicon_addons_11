@@ -42,6 +42,9 @@
                                 <field name="department_id" />
                             </group>
                         </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
                         <div class="oe_inline">
                             <label for="achieved_score"/>
                                 <field name="achieved_score" class="oe_inline" /> /<field name="score" class="oe_inline"/>
