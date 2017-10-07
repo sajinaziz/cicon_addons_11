@@ -135,16 +135,16 @@
         </record>
 
 
-        <record model="ir.ui.view" id="cicon_hr_training_emp_graph">
-            <field name="name">cicon.hr.training.graph</field>
+        <record model="ir.ui.view" id="cicon_hr_training_emp_pivot">
+            <field name="name">cicon.hr.training.pivot</field>
             <field name="model">cicon.hr.employee.training</field>
             <field name="arch" type="xml">
-                  <graph string="Training Analysis" type="pivot" stacked="True">
+                  <pivot string="Training Analysis">
                     <field name="employee_id" type="row"/>
-                      <field name="title_id" type="col"/>
-                      <field name="training_date" type="col"/>
+                    <field name="title_id" type="col"/>
+                    <field name="training_date" interval="month" type="col"/>
                     <field name="achieved_score" type="measure"/>
-                </graph>
+                </pivot>
             </field>
         </record>
 
@@ -164,7 +164,7 @@
         <record id="cicon_emp_training_action" model="ir.actions.act_window">
             <field name="name">Trainings</field>
             <field name="res_model">cicon.hr.employee.training</field>
-            <field name="view_mode">tree,form,graph</field>
+            <field name="view_mode">tree,form,pivot</field>
        </record>
 
 
