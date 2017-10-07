@@ -98,7 +98,7 @@
                                            </tr>
                                            <tr>
                                                <td>EMPLOYEE NO. :</td>
-                                               <th> <span t-field="o.cicon_employee_id" /> </th>
+                                               <th> <span t-field="o.cicon_employee_id" t-field-options='{"widget": "char"}' /> </th>
                                            </tr>
                                        </table>
                                    </th>
