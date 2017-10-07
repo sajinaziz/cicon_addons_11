@@ -19,6 +19,7 @@ class CiconJobSite(models.Model):
     company_id = fields.Many2one('res.company', string='Company')
     active = fields.Boolean('Active', default=True,  track_visibility='onchange')
     archive = fields.Boolean('Archive', help="This will hide project from reports",  default=False,  track_visibility='onchange')
+    note = fields.Text('Notes')
 
     _sql_constraints = [
         ('unique_cust_project', 'unique(partner_id,name)', 'Project Name must be unique for each customer')]

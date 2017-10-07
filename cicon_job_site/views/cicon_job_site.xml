@@ -44,6 +44,9 @@
                             <field name="telephone" />
                             <field name="fax" />
                         </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
                         <group >
                             <field name="archive" readonly="True"/>
                         </group>
