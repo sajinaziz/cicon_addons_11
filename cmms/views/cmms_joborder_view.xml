@@ -27,7 +27,7 @@
                            <h2> <field name="name" attrs="{'invisible':[('job_order_type','!=','preventive')],
                                                             'readonly':[('job_order_type','=','preventive')]}" /> </h2>
                            <label for='machine_id'/>
-                           <h2><field name="machine_id"  options="{'no_create':True}" /></h2>
+                           <h2><field name="machine_id"  domain="[('company_id','=', company_id)]"  options="{'no_create':True}" /></h2>
                          </div>
                          <group>
                          <div>
