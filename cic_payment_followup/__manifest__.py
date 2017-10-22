@@ -9,7 +9,7 @@ Module for the CICON Payment Followup.
     """,
     'website': 'http://www.cicon.ae',
     # 'depends' : ['project_gtd','account_followup'],
-    'depends': ['project','account'],
+    'depends': [],
     "data":["views/cic_project_task_view.xml","views/cic_project_task_data.xml"],
     'test': [],
     'installable': True,
