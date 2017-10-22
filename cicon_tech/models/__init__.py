@@ -1,7 +1,7 @@
-import tech_submittal
-import tech_submittal_revision
-import tech_submittal_revision_document
-import tech_documenttype
-import tech_project
-import tech_project_contact
-import tech_consultant
+from . import tech_submittal
+from . import tech_submittal_revision
+from . import tech_submittal_revision_document
+from . import tech_documenttype
+from . import tech_project
+from . import tech_project_contact
+from . import tech_consultant

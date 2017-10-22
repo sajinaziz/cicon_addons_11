@@ -1,3 +1,3 @@
-import uae_check
-import cic_res_partner
-import cic_check_aging
+from . import uae_check
+from . import cic_res_partner
+from . import cic_check_aging

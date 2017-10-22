@@ -1,1 +1,1 @@
-import common_report_wizard
+from . import common_report_wizard

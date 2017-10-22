@@ -23,7 +23,7 @@ import os
 import sys
 from datetime import datetime,date,timedelta
 from odoo import models, fields,api
-import pyodbc
+from . import pyodbc
 
 
 import logging

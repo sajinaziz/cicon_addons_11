@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 from dateutil.relativedelta import relativedelta
 import calendar
 import xlsxwriter
-import cStringIO
+from io import StringIO
 import base64
 
 
@@ -181,7 +181,7 @@ class CmmsCommonReportWizard(models.TransientModel):
         _date_list = list(set(_dates))
         _date_list.sort()
 
-        output = cStringIO.StringIO()
+        output = StringIO.StringIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         format1 = workbook.add_format()
         format1.set_num_format('###0.00')

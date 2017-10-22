@@ -7,7 +7,7 @@ import time
 #from datetime import datetime
 from datetime import datetime,date,timedelta
 from odoo.exceptions import UserError
-import cStringIO
+from io import StringIO
 import base64
 from docx import Document
 

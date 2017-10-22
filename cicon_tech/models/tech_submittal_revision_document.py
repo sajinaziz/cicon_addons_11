@@ -97,7 +97,6 @@ class SubmittalDocumentRevision(models.Model):
                 vals.update({'submittal_id': sub_revision.submittal_id.id})
         res = super(SubmittalDocumentRevision, self).create(vals)
         # Check for revision if available set value to be revised
-        print vals.get('reason_id')
         if res:
             _rec = res.parent_id
             _rec.write({'is_revised': True})

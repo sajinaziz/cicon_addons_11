@@ -1,1 +1,1 @@
-import cicon_helpdesk
+from . import cicon_helpdesk

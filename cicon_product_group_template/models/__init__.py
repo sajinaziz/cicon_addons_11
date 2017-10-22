@@ -1,1 +1,1 @@
-import cicon_prod_group
+from . import cicon_prod_group

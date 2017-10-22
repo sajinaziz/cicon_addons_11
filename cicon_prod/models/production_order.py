@@ -107,7 +107,6 @@ class cicon_prod_order(models.Model):
         _fold = {}
         for _plan in _plans:
             _fold[_plan[0]] = True
-        print _fold
         return _plans, _fold
 
     _group_by_full = {

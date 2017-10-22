@@ -1,1 +1,1 @@
-import import_odbc
+from . import import_odbc

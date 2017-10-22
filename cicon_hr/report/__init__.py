@@ -1,3 +1,3 @@
-import attendance_print
-import employee_attendance
+from . import attendance_print
+from . import employee_attendance
 

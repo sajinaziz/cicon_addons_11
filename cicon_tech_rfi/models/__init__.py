@@ -1,1 +1,1 @@
-import cicon_tech_rfi
+from . import cicon_tech_rfi

@@ -1,5 +1,5 @@
-import res_partner_project
-import customer_order
-import production_order
-import contract_lpo
-import delivery_order
+from . import res_partner_project
+from . import customer_order
+from . import production_order
+from . import contract_lpo
+from . import delivery_order

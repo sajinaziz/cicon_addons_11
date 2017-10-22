@@ -1,3 +1,3 @@
-import cicon_hr
-import cicon_hr_leave
-import cicon_hr_attendance
+from . import cicon_hr
+from . import cicon_hr_leave
+from . import cicon_hr_attendance

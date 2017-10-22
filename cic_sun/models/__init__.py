@@ -1,1 +1,1 @@
-import cic_sun_system
+from . import cic_sun_system

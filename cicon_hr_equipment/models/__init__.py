@@ -1,2 +1,2 @@
-import cicon_hr_equipment
-import cicon_user_identity
+from . import cicon_hr_equipment
+from . import cicon_user_identity

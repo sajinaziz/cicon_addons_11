@@ -146,7 +146,6 @@ class ProjectTaskWork(models.Model):
                 <li>Payment Note: %s</li>
                 </p> """ % (r.name, r.user_id.name, r.payment_note)
             _task_obj.message_post([r.task_id], _msg)
-        print res
         return res
 
     @api.multi
@@ -158,13 +157,11 @@ class ProjectTaskWork(models.Model):
         if template_id:
             _user_ids = self.read_group([('state', '=', 'pending'), ('reminder_date', '<=', datetime.date.today())],
                                         ['assign_to'], ['assign_to'])
-            print 'Groups:', _user_ids
             for u in _user_ids:
-                print 'Assignto :', u['assign_to']
+
                 if u['assign_to']:
                     _rem_ids = self.search([('state', '=', 'pending'), ('reminder_date', '<=', datetime.date.today()),
                                             ('assign_to', '=', u['assign_to'][0])])
-                    print 'Reminders', _rem_ids
                     # mail_id = template_obj.send_mail(cr,uid,template_id,_rem_ids[0],True)
                     self.get_reminders(u['assign_to'][0], context=context)
                     # print "Mail Send " , mail_id
@@ -175,7 +172,6 @@ class ProjectTaskWork(models.Model):
         reminder_table = ''
         _rem_ids = self.search([('state', '=', 'pending'), ('reminder_date', '<=', datetime.date.today()),
                                          ('assign_to', '=', user_id)])
-        print 'Render :', _rem_ids
         reminder_table += '''
                       <table border="2" width=100%%>
                       <tr>

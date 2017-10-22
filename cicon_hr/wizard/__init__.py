@@ -1,3 +1,3 @@
-import import_attendance
-import employee_attendance_wizard
-import process_attendance
+from . import import_attendance
+from . import employee_attendance_wizard
+from . import process_attendance

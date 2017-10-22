@@ -1,1 +1,1 @@
-import cicon_job_site
+from . import cicon_job_site

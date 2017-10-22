@@ -1,1 +1,1 @@
-import qc_material_approval_report
+from . import qc_material_approval_report

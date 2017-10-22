@@ -1,2 +1,2 @@
-import sun_credit_check
-import sun_credit_check_debtor_statement
+from . import sun_credit_check
+from .import sun_credit_check_debtor_statement

@@ -1,1 +1,1 @@
-import res_company_extn
+from . import res_company_extn

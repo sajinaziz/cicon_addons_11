@@ -1,1 +1,1 @@
-import drawing_register
+from . import drawing_register

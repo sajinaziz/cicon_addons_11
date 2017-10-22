@@ -1,1 +1,1 @@
-import cic_user_sign
+from . import cic_user_sign

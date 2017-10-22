@@ -190,14 +190,12 @@ class CiconProdOrder(models.Model):
                     _moves = self.env['cicon.prod.order.line'].search([('prod_order_id', 'in', _prod_orders._ids),
                                                                        ('product_id', 'in', tmp.prod_group_tmpl_id.product_ids._ids)])
                     _del_qty = sum(a.product_qty for a in _moves)
-                    print _del_qty
                     _ret_qty = 0 # sum(a.product_qty for a in _moves) #TODO: Return Quantity
                     _temp_qty = (_del_qty - _ret_qty)
                     #Get all line for current
                     _line = self.product_lines.filtered(lambda l: l.product_id.id in tmp.prod_group_tmpl_id.product_ids._ids)
                     if _line:
                         _qty = sum(x.product_qty for x in _line)
-                        print _qty
                         if (_temp_qty + _qty) > (tmp.quantity + tmp.extra_qty_allowed):
                             if tmp.restriction_type == 'restrict':
                                 res = False

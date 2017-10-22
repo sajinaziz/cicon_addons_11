@@ -1,1 +1,1 @@
-import cic_project_task
+from . import cic_project_task
