@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+      <record id="res_partner_cicon_doc_form" model="ir.ui.view">
+            <field name="name">res.partner.cicon.doc.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//notebook/page[last()]" position="after">
+                    <page string="Documents" groups="cicon_document.cicon_document_user">
+                       <field name="document_ids"  domain="[('res_model', '=', 'res.partner')]" context="{'default_res_model': 'res.partner', 'default_res_id': active_id}"  />
+                    </page>
+               </xpath>
+            </field>
+         </record>
+
+</odoo>

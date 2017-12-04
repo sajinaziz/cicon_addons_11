@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    <record model="ir.module.category" id="module_cicon_document">
+            <field name="name">CICON Document Management</field>
+            <field name="description">CICON Document Management .</field>
+            <field name="sequence">99</field>
+    </record>
+
+    <record id="cicon_document_user" model="res.groups">
+        <field name="name">Document User</field>
+        <field name="category_id" ref="module_cicon_document"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">the user will be able to view and add documents.</field>
+    </record>
+
+    <record id="cicon_document_admin" model="res.groups">
+        <field name="name">Document Admin</field>
+        <field name="category_id" ref="module_cicon_document"/>
+        <field name="implied_ids" eval="[(4, ref('cicon_document.cicon_document_user'))]"/>
+        <field name="comment">the user will be able to mange documents and directories.</field>
+    </record>
+
+
+    </data>
+
+</odoo>
