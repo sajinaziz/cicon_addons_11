@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sun_account_user,cic.sun.account.user,model_cic_sun_account,account.group_account_invoice,1,1,1,0
-access_sun_base_user,cic.sun.base.user,model_cic_sun_account,base.group_user,1,0,0,0
-access_sun_db_user,cic.sun.db.base.user,model_cic_sun_db,base.group_user,1,0,0,0
-access_sun_db_check_user,cic.sun.db.base.check.user,model_cic_sun_account,base.group_partner_manager,1,1,1,0

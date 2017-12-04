@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+      <record id="res_partner_cicon_doc_form" model="ir.ui.view">
+            <field name="name">res.partner.cicon.doc.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group/field[@name='comment']" position="after">
+
+                        <field name="passport_no" />
+                        <field name="contact_type_ids"  widget="many2many_tags"   />
+
+                </xpath>
+               <xpath expr="//notebook/page[last()]" position="after">
+                    <page string="Credit Application" groups="cicon_credit.group_cicon_credit_user" >
+                        <field name="credit_application_ids" />
+
+
+                    </page>
+               </xpath>
+            </field>
+         </record>
+
+
+     <record id="cicon_customer_credit_application_tree" model="ir.ui.view">
+            <field name="name">cicon.customer.credit.application.tree</field>
+            <field name="model">cicon.customer.credit.application</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+     </record>
+
+
+       <record id="cicon_customer_credit_application_form" model="ir.ui.view">
+            <field name="name">cicon.customer.credit.application.form</field>
+            <field name="model">cicon.customer.credit.application</field>
+            <field name="arch" type="xml">
+                <form form="Customer Credit Application">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="new,pending,approved" />
+                    </header>
+                    <sheet>
+                        <div class="oe_left">
+                        <label for="name" class="oe_edit_only"/>
+                        <h3>
+                            <field name="name" />
+                        </h3>
+                        </div>
+                        <group>
+                            <field name="partner_id" options="{'no_create': 1}" />
+                        </group>
+                        <group string="Company Details">
+                            <group>
+                                <field name="year_establish" />
+                                <field name="industry_id"/>
+                                <field name="business_type_id" />
+                            </group>
+                            <group>
+                                <field name="license_type_id"/>
+                                <field name="license_validity"/>
+                                <field name="paid_capital"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Contacts">
+                                <field name="contact_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="contact_type_ids" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Bank Details">
+                                <field name="partner_bank_ids"/>
+                            </page>
+                            <page string="Credit Requirement">
+                                <group>
+                                    <field name="approx_business"/>
+                                    <field name="credit_days_req"/>
+                                    <field name="credit_limit_req" />
+                                </group>
+                            </page>
+                            <page string="Products">
+                                <field name="product_temp_ids" widget="many2many_checkboxes" />
+                            </page>
+                            <page string="Customer Document">
+                               <field name="partner_document_ids"/>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+       </record>
+
+
+
+        <record id="cicon_credit_app_action" model="ir.actions.act_window">
+            <field name="name">Credit Application</field>
+            <field name="res_model">cicon.customer.credit.application</field>
+        </record>
+
+
+        <menuitem id="cicon_credit_root_menu"
+            name="Credit Control"
+            parent="crm.crm_menu_root"
+                  groups="cicon_credit.group_cicon_credit_user"
+            sequence="99"/>
+
+         <menuitem id="cicon_credit_app_menu"
+            action="cicon_credit_app_action"
+            parent="cicon_credit_root_menu"
+            sequence="1"/>
+
+
+
+</odoo>

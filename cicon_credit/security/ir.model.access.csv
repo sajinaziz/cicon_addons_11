@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cicon_credit_app_user,cicon.credit.app.user,model_cicon_customer_credit_application,group_cicon_credit_user,1,1,1,0
+access_cicon_credit_app_admin,cicon.credit.app.admin,model_cicon_customer_credit_application,group_cicon_credit_admin,1,1,1,1
+access_cicon_cust_busi_type_user,cicon.customer.bus.type.user,model_cicon_customer_business_type,group_cicon_credit_user,1,0,0,0
+access_cicon_cust_busi_type_admin,cicon.customer.bus.type.admin,model_cicon_customer_business_type,group_cicon_credit_admin,1,1,1,1
+access_cicon_cust_lic_type_user,cicon.customer.lic.type.user,model_cicon_customer_license_type,group_cicon_credit_user,1,0,0,0
+access_cicon_cust_lic_type_admin,cicon.customer.lic.type.admin,model_cicon_customer_license_type,group_cicon_credit_admin,1,1,1,1
+access_cicon_cust_contact_type_user,cicon.customer.contact.type.user,model_cicon_customer_contact_type,group_cicon_credit_user,1,0,0,0
+access_cicon_cust_contact_type_admin,cicon.customer.contact.type.admin,model_cicon_customer_contact_type,group_cicon_credit_admin,1,1,1,1

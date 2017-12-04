@@ -1,2 +1,0 @@
-#import cicon_purchase_request
-from . import cicon_purchase_requisition

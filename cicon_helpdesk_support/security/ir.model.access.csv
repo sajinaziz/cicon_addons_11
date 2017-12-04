@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_helpdesk_team_emp,help.desk.team.user,model_help_desk_team,base.group_user,1,0,0,0
-access_help_desk_emp,help.desk.user,model_cicon_help_desk,base.group_user,1,0,0,0
-access_helpdesk_team_admin,help.desk.team.admin,model_help_desk_team,maintenance.group_equipment_manager,1,1,1,1
-access_help_desk_admin,help.desk.admin,model_cicon_help_desk,maintenance.group_equipment_manager,1,1,1,1
-
-

@@ -1,9 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_cicon_hr_attendance_log_user,cicon.hr.attendance.log.user,model_cicon_hr_attendance_log,hr.group_hr_user,1,1,1,1
-access_cicon_hr_attendance_sheet_user,cicon.hr.attendance.sheet.user,model_cicon_hr_attendance_sheet,hr.group_hr_user,1,1,1,1
-access_cicon_hr_attendance_user,cicon.hr.attendance.user,model_cicon_hr_attendance,hr.group_hr_user,1,1,1,1
-access_cicon_hr_work_shift,cicon.hr.work.shift.user,model_cicon_hr_work_shift,hr.group_hr_user,1,1,1,1
-access_cicon_hr_employee_leave, cicon.hr.employee.leave,model_cicon_hr_employee_leave,hr.group_hr_user,1,1,1,1
-access_cicon_hr_employee_leave_hse, cicon.hr.employee.leave_hse,model_cicon_hr_employee_leave,base.group_hr_hse_user,1,1,1,1
-
-
