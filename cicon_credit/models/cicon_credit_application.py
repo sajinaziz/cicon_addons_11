@@ -39,7 +39,7 @@ class CiconCustomerCreditApplication(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char("Ref#", required=True)
-
+    date = fields.Date('Date', default=fields.Date.today(), required=True)
     partner_id = fields.Many2one('res.partner', string="Customer", required=True,track_visibility='onchange')
     year_establish = fields.Char('Year Established',track_visibility='onchange')
     industry_id = fields.Many2one('res.partner.industry',related='partner_id.industry_id', string='Nature of Business', readonly=True)
@@ -55,8 +55,9 @@ class CiconCustomerCreditApplication(models.Model):
     credit_limit_req = fields.Float('Credit Limit Required',track_visibility='onchange')
 
     product_temp_ids = fields.Many2many(comodel_name='product.template', relation='cicon_credit_app_product_temp_rel', column1='credit_app_id', column2= 'product_temp_id', string="Products Required")
-    partner_document_ids = fields.One2many('cicon.document', related='partner_id.document_ids', string="Documents", readonly=True)
-
+    partner_document_ids = fields.Many2many('cicon.document', related='partner_id.document_ids', string="Documents", readonly=True)
+    user_id = fields.Many2one('res.users', string="Created User", default=lambda self: self.env.user)
+    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.user.company_id)
     state = fields.Selection([('new', 'Draft'), ('pending', 'Submitted'), ('approved', 'Approved'),
                               ('reject', 'Rejected'), ('cancel', 'Cancelled')], string='State', default='new', track_visibility='onchange')
 
