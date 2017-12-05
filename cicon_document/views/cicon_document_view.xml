@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+
         <record id="cicon_document_directory_form" model="ir.ui.view">
             <field name="model">cicon.document.directory</field>
             <field name="arch" type="xml">
                 <form string="Directory">
                    <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="parent_id"/>
-                    </group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group string="Properties">
+                            <field name="property_ids" widget="many2many_tags" nolabel="1"/>
+                        </group>
                   </sheet>
                 </form>
             </field>
@@ -20,7 +23,6 @@
             <field name="arch" type="xml">
                 <tree string="Directories">
                     <field name="name"/>
-                    <field name="parent_id"/>
                 </tree>
             </field>
         </record>
@@ -29,33 +31,51 @@
             <field name="model">cicon.document</field>
             <field name="arch" type="xml">
                 <form string="Document">
+                    <header>
+                        <button name="revise_document" string="Renew/Revise" type="object" />
+                        <field name="state" widget="statusbar" statusbar_visible="active" />
+                    </header>
                    <sheet>
                     <label for="name" class="oe_edit_only"/>
                     <h1>
                         <field name="name"/>
                     </h1>
+                     <group>
+                         <field name="id" invisible="1" />
+                         <field name="parent_id" attrs="{'invisible':['|',('parent_id','=',False),('id','=',False)]}" />
+                     </group>
                     <group>
                         <group>
                             <field name="dir_id" required="True"/>
+                            <field name="doc_code" />
+                            <field name="doc_date" required="True"/>
                             <field name="expiry_date"/>
                             <field name="is_private"/>
+                            <field name="rev_number"/>
                         </group>
                         <group string="Attached To" >
                             <field name="res_model" />
-                            <!--<field name="reference" widget="reference"/>-->
-                            <!--&lt;!&ndash;<field name="res_field"/>&ndash;&gt;-->
-                            <field name="res_id" />
-                            <!--&lt;!&ndash;<field name="res_name"/>&ndash;&gt;-->
+                            <field name="reference" widget="reference"/>
+                            <field name="res_id"/>
                             <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                         </group>
                     </group>
                           <group name="description_group" string="Description">
                             <field name="description"/>
                             <field name="note"/>
-
                         </group>
+
                        <group>
                            <field name="attachment_ids" widget="many2many_binary" />
+                       </group>
+                       <group>
+                            <field name="property_ids" widget="many2many_tags" invisible="True"/>
+                            <field name="property_value_ids" attrs="{'invisible':[('property_ids','=',[])]}" >
+                                <tree editable="bottom">
+                                    <field name="property_id" string="Description" options="{'no_open':True,'no_create': True}" domain="[('id','in',parent.property_ids)]"/>
+                                    <field name="property_value" string="" />
+                                </tree>
+                            </field>
                        </group>
                   </sheet>
                 </form>
@@ -67,7 +87,7 @@
             <field name="model">cicon.document</field>
             <field name="arch" type="xml">
                 <tree string="Documents">
-                    <field name="name"/>
+                    <field name="display_name"/>
                     <field name="dir_id"/>
                     <field name="expiry_date"/>
                 </tree>
@@ -77,6 +97,7 @@
         <record id="action_cicon_document" model="ir.actions.act_window">
             <field name="name">Documents</field>
             <field name="res_model">cicon.document</field>
+            <field name="domain">[('state','=','active')]</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Click here to create new documents.
@@ -100,6 +121,7 @@
                 </p>
             </field>
         </record>
+
 
 
 

@@ -3,3 +3,6 @@ access_cic_doc_dir_user,cic.doc.dir user,model_cicon_document_directory,cicon_do
 access_cic_doc_dir_admin,cic.doc.dir admin,model_cicon_document_directory,cicon_document.cicon_document_admin,1,1,1,1
 access_cic_doc_user,cic.doc user,model_cicon_document,cicon_document.cicon_document_user,1,1,1,0
 access_cic_doc_admin,cic.doc admin,model_cicon_document,cicon_document.cicon_document_admin,1,1,1,1
+access_cic_doc_dir_prop_user,cic.doc.dir.prop user,model_cicon_document_directory_property,cicon_document.cicon_document_user,1,0,0,0
+access_cic_doc_dir_prop_admin,cic.doc.dir.prop admin,model_cicon_document_directory_property,cicon_document.cicon_document_admin,1,1,1,1
+access_cic_doc_prop_val_user,cic.doc.prop.val user,model_cicon_document_property_value,cicon_document.cicon_document_user,1,1,1,1
