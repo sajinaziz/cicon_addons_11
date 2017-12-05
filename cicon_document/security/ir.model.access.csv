@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_cic_doc_dir_user,cic.doc.dir user,model_cicon_document_directory,cicon_document.cicon_document_user,1,0,0,0
+access_cic_doc_dir_user,cic.doc.dir user,model_cicon_document_directory,cicon_document.cicon_document_user,1,1,0,0
 access_cic_doc_dir_admin,cic.doc.dir admin,model_cicon_document_directory,cicon_document.cicon_document_admin,1,1,1,1
 access_cic_doc_user,cic.doc user,model_cicon_document,cicon_document.cicon_document_user,1,1,1,0
 access_cic_doc_admin,cic.doc admin,model_cicon_document,cicon_document.cicon_document_admin,1,1,1,1

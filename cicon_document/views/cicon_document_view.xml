@@ -37,9 +37,9 @@
                     </header>
                    <sheet>
                     <label for="name" class="oe_edit_only"/>
-                    <h1>
+                    <h3>
                         <field name="name"/>
-                    </h1>
+                    </h3>
                      <group>
                          <field name="id" invisible="1" />
                          <field name="parent_id" attrs="{'invisible':['|',('parent_id','=',False),('id','=',False)]}" />
@@ -51,12 +51,12 @@
                             <field name="doc_date" required="True"/>
                             <field name="expiry_date"/>
                             <field name="is_private"/>
-                            <field name="rev_number"/>
+                            <field name="rev_number" attrs="{'invisible':['|',('parent_id','=',False),('id','=',False)]}"/>
                         </group>
                         <group string="Attached To" >
-                            <field name="res_model" />
+                            <field name="res_model" invisible="1" />
                             <field name="reference" widget="reference"/>
-                            <field name="res_id"/>
+                            <field name="res_id" invisible="1"/>
                             <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                         </group>
                     </group>
