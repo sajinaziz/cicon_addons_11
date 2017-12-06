@@ -32,7 +32,9 @@
             <field name="arch" type="xml">
                 <form string="Document">
                     <header>
-                        <button name="revise_document" string="Renew/Revise" type="object" />
+                        <button name="revise_document" string="Renew/Revise" type="object"  icon="fa-repeat"
+                                attrs="{'invisible':['|',('id','=',False),('state','!=','active')]}"
+                                confirm="Confirm Document New Version , you need to attach new files ." class="btn-primary" />
                         <field name="state" widget="statusbar" statusbar_visible="active" />
                     </header>
                    <sheet>
@@ -42,7 +44,7 @@
                     </h3>
                      <group>
                          <field name="id" invisible="1" />
-                         <field name="parent_id" attrs="{'invisible':['|',('parent_id','=',False),('id','=',False)]}" />
+                         <field name="parent_id" attrs="{'invisible':['|',('parent_id','=',False),('id','=',False)],'readonly':[('id','!=',False)]}" />
                      </group>
                     <group>
                         <group>
@@ -51,7 +53,7 @@
                             <field name="doc_date" required="True"/>
                             <field name="expiry_date"/>
                             <field name="is_private"/>
-                            <field name="rev_number" attrs="{'invisible':['|',('parent_id','=',False),('id','=',False)]}"/>
+                            <field name="rev_number" attrs="{'invisible':['|',('parent_id','=',False),('id','=',False)],'readonly':[('id','!=',False)]}"/>
                         </group>
                         <group string="Attached To" >
                             <field name="res_model" invisible="1" />
@@ -107,6 +109,8 @@
                 </p>
             </field>
         </record>
+
+
 
 
         <record id="action_cicon_document_directory" model="ir.actions.act_window">

@@ -64,7 +64,7 @@ class CiconDocument(models.Model):
     reference = fields.Char(string='Reference', compute='_compute_reference', readonly=True, store=False)
     attachment_ids = fields.Many2many('ir.attachment', 'cicon_document_attachment_rel', 'cicon_document_id',
                                       'attachment_id', 'Attachments',
-                                      help="You may attach files to this Document", copy=False)
+                                      help="You may attach files to this Document", required=True, copy=False)
     property_ids = fields.Many2many(related='dir_id.property_ids', store=False, string="Properties")
     property_value_ids = fields.One2many('cicon.document.property.value', 'document_id', string="Property Values")
 
