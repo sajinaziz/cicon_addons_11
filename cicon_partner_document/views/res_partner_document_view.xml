@@ -8,10 +8,15 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                <xpath expr="//notebook/page[last()]" position="after">
+
                     <page string="Documents" groups="cicon_document.cicon_document_user">
                        <field name="document_ids"  context="{'default_res_model': 'res.partner', 'default_res_id': active_id}" >
                        </field>
                     </page>
+
+               </xpath>
+               <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                  <button name="customer_new_doc"  type="object" icon="fa-file-text-o" string="New Document" groups="cicon_document.cicon_document_user" />
                </xpath>
             </field>
          </record>
