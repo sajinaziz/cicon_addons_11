@@ -48,13 +48,38 @@ class CiconDocument(models.Model):
             if _rec.res_model and _rec.res_id:
                 _rec.reference = "%s,%s" % (_rec.res_model, _rec.res_id)
 
+    def _get_all_parents(self):
+        for _rec in self:
+            parent = self._parent_name
+            cr = self._cr
+            parent_ids = []
+            query = 'SELECT "%s" FROM "%s" WHERE id = %%s' % (parent, self._table)
+            current_id = _rec.id
+            parent_ids.append(current_id)
+            while current_id:
+                cr.execute(query, (current_id,))
+                result = cr.fetchone()
+                current_id = result[0] if result else False
+                print(current_id)
+                if current_id:
+                    parent_ids.append(current_id)
+            _rec.parent_ids = parent_ids
+
+    @api.depends('doc_code')
+    def _count_doc_code(self):
+        for _rec in self:
+            _rec.doc_code_count = self.env['cicon.document'].search_count([('dir_id', '=', _rec.dir_id.id),
+                                                                           ('doc_code','=ilike',_rec.doc_code),
+                                                                           ('id','not in', _rec.parent_ids._ids)])
+
     display_name = fields.Char(compute=_compute_reference , string="Document")
     name = fields.Char('Document Name', required=True,copy=False)
     parent_id = fields.Many2one('cicon.document', string='Parent Document',copy=False)
-    rev_number = fields.Integer('Revision', default=0, required=True,copy=False)
+    rev_number = fields.Integer('Revision', default=0, required=True, copy=False)
 
     dir_id = fields.Many2one('cicon.document.directory', string='Directory', required=True)
-    doc_code = fields.Char('Document ID')
+    doc_code = fields.Char('Document ID', required=True)
+    doc_code_count = fields.Integer('Duplicate Count', compute=_count_doc_code)
     note = fields.Text('Notes')
     description = fields.Char("Description")
     is_private = fields.Boolean('Private', default=False)
@@ -72,6 +97,7 @@ class CiconDocument(models.Model):
     user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user, copy=False)
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.user.company_id, copy=False)
     state = fields.Selection([('active', 'Active'), ('inactive', 'In-Active')], string="Status", default='active', copy=False)
+    parent_ids = fields.Many2many('cicon.document',compute=_get_all_parents,store=False,readonly=True)
 
 
     #_sql_constraints = [('uniq_doc_code', 'UNIQUE(dir_id,doc_code,rev_number)', "Document Code Should be Unique")]
@@ -105,6 +131,22 @@ class CiconDocument(models.Model):
             'target': 'current',
             'context': ctx,
         }
+
+    def get_similar_doc(self):
+        self.ensure_one()  # One Record
+        _dup_docs_ids = self.env['cicon.document'].search([('dir_id', '=', self.dir_id.id),
+                                                 ('doc_code', '=ilike', self.doc_code),
+                                                 ('id', 'not in', self.parent_ids._ids)])
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'name': 'Similar Documents',
+            'view_mode': 'tree,form',
+            'res_model': 'cicon.document',
+            'target': 'current',
+            'domain': [('state','=','active'), ('id','in',_dup_docs_ids.ids)]
+        }
+
 
     @api.model
     def create(self, vals):
