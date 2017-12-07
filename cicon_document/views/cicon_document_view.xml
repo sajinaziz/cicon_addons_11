@@ -50,6 +50,13 @@
                         <group>
                             <field name="dir_id" required="True"/>
                             <field name="doc_code" />
+                            <div class="oe_inline">
+                                 <button  attrs="{'invisible':[('doc_code_count','=',0)]}"
+                                          class="btn-danger" name="get_similar_doc"
+                                    type="object" icon="fa-link">
+                                   Found (<field name="doc_code_count" />) Similar Document(s)!
+                                </button>
+                            </div>
                             <field name="doc_date" required="True"/>
                             <field name="expiry_date"/>
                             <field name="is_private"/>
@@ -67,18 +74,31 @@
                             <field name="note"/>
                         </group>
 
-                       <group>
+                       <notebook>
+                           <page string="Attachments">
+                                <group>
                            <field name="attachment_ids" widget="many2many_binary" />
                        </group>
-                       <group>
-                            <field name="property_ids" widget="many2many_tags" invisible="True"/>
-                            <field name="property_value_ids" attrs="{'invisible':[('property_ids','=',[])]}" >
-                                <tree editable="bottom">
-                                    <field name="property_id" string="Description" options="{'no_open':True,'no_create': True}" domain="[('id','in',parent.property_ids)]"/>
-                                    <field name="property_value" string="" />
-                                </tree>
-                            </field>
-                       </group>
+                           </page>
+                           <page string="Document Properties">
+                               <group>
+                                <field name="property_ids" widget="many2many_tags" invisible="True"/>
+                                <field name="property_value_ids" attrs="{'invisible':[('property_ids','=',[])]}" >
+                                    <tree editable="bottom">
+                                        <field name="property_id" string="Description" options="{'no_open':True,'no_create': True}" domain="[('id','in',parent.property_ids)]"/>
+                                        <field name="property_value" string="" />
+                                    </tree>
+                                </field>
+                            </group>
+                           </page>
+                           <page string="Previous Documents">
+                                 <group>
+                                     <field name="parent_ids" />
+                                 </group>
+                           </page>
+                       </notebook>
+
+
                   </sheet>
                 </form>
             </field>
@@ -96,6 +116,19 @@
             </field>
         </record>
 
+      <record id="cicon_document_view_search" model="ir.ui.view">
+            <field name="name">cicon.document.view.search</field>
+            <field name="model">cicon.document</field>
+            <field name="arch" type="xml">
+                <search string="Document">
+                    <field name="dir_id" widget="selection"/>
+                    <field name="id"/>
+
+                </search>
+            </field>
+        </record>
+
+
         <record id="action_cicon_document" model="ir.actions.act_window">
             <field name="name">Documents</field>
             <field name="res_model">cicon.document</field>
@@ -109,7 +142,6 @@
                 </p>
             </field>
         </record>
-
 
 
 
