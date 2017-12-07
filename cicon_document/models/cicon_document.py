@@ -55,12 +55,10 @@ class CiconDocument(models.Model):
             parent_ids = []
             query = 'SELECT "%s" FROM "%s" WHERE id = %%s' % (parent, self._table)
             current_id = _rec.id
-            parent_ids.append(current_id)
             while current_id:
                 cr.execute(query, (current_id,))
                 result = cr.fetchone()
                 current_id = result[0] if result else False
-                print(current_id)
                 if current_id:
                     parent_ids.append(current_id)
             _rec.parent_ids = parent_ids
@@ -68,9 +66,12 @@ class CiconDocument(models.Model):
     @api.depends('doc_code')
     def _count_doc_code(self):
         for _rec in self:
-            _rec.doc_code_count = self.env['cicon.document'].search_count([('dir_id', '=', _rec.dir_id.id),
+            if _rec.id:
+                _rec.doc_code_count = self.env['cicon.document'].search_count([('dir_id', '=', _rec.dir_id.id),
                                                                            ('doc_code','=ilike',_rec.doc_code),
-                                                                           ('id','not in', _rec.parent_ids._ids)])
+                                                                           ('id','not in', _rec.parent_ids._ids),
+                                                                           ('id', '!=', _rec.id)
+                                                                           ])
 
     display_name = fields.Char(compute=_compute_reference , string="Document")
     name = fields.Char('Document Name', required=True,copy=False)
@@ -136,7 +137,8 @@ class CiconDocument(models.Model):
         self.ensure_one()  # One Record
         _dup_docs_ids = self.env['cicon.document'].search([('dir_id', '=', self.dir_id.id),
                                                  ('doc_code', '=ilike', self.doc_code),
-                                                 ('id', 'not in', self.parent_ids._ids)])
+                                                 ('id', 'not in', self.parent_ids._ids),
+                                                  ('id', '!=', self.id)])
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',
