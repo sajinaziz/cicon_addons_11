@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record model="ir.ui.view" id="view_dbsource_tree_view">
+      <field name="name">odbc.db.source.tree</field>
+      <field name="model">odbc.db.source</field>
+      <field name="arch" type="xml">
+          <tree string="ODBC Connections">
+              <field name="name"/>
+              <field name="connector"/>
+          </tree>
+
+	  </field>
+	</record>
+
+	<!-- DBSource form -->
+    <record model="ir.ui.view" id="view_dbsource_form_view">
+      <field name="name">odbc.db.source.form</field>
+      <field name="model">odbc.db.source</field>
+      <field name="arch" type="xml">
+		<form>
+			<sheet>
+				<group colspan="2" col="2">
+					<field name="name"/>
+					<field name="password" password="True"/>
+					<field name="connector"/>
+					<field name="conn_string" colspan="2"/>
+					<label colspan="2" string="ODBC Sample: DRIVER={FreeTDS};SERVER=server.address;Database=mydb;UID=sa"/>
+					<label colspan="2" string="ORACLE Sample: username/%s@//server.address:port/instance"/>
+				</group>
+			</sheet>
+
+			<button name="connection_test" string="Test Connection" type="object" />
+        </form>
+      </field>
+    </record>
+
+<!--Menu-->
+    <record model="ir.actions.act_window" id="action_db_source">
+      <field name="name">ODBC DB Sources</field>
+      <field name="res_model">odbc.db.source</field>
+    </record>
+
+    <menuitem name="ODBC Connection" id="menu_odbc_connect" parent="base.menu_ir_property" sequence="99" action="action_db_source"/>
+
+
+</odoo>
