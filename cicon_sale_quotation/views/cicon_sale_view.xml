@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cicon_sale_condition_template_view_tree" model="ir.ui.view">
+            <field name="name">cicon.sale.condition.template.tree</field>
+            <field name="model">cicon.sale.condition.template</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Condition Template">
+                    <field name="name"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="cicon_sale_condition_template_view_form" model="ir.ui.view">
+            <field name="name">cicon.sale.condition.template.form</field>
+            <field name="model">cicon.sale.condition.template</field>
+            <field name="arch" type="xml">
+                <form string="Sales Condition Template">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="condition_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+    </record>
+
+    <record id="cicon_sale_condition_view_tree" model="ir.ui.view">
+        <field name="name">cicon.sale.condition.tree</field>
+        <field name="model">cicon.sale.condition</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Condition">
+                <field name="sequence" widget="handle"/>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+     <record id="cicon_sale_condition_view_form" model="ir.ui.view">
+        <field name="name">cicon.sale.condition.form</field>
+        <field name="model">cicon.sale.condition</field>
+        <field name="arch" type="xml">
+            <form string="Sales Condition">
+                <sheet>
+                    <group>
+                       <field name="name"/>
+                       <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+
+    <record id="view_order_form_cicon_sale" model="ir.ui.view">
+            <field name="name">sale.order.form.cicon.sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_shipping_id" position="after">
+                    <field name="cicon_template_id" />
+                </field>
+            </field>
+    </record>
+
+
+    <record id="cicon_action_term_template" model="ir.actions.act_window">
+            <field name="name">Sale Terms Template</field>
+            <field name="res_model">cicon.sale.condition.template</field>
+            <field name="view_type">form</field>
+     </record>
+
+     <menuitem id= "menu_sales_condition"
+            parent= "sale.menu_sales_config"
+            sequence= "90"
+            action="cicon_action_term_template" />
+
+</odoo>

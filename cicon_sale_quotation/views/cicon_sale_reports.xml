@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="action_cicon_quotation_print"
+            string="CICON Quotation"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="cicon_sale_quotation.report_cicon_sale_quotation_template"
+            name="cicon_sale_quotation.report_cicon_sale_quotation_template"
+            print_report_name="'Quotation-%s'%(object.name)"
+        />
+    </data>
+</odoo>
