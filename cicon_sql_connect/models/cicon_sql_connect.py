@@ -39,8 +39,6 @@ class OdbcDbSource(models.Model):
             if '%s' not in self.conn_string:
                 connStr += ';PWD=%s'
             connStr = connStr % self.password
-        if isinstance(connStr, str):
-            connStr = str(connStr, 'utf8')
 
         # Try to connect
         if self.connector == 'cx_Oracle':
