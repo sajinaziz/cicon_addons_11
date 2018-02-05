@@ -40,7 +40,7 @@ class OdbcDbSource(models.Model):
                 connStr += ';PWD=%s'
             connStr = connStr % self.password
         if isinstance(connStr, str):
-            connStr = connStr.encode('utf8')
+            connStr = str(connStr, 'utf8')
 
         # Try to connect
         if self.connector == 'cx_Oracle':
