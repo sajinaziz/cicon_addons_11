@@ -33,8 +33,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td t-foreach="docs" t-as="o">
-                                       <t t-foreach="get_report_data(o)" t-as="r">
+                                    <t t-foreach="docs" t-as="o">
+                                       <tr t-foreach="get_report_data(o)" t-as="r">
                                          <td>  <span t-esc="r.get('ACCNT_CODE',False)"/> </td>
                                          <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
                                          <td>  - </td>
@@ -88,10 +88,8 @@
                                                 <span t-esc="r.get('Above Year',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                              </t>
                                          </td>
-
-                                      </tr>
+                                       </tr>
                                     </t>
-
                                 </tbody>
 
 
