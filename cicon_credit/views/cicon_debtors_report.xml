@@ -25,7 +25,7 @@
                                        <tr t-foreach="get_report_data(o)" t-as="r">
                                          <td>  <span t-esc="r.get('ACCNT_CODE',False)"/> </td>
                                          <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
-                                         <td>  - </td>
+                                         <td>  <span t-esc="o.name"/>  </td>
                                          <td>  - </td>
 
                                       </tr>
