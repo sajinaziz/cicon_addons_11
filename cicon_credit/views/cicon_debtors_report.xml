@@ -11,24 +11,26 @@
                                 <thead>
                                     <tr>
                                         <th colspan="4">Descriptions</th>
+                                        <th rowspan="2"> Total Receivable </th>
+                                        <th rowspan="2"> Covered By PDC </th>
+                                        <th rowspan="2"> Covered By LC </th>
+                                        <th rowspan="2"> Net Amount </th>
+                                        <th rowspan="2"> 30 Days</th>
+                                        <th rowspan="2"> 60 Days </th>
+                                        <th rowspan="2"> 90 Days </th>
+                                        <th rowspan="2"> 120 Days </th>
+                                        <th rowspan="2"> 150 Days </th>
+                                        <th rowspan="2"> 180 Days </th>
+                                        <th rowspan="2"> 6-12 Months </th>
+                                        <th rowspan="2"> Above </th>
+
                                     </tr>
                                     <tr>
                                         <th> Account Code </th>
                                         <th> Account Name </th>
                                         <th> Project </th>
                                         <th> Database </th>
-                                        <th> Total Receivable </th>
-                                        <th> Covered By PDC </th>
-                                        <th> Covered By LC </th>
-                                        <th> Net Amount </th>
-                                        <th> 30 Days</th>
-                                        <th> 60 Days </th>
-                                        <th> 90 Days </th>
-                                        <th> 120 Days </th>
-                                        <th> 150 Days </th>
-                                        <th> 180 Days </th>
-                                        <th> 6-12 Months </th>
-                                        <th> Above </th>
+
 
                                     </tr>
                                 </thead>
