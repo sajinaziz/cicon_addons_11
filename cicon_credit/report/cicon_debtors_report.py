@@ -7,6 +7,7 @@ class CiconDebtorsReport(models.AbstractModel):
     def _get_sun_data(self,sun_account):
         _res = {}
         _qry = "EXEC dbo.Get_Aging @SunAccountNo = '" + sun_account + "'"
+        print(_qry)
         _res_qry = self.env['odbc.db.source'].fetch_data('SUN_DB', _qry)
         #_res_qry = [{'a': 1, 'b': 2}]
         print(_res_qry)
