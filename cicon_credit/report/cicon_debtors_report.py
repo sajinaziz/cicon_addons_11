@@ -29,10 +29,10 @@ class CiconDebtorsReport(models.AbstractModel):
                 _res.append(self._get_sun_data(sun_account.sun_account_no))
         else:
             _res = self._get_all_sun_data()
-        for _r in _res:
-            for _key in [*_r]:
-                if _r[_key] == 0 or _r[_key] == '0.0' or _r[_key] == '0':
-                    _r[_key] = ''
+        # for _r in _res:
+        #     for _key in [*_r]:
+        #         if _r[_key] == 0 or _r[_key] == '0.0' or _r[_key] == '0':
+        #             _r[_key] = ''
         return _res
 
     @api.multi
