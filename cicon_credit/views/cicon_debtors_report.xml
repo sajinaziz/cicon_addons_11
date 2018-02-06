@@ -17,7 +17,7 @@
                                         <th> Account Name </th>
                                         <th> Project </th>
                                         <th> Database </th>
-                                        <th> Receivable </th>
+                                        <th> Total Receivable </th>
                                         <th> Covered By PDC </th>
                                         <th> Covered By LC </th>
                                         <th> Net Amount </th>
@@ -39,7 +39,7 @@
                                          <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
                                          <td>  - </td>
                                          <td>  - </td>
-                                         <td>  - </td>
+                                         <td>  <span t-esc="r.get('TOTAL',False)"/> </td>
                                          <td>  - </td>
                                          <td>  - </td>
                                          <td>  - </td>
