@@ -27,8 +27,8 @@ class CiconDebtorsReport(models.AbstractModel):
         if _partner.sun_account_ids:
             for sun_account in _partner.sun_account_ids:
                 _res.append(self._get_sun_data(sun_account.sun_account_no))
-            else:
-                _res = self._get_all_sun_data()
+        else:
+            _res = self._get_all_sun_data()
         return _res
 
     @api.multi
