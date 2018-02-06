@@ -7,7 +7,7 @@
                 <t t-call="web.internal_layout">
                     <div class="page">
                         <div>
-                            <table>
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th colspan="4">Descriptions</th>
@@ -17,6 +17,18 @@
                                         <th> Account Code </th>
                                         <th> Project </th>
                                         <th> Database </th>
+                                        <th> Receivable </th>
+                                        <th> Covered By PDC </th>
+                                        <th> Covered By LC </th>
+                                        <th> Net Amount </th>
+                                        <th> 30 Days</th>
+                                        <th> 60 Days </th>
+                                        <th> 90 Days </th>
+                                        <th> 120 Days </th>
+                                        <th> 150 Days </th>
+                                        <th> 180 Days </th>
+                                        <th> 6-12 Months </th>
+                                        <th> Above </th>
 
                                     </tr>
                                 </thead>
@@ -27,6 +39,17 @@
                                          <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
                                          <td>  <span t-esc="o.name"/>  </td>
                                          <td>  - </td>
+                                         <td>  - </td>
+                                         <td>  - </td>
+                                         <td>  - </td>
+                                         <td>  <span t-esc="r.get('30 Days',False)"/>  </td>
+                                         <td>  <span t-esc="r.get('30-60 Days',False)"/>  </td>
+                                         <td>  <span t-esc="r.get('60-90 Days',False)"/> </td>
+                                         <td>  <span t-esc="r.get('90-120 Days',False)"/>  </td>
+                                         <td>  <span t-esc="r.get('120-150 Days',False)"/>  </td>
+                                         <td>  <span t-esc="r.get('150-180 Days',False)"/>  </td>
+                                         <td>  <span t-esc="r.get('6-12 Months',False)"/>  </td>
+                                         <td>  <span t-esc="r.get('Above Year',False)"/>  </td>
 
                                       </tr>
                                     </t>
