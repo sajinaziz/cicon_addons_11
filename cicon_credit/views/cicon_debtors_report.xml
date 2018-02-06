@@ -14,7 +14,7 @@
                                     </tr>
                                     <tr>
                                         <th> Account Code </th>
-                                        <th> Account Code </th>
+                                        <th> Account Name </th>
                                         <th> Project </th>
                                         <th> Database </th>
                                         <th> Receivable </th>
@@ -37,7 +37,7 @@
                                        <tr t-foreach="get_report_data(o)" t-as="r">
                                          <td>  <span t-esc="r.get('ACCNT_CODE',False)"/> </td>
                                          <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
-                                         <td>  <span t-esc="o.name"/>  </td>
+                                         <td>  - </td>
                                          <td>  - </td>
                                          <td>  - </td>
                                          <td>  - </td>
