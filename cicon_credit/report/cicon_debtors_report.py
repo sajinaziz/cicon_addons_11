@@ -13,10 +13,22 @@ class CiconDebtorsReport(models.AbstractModel):
             _res = _res_qry[0]
         return _res
 
+    def _get_all_sun_data(self):
+        _res = {}
+        _qry = "EXEC dbo.Get_Aging @SunAccountNo = ''"
+        _res_qry = self.env['odbc.db.source'].fetch_data('SUN_DB', _qry)
+        #_res_qry = [{'a': 1, 'b': 2}]
+        if _res_qry:
+            _res = _res_qry
+        return _res
+
     def _get_report_data(self, _partner):
         _res =[]
-        for sun_account in _partner.sun_account_ids:
-            _res.append(self._get_sun_data(sun_account.sun_account_no))
+        if _partner.sun_account_ids:
+            for sun_account in _partner.sun_account_ids:
+                _res.append(self._get_sun_data(sun_account.sun_account_no))
+            else:
+                _res = self._get_sun_data()
         return _res
 
     @api.multi
