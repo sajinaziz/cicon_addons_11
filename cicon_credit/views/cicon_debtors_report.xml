@@ -42,6 +42,7 @@
                                          <td>  - </td>
                                          <td>  - </td>
                                          <td>  - </td>
+                                         <td>  - </td>
                                          <td>  <span t-esc="r.get('30 Days',False)"/>  </td>
                                          <td>  <span t-esc="r.get('30-60 Days',False)"/>  </td>
                                          <td>  <span t-esc="r.get('60-90 Days',False)"/> </td>
