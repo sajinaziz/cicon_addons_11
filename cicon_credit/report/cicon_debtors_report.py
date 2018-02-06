@@ -32,7 +32,7 @@ class CiconDebtorsReport(models.AbstractModel):
         for _r in _res:
             for _key in [*_r]:
                 if _r[_key] == 0 or _r[_key] == '0.0' or _r[_key] == '0':
-                    _r[_key] = None
+                    _r[_key] = 0
         return _res
 
     @api.multi
