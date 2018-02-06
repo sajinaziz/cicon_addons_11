@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="view_cic_sun_db_tree" model="ir.ui.view">
+            <field name="name">cic.sun.db.tree</field>
+            <field name="model">cic.sun.db</field>
+            <field name="arch" type="xml">
+                <tree  string="SUN DB" editable="bottom">
+                    <field name="db_name"/>
+                    <field name="db_code"/>
+                </tree>
+            </field>
+      </record>
+
+     <record id="action_cic_sun_db_view" model="ir.actions.act_window">
+            <field name="name" >Sun DB</field>
+            <field name="res_model">cic.sun.db</field>
+      </record>
+
+     <record id="view_cic_sun_account_edit" model="ir.ui.view">
+            <field name="name">cic.sun.account.form</field>
+            <field name="model">cic.sun.account</field>
+            <field name="arch" type="xml">
+                <form string="SUN Account">
+                     <sheet>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="sun_db"/>
+                            <field name="sun_account_no"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+       </record>
+
+     <record id="view_cic_sun_account_tree" model="ir.ui.view">
+            <field name="name">cic.sun.account.tree</field>
+            <field name="model">cic.sun.account</field>
+            <field name="arch" type="xml">
+                <tree string="SUN Account">
+                    <field name="partner_id"/>
+                    <field name="sun_db"/>
+                    <field name="sun_account_no"/>
+                </tree>
+            </field>
+        </record>
+
+     <record id="action_cic_sun_account_tree_view" model="ir.actions.act_window">
+          <field name="name" >Sun Accounts</field>
+          <field name="res_model">cic.sun.account</field>
+      </record>
+
+     <menuitem id="account_cic_sun_base_menu" name="Sun System" parent="account.menu_finance_configuration" sequence="99" groups="account.group_account_invoice"/>
+     <menuitem id="menu_config_sun_db" parent="cicon_sun_system.account_cic_sun_base_menu" name="SUN DB" action="action_cic_sun_db_view" sequence="3"/>
+     <menuitem id="menu_config_sun_account" parent="cicon_sun_system.account_cic_sun_base_menu" name="SUN Account" action="action_cic_sun_account_tree_view" sequence="2" groups="base.group_system"/>
+
+     <record id="cic_sun_view_partner_form" model="ir.ui.view">
+            <field name="name">cic.sun.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+                <field name="arch" type="xml">
+                    <field name="child_ids" position="after">
+                        <field name="sun_account_ids" >
+                             <tree  string="SUN Account" editable="bottom">
+                                <field name="sun_db"/>
+                                <field name="sun_account_no"/>
+                             </tree>
+                        </field>
+                </field>
+            </field>
+     </record>
+
+</odoo>

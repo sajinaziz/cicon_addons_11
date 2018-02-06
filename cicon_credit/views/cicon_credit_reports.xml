@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="action_cicon_debtors_report"
+            string="Debtors Report"
+            model="res.partner"
+            report_type="qweb-pdf"
+            file="cicon_credit.report_cicon_debtors_report_template"
+            name="cicon_credit.report_cicon_debtors_report_template"
+            print_report_name="'Debtors-Report_%s'%(object.name)"
+        />
+    </data>
+</odoo>

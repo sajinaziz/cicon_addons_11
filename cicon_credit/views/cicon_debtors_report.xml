@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_cicon_debtors_report_template">
+        <t t-call="web.html_container">
+
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th colspan="4">Descriptions</th>
+                                    </tr>
+                                    <tr>
+                                        <th> Account Code </th>
+                                        <th> Account Code </th>
+                                        <th> Project </th>
+                                        <th> Database </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="docs" t-as="o">
+                                       <tr t-foreach="get_report_data(o)" t-as="r">
+                                         <td>  <span t-esc="r.get('ACCNT_CODE',False)"/> </td>
+                                         <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
+                                         <td>  - </td>
+                                         <td>  - </td>
+
+                                      </tr>
+                                    </t>
+
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                    </div>
+
+            </t>
+        </t>
+    </template>
+
+</odoo>
