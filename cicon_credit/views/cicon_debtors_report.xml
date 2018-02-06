@@ -39,18 +39,18 @@
                                          <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
                                          <td>  - </td>
                                          <td>  - </td>
-                                         <td>  <span t-esc="r.get('TOTAL',False)"/> </td>
+                                         <td>  <span t-esc="r.get('TOTAL',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/> </td>
                                          <td>  - </td>
                                          <td>  - </td>
                                          <td>  - </td>
-                                         <td>  <span t-esc="r.get('30 Days',False)"/>  </td>
-                                         <td>  <span t-esc="r.get('30-60 Days',False)"/>  </td>
-                                         <td>  <span t-esc="r.get('60-90 Days',False)"/> </td>
-                                         <td>  <span t-esc="r.get('90-120 Days',False)"/>  </td>
-                                         <td>  <span t-esc="r.get('120-150 Days',False)"/>  </td>
-                                         <td>  <span t-esc="r.get('150-180 Days',False)"/>  </td>
-                                         <td>  <span t-esc="r.get('6-12 Months',False)"/>  </td>
-                                         <td>  <span t-esc="r.get('Above Year',False)"/>  </td>
+                                         <td>  <span t-esc="r.get('30 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />   </td>
+                                         <td>  <span t-esc="r.get('30-60 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                         <td>  <span t-esc="r.get('60-90 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" /> </td>
+                                         <td>  <span t-esc="r.get('90-120 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                         <td>  <span t-esc="r.get('120-150 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                         <td>  <span t-esc="r.get('150-180 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                         <td>  <span t-esc="r.get('6-12 Months',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                         <td>  <span t-esc="r.get('Above Year',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
 
                                       </tr>
                                     </t>
