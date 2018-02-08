@@ -64,7 +64,7 @@
                                                          </t>
                                                     </td>
 
-                                                    <td>
+                                                    <td class="text-right">
                                                         <span t-esc="r.get('TOTAL',0) - (ch.get('total_chq',0) + ch.get('total_lc',0))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
 
                                                     </td>
