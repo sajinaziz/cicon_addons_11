@@ -10,7 +10,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th colspan="5">Descriptions</th>
+                                        <th colspan="4">Descriptions</th>
                                         <th rowspan="2"> Total Receivable </th>
                                         <th rowspan="2"> Covered By PDC </th>
                                         <th rowspan="2"> Covered By LC </th>
@@ -28,7 +28,7 @@
                                     <tr>
                                         <th> Customer  </th>
                                         <th> Account Code </th>
-                                        <th> Account Name </th>
+                                        <!--<th> Account Name </th>-->
                                         <th> Project </th>
                                         <th> Database </th>
 
@@ -43,13 +43,15 @@
                                                  <t t-set="ch_count" t-value="len(_checks)"/>
                                                  <td t-att-rowspan="ch_count"> <span t-esc="p[1]"/> </td>
                                                  <t t-foreach="_checks" t-as="ch">
-                                                 <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
-                                                    <t t-if="ch_index > 0">
+                                                     <t t-if="ch_index > 0">
                                                         <![CDATA[ <tr> ]]>
                                                     </t>
+                                                 <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
+                                                     <t t-if="r">
+
                                                    <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
-                                                   <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
-                                                   <td>  - </td>
+                                                   <!--<td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>-->
+                                                   <td>  <span t-esc="ch.get('project_name', '')"/>  </td>
                                                     <td>  -  </td>
                                                     <td class="text-right">
                                                          <t t-if="r.get('TOTAL',0) != 0">
@@ -67,7 +69,10 @@
                                                          </t>
                                                     </td>
 
-                                                    <td>  - </td>
+                                                    <td>
+                                                        <span t-esc="r.get('TOTAL',0) - (ch.get('total_chq',0) + ch.get('total_lc',0))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+
+                                                    </td>
                                                     <td class="text-right">
                                                          <t t-if="r.get('30 Days',0) != 0">
                                                             <span t-esc="r.get('30 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
@@ -108,7 +113,7 @@
                                                             <span t-esc="r.get('Above Year',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
-
+                                                    </t>
                                                 </t>
                                              </tr>
 
