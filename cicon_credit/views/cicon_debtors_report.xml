@@ -38,23 +38,23 @@
                                 <tbody>
                                     <t t-foreach="docs" t-as="o">
                                        <t t-foreach="get_partners()" t-as="p">
-                                         <t t-foreach="get_check_details(p)" t-as="ch">
+                                         <t t-foreach="get_check_details(p[0])" t-as="ch">
                                              <tr>
-                                                 <td> <span t-esc="ch.get('name')" />  </td>
-                                                 <t t-set="r" t-value="get_sun_details(ch.get('account_no'))">
-                                                     <td>  <span t-esc="r.get('ACCNT_CODE',False)"/> </td>
-                                                     <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
-                                                     <td>  - </td>
-                                                     <td>  - </td>
-                                                     <td class="text-right">
+                                                 <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
+                                                   <td> <span t-esc="ch.get('name')" />  </td>
+                                                   <td>  <span t-esc="r.get('ACCNT_CODE',False)"/> </td>
+                                                   <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
+                                                   <td>  - </td>
+                                                    <td>  - </td>
+                                                    <td class="text-right">
                                                          <t t-if="r.get('TOTAL',0) != 0">
                                                             <span t-esc="r.get('TOTAL',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                                                          </t>
                                                      </td>
-                                                     <td>  - </td>
-                                                     <td>  - </td>
-                                                     <td>  - </td>
-                                                     <td class="text-right">
+                                                    <td>  - </td>
+                                                    <td>  - </td>
+                                                    <td>  - </td>
+                                                    <td class="text-right">
                                                          <t t-if="r.get('30 Days',0) != 0">
                                                             <span t-esc="r.get('30 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
@@ -95,7 +95,7 @@
                                                          </t>
                                                      </td>
 
-                                                 </t>
+
                                              </tr>
                                          </t>
                                        </t>
