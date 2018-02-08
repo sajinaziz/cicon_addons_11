@@ -22,6 +22,16 @@ class CiconDebtorsReport(models.AbstractModel):
             _res = _res_qry
         return _res
 
+    def _get_all_partners_from_openerp(self):
+        _qry = """SELECT *
+                FROM dblink('host=192.168.0.54 user=openerp password=openpgpwd dbname=CICON_NEW',
+                'select id, name from res_partner where customer= true')
+                AS Partners(id integer, name character varying);"""
+        _cr = self._cr
+        _cr.excute(_qry)
+        _res = _cr.fetchall()
+        return _res
+
     def _get_report_data(self, _partner):
         _res =[]
         if _partner.sun_account_ids:
@@ -43,5 +53,6 @@ class CiconDebtorsReport(models.AbstractModel):
             'doc_ids': _partners.ids,
             'doc_model': 'res.partner',
             'docs': _partners,
-            'get_report_data': self._get_report_data
+            'get_report_data': self._get_report_data,
+            'get_partners' : self._get_all_partners_from_openerp
         }

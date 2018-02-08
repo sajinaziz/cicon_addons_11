@@ -96,6 +96,19 @@
 
 
                             </table>
+
+                             <table class="table table-bordered">
+                                 <thead>
+                                     <th> ID</th>
+                                     <th> Name</th>
+                                 </thead>
+                                 <tbody>
+                                     <tr t-foreach="get_partners" t-as="p">
+                                         <td> <span t-esc="p.get('id',False)"/> </td>
+                                         <td> <span t-esc="p.get('name',False)"/> </td>
+                                     </tr>
+                                 </tbody>
+                             </table>
                         </div>
                     </div>
 
