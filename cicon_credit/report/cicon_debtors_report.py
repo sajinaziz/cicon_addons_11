@@ -1,7 +1,7 @@
 from odoo import api, models
 
 _res_openerp_data = []
-
+_res_sun_data = []
 class CiconDebtorsReport(models.AbstractModel):
     _name = 'report.cicon_credit.report_cicon_debtors_report_template'
 
@@ -37,7 +37,7 @@ class CiconDebtorsReport(models.AbstractModel):
         #         _res.append(self._get_sun_data(sun_account.sun_account_no))
         # else:
         #     _res = self._get_all_sun_data()
-        #self._res_sun_data = self._get_all_sun_data()
+        self._res_sun_data = self._get_all_sun_data()
         # for _r in _res_sun_data:
         #     for _key in [*_r]:
         #         if _r[_key] == 0 or _r[_key] == '0.0' or _r[_key] == '0':
@@ -54,6 +54,9 @@ class CiconDebtorsReport(models.AbstractModel):
         _check_data = list(filter(lambda d: d['id'] == partner_id,  self._res_openerp_data))
         return _check_data
 
+    def _get_report_sun_data(self, sun_account):
+        _sun_data = list(filter(lambda d: d['ACCNT_CODE'] == sun_account, self._res_sun_data))
+        return _sun_data
 
     @api.multi
     def get_report_values(self, docids, data=None):
@@ -66,6 +69,6 @@ class CiconDebtorsReport(models.AbstractModel):
             'docs': _company,
             'get_partners': self._get_partners,
             'get_check_details': self._get_report_check_data_for_partner,
-            'get_sun_details': self._get_sun_data
+            'get_sun_details': self._get_report_sun_data
 
         }
