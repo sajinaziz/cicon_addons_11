@@ -23,10 +23,7 @@ class CiconDebtorsReport(models.AbstractModel):
         return _res
 
     def _get_all_partners_from_openerp(self):
-        _qry = """SELECT *
-                FROM dblink('host=192.168.0.54 user=openerp password=openpgpwd dbname=CICON_NEW',
-                'select id, name from res_partner where customer= true')
-                AS Partners(id integer, name character varying);"""
+        _qry = "select * from GetOpenErpData('' )"
         _cr = self._cr
         _cr.execute(_qry)
         _res = _cr.fetchall()
