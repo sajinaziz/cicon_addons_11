@@ -38,12 +38,16 @@
                                 <tbody>
                                     <t t-foreach="docs" t-as="o">
                                        <t t-foreach="get_partners()" t-as="p">
-                                         <t t-foreach="get_check_details(p[0])" t-as="ch">
+                                           <t t-set="_checks" t-value="get_check_details(p[0])"/>
                                              <tr>
+                                                 <td t-att-rowspan="len(_checks)"> <span t-esc="p[1]"/> </td>
+                                                 <t t-foreach="_checks" t-as="ch">
                                                  <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
-
+                                                    <t t-if="_ch_index > 0">
+                                                        <![CDATA[ <tr> ]]>
+                                                    </t>
                                                    <td> <span t-esc="ch.get('name')" />  </td>
-                                                   <td>  <span t-esc="r.get('ACCNT_CODE',False)"/> </td>
+                                                   <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
                                                    <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
                                                    <td>  - </td>
                                                     <td>  -  </td>
@@ -52,12 +56,12 @@
                                                             <span t-esc="r.get('TOTAL',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                                                          </t>
                                                      </td>
-                                                    <td>
+                                                    <td class="text-right">
                                                          <t t-if="ch.get('total_chq',0) != 0">
                                                             <span t-esc="ch.get('total_chq',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-right">
                                                          <t t-if="ch.get('total_lc',0) != 0">
                                                             <span t-esc="ch.get('total_chq',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
@@ -105,9 +109,9 @@
                                                          </t>
                                                      </td>
 
-
+                                                </t>
                                              </tr>
-                                         </t>
+
                                        </t>
                                     </t>
                                 </tbody>
