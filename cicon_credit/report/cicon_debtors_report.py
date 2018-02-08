@@ -58,7 +58,7 @@ class CiconDebtorsReport(models.AbstractModel):
     def _get_report_sun_data_for_sun_code(self, sun_code):
         _res = {}
         _sun_data = list(filter(lambda d: d['ACCNT_CODE'] == sun_code,  self._res_sun_data))
-        if _sun_data:
+        if len(_sun_data) > 0:
             _res = _sun_data[0]
         return _res
 
