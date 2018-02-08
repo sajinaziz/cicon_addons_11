@@ -26,7 +26,7 @@ class CiconDebtorsReport(models.AbstractModel):
         _qry = "select * from GetOpenErpData('' )"
         _cr = self._cr
         _cr.execute(_qry)
-        _res = _cr.fetchall()
+        _res = _cr.dictfetchall()
         return _res
 
     def _get_report_data(self, _partner):
