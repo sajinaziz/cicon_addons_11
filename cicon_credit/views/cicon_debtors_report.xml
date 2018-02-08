@@ -47,7 +47,6 @@
                                                     <t t-if="ch_index > 0">
                                                         <![CDATA[ <tr> ]]>
                                                     </t>
-                                                   <td> <span t-esc="ch.get('name')" />  </td>
                                                    <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
                                                    <td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>
                                                    <td>  - </td>
