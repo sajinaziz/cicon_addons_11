@@ -15,13 +15,9 @@ class CiconDebtorsReport(models.AbstractModel):
         return _res
 
     def _get_all_sun_data(self):
-        _res = {}
         _qry = "EXEC dbo.Get_Aging @SunAccountNo = ''"
         _res_qry = self.env['odbc.db.source'].fetch_data('SUN_DB', _qry)
-        #_res_qry = [{'a': 1, 'b': 2}]
-        if _res_qry:
-            _res = _res_qry
-        return _res
+        return _res_qry
 
     def _get_all_partners_from_openerp(self):
         _qry = "SELECT * FROM GetOpenErpData('')"
@@ -56,7 +52,8 @@ class CiconDebtorsReport(models.AbstractModel):
 
     def _get_report_sun_data(self, sun_account):
         _res = {}
-        _sun_data = list(filter(lambda d: d['ACCNT_CODE'] == sun_account, self._res_sun_data))
+        #_sun_data = list(filter(lambda d: d['ACCNT_CODE'] == sun_account, self._res_sun_data))
+        _sun_data = [d for d in self._res_sun_data if d['ACCNT_CODE'] == sun_account]
         if _sun_data:
             _res = _sun_data[0]
         return _res
