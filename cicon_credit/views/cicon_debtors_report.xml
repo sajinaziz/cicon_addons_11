@@ -40,7 +40,7 @@
                                        <t t-foreach="get_partners()" t-as="p">
                                            <t t-set="_checks" t-value="get_check_details(p[0])"/>
                                              <tr>
-                                                 <td t-att-rowspan="len(_checks)"> <span t-esc="p[1]"/> </td>
+                                                 <td t-attf-rowspan="len(_checks)"> <span t-esc="p[1]"/> </td>
                                                  <t t-foreach="_checks" t-as="ch">
                                                  <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
                                                     <t t-if="ch_index > 0">
