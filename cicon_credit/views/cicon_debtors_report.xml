@@ -40,16 +40,14 @@
                                        <t t-foreach="get_partners()" t-as="p">
                                            <t t-set="_checks" t-value="get_check_details(p[0])"/>
                                            <t t-set="ch_count" t-value="len(_checks)"/>
-                                           <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
+                                           <t t-foreach="_checks" t-as="ch">
+                                            <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
                                              <t t-if="r">
                                              <tr>
-                                                 <td t-att-rowspan="ch_count"> <span t-esc="p[1]"/> </td>
-                                                 <t t-foreach="_checks" t-as="ch">
-                                                     <t t-if="ch_index > 0">
-                                                        <![CDATA[ <tr> ]]>
-                                                    </t>
 
-
+                                                <t t-if="ch_index == 0">
+                                                      <td t-att-rowspan="ch_count"> <span t-esc="p[1]"/> </td>
+                                                </t>
                                                    <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
                                                    <!--<td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>-->
                                                    <td>  <span t-esc="ch.get('project_name', '')"/>  </td>
@@ -114,9 +112,9 @@
                                                             <span t-esc="r.get('Above Year',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
-                                                    </t>
 
-                                              </tr>
+                                                    </tr>
+                                                 </t>
                                             </t>
 
                                        </t>
