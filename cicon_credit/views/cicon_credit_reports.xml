@@ -4,7 +4,7 @@
         <report
             id="action_cicon_debtors_report"
             string="Debtors Report"
-            model="res.partner"
+            model="res.company"
             report_type="qweb-pdf"
             file="cicon_credit.report_cicon_debtors_report_template"
             name="cicon_credit.report_cicon_debtors_report_template"
