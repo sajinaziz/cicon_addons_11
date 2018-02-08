@@ -28,7 +28,7 @@ class CiconDebtorsReport(models.AbstractModel):
                 'select id, name from res_partner where customer= true')
                 AS Partners(id integer, name character varying);"""
         _cr = self._cr
-        _cr.excute(_qry)
+        _cr.execute(_qry)
         _res = _cr.fetchall()
         return _res
 
