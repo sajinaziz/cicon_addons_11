@@ -38,10 +38,10 @@ class CiconDebtorsReport(models.AbstractModel):
         # else:
         #     _res = self._get_all_sun_data()
         #self._res_sun_data = self._get_all_sun_data()
-        for _r in _res_sun_data:
-            for _key in [*_r]:
-                if _r[_key] == 0 or _r[_key] == '0.0' or _r[_key] == '0':
-                    _r[_key] = 0
+        # for _r in _res_sun_data:
+        #     for _key in [*_r]:
+        #         if _r[_key] == 0 or _r[_key] == '0.0' or _r[_key] == '0':
+        #             _r[_key] = 0
         self._res_openerp_data = self._get_all_partners_from_openerp()
 
     def _get_partners(self):
