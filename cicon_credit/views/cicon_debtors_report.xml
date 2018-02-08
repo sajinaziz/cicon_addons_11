@@ -39,15 +39,16 @@
                                     <t t-foreach="docs" t-as="o">
                                        <t t-foreach="get_partners()" t-as="p">
                                            <t t-set="_checks" t-value="get_check_details(p[0])"/>
+                                           <t t-set="ch_count" t-value="len(_checks)"/>
+                                           <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
+                                             <t t-if="r">
                                              <tr>
-                                                 <t t-set="ch_count" t-value="len(_checks)"/>
                                                  <td t-att-rowspan="ch_count"> <span t-esc="p[1]"/> </td>
                                                  <t t-foreach="_checks" t-as="ch">
                                                      <t t-if="ch_index > 0">
                                                         <![CDATA[ <tr> ]]>
                                                     </t>
-                                                 <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
-                                                     <t t-if="r">
+
 
                                                    <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
                                                    <!--<td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>-->
@@ -114,8 +115,9 @@
                                                          </t>
                                                      </td>
                                                     </t>
-                                                </t>
-                                             </tr>
+
+                                              </tr>
+                                            </t>
 
                                        </t>
                                     </t>
