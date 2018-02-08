@@ -69,6 +69,6 @@ class CiconDebtorsReport(models.AbstractModel):
             'docs': _company,
             'get_partners': self._get_partners,
             'get_check_details': self._get_report_check_data_for_partner,
-            'get_sun_details': self._get_report_sun_data
+            'get_sun_details': self._get_sun_data
 
         }
