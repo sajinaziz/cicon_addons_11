@@ -41,7 +41,7 @@
                                        <t t-foreach="get_partners()" t-as="p">
                                          <t t-foreach="get_check_details(p[0])" t-as="ch">
                                              <tr>
-                                                 <t t-set="r" t-value="[s for s in sun_res if s.get('ACCNT_CODE')== ch.get('account_no') ]" />
+                                                 <t t-set="r" t-value="[s for s in sun_res if s.get('ACCNT_CODE')== ch.get('account_no')][0]" />
 
                                                    <td> <span t-esc="ch.get('name')" />  </td>
                                                    <td>  <span t-esc="r.get('ACCNT_CODE',False)"/> </td>
