@@ -52,11 +52,9 @@ class CiconDebtorsReport(models.AbstractModel):
 
     def _get_report_sun_data(self, sun_account):
         _res = {}
-        _sun_data = list(filter(lambda d: d['ACCNT_CODE'] == sun_account, self._res_sun_data))
+        _sun_data = list(filter(lambda d:  str(d['ACCNT_CODE']).strip() == str(sun_account).strip(), self._res_sun_data))
         if _sun_data:
             _res = _sun_data[0]
-        else:
-            _res = self._res_sun_data[1]
         return _res
 
     @api.multi
