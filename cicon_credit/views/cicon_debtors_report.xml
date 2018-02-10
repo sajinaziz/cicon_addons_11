@@ -42,7 +42,7 @@
                                            <t t-foreach="_checks" t-as="ch">
                                            <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
                                            <t t-if="r">
-                                             <tr t-att-class="'success' if l_even" >
+                                             <tr t-att-class="'success' if ch_even" >
                                                    <td> <span t-esc="p[1]"/> </td>
                                                    <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
                                                    <!--<td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>-->
