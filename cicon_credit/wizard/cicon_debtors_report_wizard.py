@@ -8,8 +8,8 @@ class CiconDebtorsReportWizard(models.TransientModel):
     report_option = fields.Selection([('report_sun_check', 'Aging Report (With LC & Check'),
                                       ('report_sun_aging', 'Aging Report (Sun System)')], string='Report Options',
                                      default='report_sun_check')
-    report_period = fields.Selection([('invoice_period', 'Invoice Period'), ('invoice_date', 'Invoice Date')],
-                                     dafault='invoice_date', string="Report Period")
+    report_period = fields.Selection([('invoice_date', 'Invoice Date'), ('invoice_period', 'Invoice Period')],
+                                     default='invoice_date', string="Report Period")
     start_date = fields.Date('From')
     end_date = fields.Date('To')
     # partner_ids = fields.Many2many('res.partner',relation='cicon_debtor_report_partner_rel',column1='wizard_id',
