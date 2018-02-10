@@ -42,12 +42,12 @@
                                            <t t-foreach="_checks" t-as="ch">
                                            <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
                                            <t t-if="r">
-                                             <tr>
+                                             <tr t-att-class="'success' if l_even" >
                                                    <td> <span t-esc="p[1]"/> </td>
                                                    <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
                                                    <!--<td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>-->
-                                                   <td>  <span t-esc="ch.get('project_name', '')"/>  </td>
-                                                    <td>  -  </td>
+                                                    <td>  <span t-esc="ch.get('project_name', '')"/>  </td>
+                                                    <td>  <span t-esc="type(r.get('ACCNT_CODE'))" />  </td>
                                                     <td class="text-right">
                                                          <t t-if="r.get('TOTAL',0) != 0">
                                                             <span t-esc="r.get('TOTAL',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
