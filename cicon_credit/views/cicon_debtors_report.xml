@@ -47,7 +47,7 @@
                                                    <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
                                                    <!--<td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>-->
                                                     <td>  <span t-esc="ch.get('project_name', '')"/>  </td>
-                                                    <td>  <span t-esc="type(r.get('ACCNT_CODE'))" />  </td>
+                                                    <td>  -  </td>
                                                     <td class="text-right">
                                                          <t t-if="r.get('TOTAL',0) != 0">
                                                             <span t-esc="r.get('TOTAL',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
