@@ -9,7 +9,7 @@
                 <form string="Report Wizard">
                     <group>
                         <field name="report_option"/>
-                        <field name="report_period" widget="radio"/>.
+                        <field name="report_period" widget="radio"/>
                     </group>
                     <group col="4">
                         <field name="start_date"/>
