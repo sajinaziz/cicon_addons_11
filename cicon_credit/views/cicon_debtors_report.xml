@@ -39,18 +39,19 @@
                                     <t t-foreach="docs" t-as="o">
                                        <t t-foreach="get_partners()" t-as="p">
                                            <t t-set="_checks" t-value="get_check_details(p[0])"/>
+                                           <t t-set="_ch_count" t-value="len(_checks)" />
                                            <t t-foreach="_checks" t-as="ch">
-                                           <t t-set="r" t-value="get_sun_details(ch.get('account_no'))" />
-                                           <t t-if="r">
-                                             <tr t-att-class="'success' if p_even == true else 'active'" >
-                                                   <td> <span t-esc="p[1]"/> </td>
-                                                   <td>  <span t-esc="r.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
-                                                   <!--<td>  <span t-esc="r.get('ACCNT_NAME',False)"/> </td>-->
+                                             <tr t-att-class="'success' if ch_even == true else 'active'" >
+                                                  <t t-if="ch_index == 0">
+                                                    <td t-att-rowspan="_ch_count"> <span t-esc="p[1]"/> </td>
+                                                  </t>
+                                                   <td>  <span t-esc="ch.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
+                                                   <!--<td>  <span t-esc="ch.get('ACCNT_NAME',False)"/> </td>-->
                                                     <td>  <span t-esc="ch.get('project_name', '')"/>  </td>
                                                     <td>  -  </td>
                                                     <td class="text-right">
-                                                         <t t-if="r.get('TOTAL',0) != 0">
-                                                            <span t-esc="r.get('TOTAL',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                                         <t t-if="ch.get('TOTAL',0) != 0">
+                                                            <span t-esc="ch.get('TOTAL',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                                                          </t>
                                                      </td>
                                                     <td class="text-right">
@@ -65,53 +66,52 @@
                                                     </td>
 
                                                     <td>
-                                                        <span t-esc="r.get('TOTAL',0) - (ch.get('total_chq',0) + ch.get('total_lc',0))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                        <span t-esc="ch.get('TOTAL',0) - (ch.get('total_chq',0) + ch.get('total_lc',0))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
 
                                                     </td>
                                                     <td class="text-right">
-                                                         <t t-if="r.get('30 Days',0) != 0">
-                                                            <span t-esc="r.get('30 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                         <t t-if="ch.get('30 Days',0) != 0">
+                                                            <span t-esc="ch.get('30 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
                                                      <td class="text-right">
-                                                         <t t-if="r.get('30-60 Days',0) != 0">
-                                                            <span t-esc="r.get('30-60 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                         <t t-if="ch.get('30-60 Days',0) != 0">
+                                                            <span t-esc="ch.get('30-60 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                     </td>
                                                      <td class="text-right">
-                                                         <t t-if="r.get('60-90 Days',0) != 0">
-                                                            <span t-esc="r.get('60-90 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                         <t t-if="ch.get('60-90 Days',0) != 0">
+                                                            <span t-esc="ch.get('60-90 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
                                                      <td class="text-right">
-                                                         <t t-if="r.get('90-120 Days',0) != 0">
-                                                            <span t-esc="r.get('90-120 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                         <t t-if="ch.get('90-120 Days',0) != 0">
+                                                            <span t-esc="ch.get('90-120 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
                                                      <td class="text-right">
-                                                         <t t-if="r.get('120-150 Days',0) != 0">
-                                                         <span t-esc="r.get('120-150 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                         <t t-if="ch.get('120-150 Days',0) != 0">
+                                                         <span t-esc="ch.get('120-150 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
                                                      <td class="text-right">
-                                                         <t t-if="r.get('150-180 Days',0) != 0">
-                                                            <span t-esc="r.get('150-180 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                         <t t-if="ch.get('150-180 Days',0) != 0">
+                                                            <span t-esc="ch.get('150-180 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
                                                      <td class="text-right">
-                                                         <t t-if="r.get('6-12 Months',0) != 0">
-                                                            <span t-esc="r.get('6-12 Months',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                         <t t-if="ch.get('6-12 Months',0) != 0">
+                                                            <span t-esc="ch.get('6-12 Months',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
                                                      <td class="text-right">
-                                                         <t t-if="r.get('Above Year',0) != 0">
-                                                            <span t-esc="r.get('Above Year',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                         <t t-if="ch.get('Above Year',0) != 0">
+                                                            <span t-esc="ch.get('Above Year',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                      </td>
 
                                                     </tr>
                                                  </t>
-                                            </t>
 
                                        </t>
                                     </t>
