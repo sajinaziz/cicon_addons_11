@@ -53,7 +53,7 @@ class CiconDebtorsReport(models.AbstractModel):
     def _get_report_sun_data(self, sun_account):
         _res = {}
         #_sun_data = list(filter(lambda d: d['ACCNT_CODE'] == sun_account, self._res_sun_data))
-        _sun_data = [d for d in self._res_sun_data if d['ACCNT_CODE'] == sun_account]
+        _sun_data = [d for d in self._res_sun_data if str(d['ACCNT_CODE']) == str(sun_account)]
         if _sun_data:
             _res = _sun_data[0]
         return _res
@@ -69,6 +69,6 @@ class CiconDebtorsReport(models.AbstractModel):
             'docs': _company,
             'get_partners': self._get_partners,
             'get_check_details': self._get_report_check_data_for_partner,
-            'get_sun_details': self._get_sun_data
+            'get_sun_details': self._get_report_sun_data
 
         }
