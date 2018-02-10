@@ -50,8 +50,8 @@ class CiconDebtorsReport(models.AbstractModel):
         return _res
 
     def _get_report_check_data_partner_with_sun(self, partner_id):
-        _res  = []
-        _checks  = self._get_report_check_data_for_partner(partner_id)
+        _res = []
+        _checks = self._get_report_check_data_for_partner(partner_id)
         for _check in _checks:
             _sun_data = self._get_report_sun_data(_check.get('account_no'))
             if _sun_data:
