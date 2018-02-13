@@ -10,7 +10,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th colspan="4">Descriptions</th>
+                                        <th colspan="3">Descriptions</th>
                                         <th rowspan="2"> Total Receivable </th>
                                         <th rowspan="2"> Covered By PDC </th>
                                         <th rowspan="2"> Covered By LC </th>
@@ -30,28 +30,28 @@
                                         <th> Account Code </th>
                                         <!--<th> Account Name </th>-->
                                         <th> Project </th>
-                                        <th> Database </th>
+                                        <!--<th> Database </th>-->
 
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <t t-foreach="docs" t-as="o">
                                        <t t-foreach="get_partners()" t-as="p">
                                            <t t-set="_checks" t-value="get_check_details(p[0])"/>
                                            <t t-set="_ch_count" t-value="len(_checks)" />
                                            <t t-foreach="_checks" t-as="ch">
-                                             <tr style="page-break-inside: avoid;" t-att-class="'active' if ch_odd == true else ''" >
+                                                <tr style="page-break-inside: avoid;" t-att-class="'active' if ch_odd == true else ''" >
                                                   <t t-if="ch_index == 0">
                                                     <td t-att-rowspan="_ch_count"> <span t-esc="p[1]"/> </td>
                                                   </t>
+
                                                    <td>  <span t-esc="ch.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
                                                    <!--<td>  <span t-esc="ch.get('ACCNT_NAME',False)"/> </td>-->
                                                     <td>  <span t-esc="ch.get('project_name', '')"/>  </td>
-                                                    <td>  -  </td>
+                                                    <!--<td>  -  </td>-->
                                                     <td class="text-right">
                                                          <t t-if="ch.get('TOTAL',0) != 0">
-                                                            <span t-esc="ch.get('TOTAL',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                                            <span t-esc="ch.get('TOTAL',0)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                                                          </t>
                                                      </td>
                                                     <td class="text-right">
@@ -66,6 +66,7 @@
                                                     </td>
 
                                                     <td class="text-right">
+
                                                         <span t-esc="ch.get('TOTAL',0) - (ch.get('total_chq',0) + ch.get('total_lc',0))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
 
                                                     </td>
@@ -114,7 +115,7 @@
                                                  </t>
 
                                        </t>
-                                    </t>
+
                                 </tbody>
 
 

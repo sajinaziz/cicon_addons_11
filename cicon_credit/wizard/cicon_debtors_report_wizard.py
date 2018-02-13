@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from datetime import datetime
 
 
 class CiconDebtorsReportWizard(models.TransientModel):
@@ -16,5 +17,12 @@ class CiconDebtorsReportWizard(models.TransientModel):
     @api.multi
     def show_report(self):
         _company = self.env.user.company_id
-        return self.env.ref('cicon_credit.action_cicon_debtors_report').report_action(_company)
+        data = {}
+        if self.start_date and self.end_date:
+            data.update(form={})
+            start_date = datetime.strptime(self.start_date, '%Y-%m-%d').strftime('%Y%m%d')
+            end_date = datetime.strptime(self.end_date, '%Y-%m-%d').strftime('%Y%m%d')
+            data['form'].update(start_date=start_date)
+            data['form'].update(end_date=end_date)
+        return self.env.ref('cicon_credit.action_cicon_debtors_report').report_action(_company,data=data)
 
