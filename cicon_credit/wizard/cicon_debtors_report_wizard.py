@@ -8,7 +8,7 @@ class CiconDebtorsReportWizard(models.TransientModel):
 
     report_option = fields.Selection([('report_sun_check', 'Aging Report (With LC & Check)'),
                                       ('report_sun_aging', 'Aging Report (Sun System)')], string='Report Options',
-                                     default='report_sun_check')
+                                     default='report_sun_check', required=True)
     report_period = fields.Selection([('invoice_date', 'Invoice Date'), ('invoice_period', 'Invoice Period')],
                                      default='invoice_date', string="Report Period")
     start_date = fields.Date('From')
@@ -24,5 +24,7 @@ class CiconDebtorsReportWizard(models.TransientModel):
             end_date = datetime.strptime(self.end_date, '%Y-%m-%d').strftime('%Y%m%d')
             data['form'].update(start_date=start_date)
             data['form'].update(end_date=end_date)
+            data['form'].update(report_option=self.report_option)
+
         return self.env.ref('cicon_credit.action_cicon_debtors_report').report_action(_company,data=data)
 

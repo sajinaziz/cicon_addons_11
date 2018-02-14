@@ -1,7 +1,10 @@
 from odoo import api, models
 import decimal
+
 _res_openerp_data = []
 _res_sun_data = []
+_res_sun_data_no_partner = []
+_sun_codes =[]
 
 
 class CiconDebtorsReport(models.AbstractModel):
@@ -17,11 +20,12 @@ class CiconDebtorsReport(models.AbstractModel):
         return _res
 
     def _get_all_sun_data(self, param):
-
         _qry = "EXEC dbo.Get_Aging @SunAccountNo = '' "
         if param:
             _qry = _qry + param
         _res_qry = self.env['odbc.db.source'].fetch_data('SUN_DB', _qry)
+        for _r in _res_qry:
+            self._clean_up_sun_decimal(_r)
         return _res_qry
 
     def _get_all_partners_from_openerp(self):
@@ -35,14 +39,26 @@ class CiconDebtorsReport(models.AbstractModel):
         self._res_sun_data = self._get_all_sun_data(param)
         self._res_openerp_data = self._get_all_partners_from_openerp()
 
-    def _get_partners(self):
-        _res_list = [(_partner.get('id'), _partner.get('name')) for _partner in self._res_openerp_data]
+    def _get_partners(self, _report_opt=''):
+        _partners=[]
+        _dummy_partner = None
+        if _report_opt == 'report_sun_aging':
+            self._sun_codes = [str(a['ACCNT_CODE']).strip() for a in self._res_sun_data]
+            _partners = list(filter(lambda d: d['account_no'] in self._sun_codes ,  self._res_openerp_data))
+            _partner_sun_codes = list(set([p['account_no'] for p in self._res_openerp_data]))
+            self._res_sun_data_no_partner = list(filter(lambda d: str(d['ACCNT_CODE']).strip() not in _partner_sun_codes,  self._res_sun_data))
+            _dummy_partner = (0, '')
+        else:
+            _partners = self._res_openerp_data
+        _res_list = [(_partner.get('id'), _partner.get('name')) for _partner in _partners]
         _res_set = list(set(_res_list))
         _res = sorted(_res_set, key=lambda x: x[1])
+        if _report_opt and _dummy_partner:
+            _res.append(_dummy_partner)
         return _res
 
     def _get_report_check_data_for_partner(self, partner_id):
-        _check_data = list(filter(lambda d: d['id'] == partner_id,  self._res_openerp_data))
+        _check_data = list(filter(lambda d: d['id'] == partner_id and d['account_no'] in self._sun_codes,  self._res_openerp_data))
         return _check_data
 
     def _get_report_sun_data(self, sun_account):
@@ -57,23 +73,26 @@ class CiconDebtorsReport(models.AbstractModel):
         _checks = self._get_report_check_data_for_partner(partner_id)
         for _check in _checks:
             _sun_data = self._get_report_sun_data(_check.get('account_no'))
-            if _sun_data:
-                for k in _sun_data.keys():
-                    if isinstance(_sun_data.get(k), decimal.Decimal):
-                        _sun_data[k] = float(_sun_data.get(k))
-                _check.update(_sun_data)
-                _res.append(_check)
+            _check.update(_sun_data)
+            _res.append(_check)
+        if not _checks and partner_id == 0:
+            _res = self._res_sun_data_no_partner
         return _res
+
+    def _clean_up_sun_decimal(self, _sun_data):
+        if _sun_data:
+            for k in _sun_data.keys():
+                if isinstance(_sun_data.get(k), decimal.Decimal):
+                    _sun_data[k] = float(_sun_data.get(k))
 
     @api.multi
     def get_report_values(self, docids, data=None):
         _filter =''
         if data.get('form'):
             _filter = ",@Fromdt='" + data['form'].get('start_date') + "' ,@Todt='" + data['form'].get('end_date') + "'"
-        print(_filter)
         self._get_report_data(_filter)
         return {
-            'data':data,
+            'data': data,
             'get_partners': self._get_partners,
             'get_check_details': self._get_report_check_data_partner_with_sun,
         }

@@ -36,13 +36,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                       <t t-foreach="get_partners()" t-as="p">
+                                       <t t-foreach="get_partners(data['form'].get('report_option',''))" t-as="p">
                                            <t t-set="_checks" t-value="get_check_details(p[0])"/>
                                            <t t-set="_ch_count" t-value="len(_checks)" />
                                            <t t-foreach="_checks" t-as="ch">
                                                 <tr style="page-break-inside: avoid;" t-att-class="'active' if ch_odd == true else ''" >
-                                                  <t t-if="ch_index == 0">
+                                                  <t t-if="ch_index == 0 and p[0] > 0">
                                                     <td t-att-rowspan="_ch_count"> <span t-esc="p[1]"/> </td>
+                                                  </t>
+                                                  <t t-elif="p[0] == 0">
+                                                      <td class="text-warning">  <span t-esc="ch.get('ACCNT_NAME')" /> </td>
                                                   </t>
 
                                                    <td>  <span t-esc="ch.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>
