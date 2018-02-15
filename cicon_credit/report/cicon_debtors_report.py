@@ -42,6 +42,7 @@ class CiconDebtorsReport(models.AbstractModel):
     def _get_partners(self, _report_opt=''):
         _partners=[]
         _dummy_partner = None
+        self._sun_codes =[]
         if _report_opt == 'report_sun_aging':
             self._sun_codes = [str(a['ACCNT_CODE']).strip() for a in self._res_sun_data]
             _partners = list(filter(lambda d: d['account_no'] in self._sun_codes ,  self._res_openerp_data))
