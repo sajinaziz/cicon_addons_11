@@ -58,7 +58,11 @@ class CiconDebtorsReport(models.AbstractModel):
         return _res
 
     def _get_report_check_data_for_partner(self, partner_id):
-        _check_data = list(filter(lambda d: d['id'] == partner_id and d['account_no'] in self._sun_codes,  self._res_openerp_data))
+        _check_data =[]
+        if self._sun_codes:
+            _check_data = list(filter(lambda d: d['id'] == partner_id and d['account_no'] in self._sun_codes,  self._res_openerp_data))
+        else:
+            _check_data = list(filter(lambda d: d['id'] == partner_id,  self._res_openerp_data))
         return _check_data
 
     def _get_report_sun_data(self, sun_account):
