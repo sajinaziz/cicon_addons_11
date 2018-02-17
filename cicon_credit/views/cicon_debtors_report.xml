@@ -64,7 +64,7 @@
                                                     </td>
                                                     <td class="text-right">
                                                          <t t-if="ch.get('total_lc',0) != 0">
-                                                            <span t-esc="ch.get('total_chq',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+                                                            <span t-esc="ch.get('total_lc',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
                                                          </t>
                                                     </td>
 
@@ -115,9 +115,25 @@
                                                      </td>
 
                                                     </tr>
-                                                 </t>
-
+                                           </t>
                                        </t>
+                                      <tr class="success">
+                                          <t t-set="_total" t-value="get_total()"/>
+                                          <td class="text-center" colspan="3"> Grand Total </td>
+                                          <td> <span t-esc="sum(_total['TOTAL']) - (sum(_total['total_chq']) + sum(_total['total_lc']))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />   </td>
+                                          <td> <span t-esc="sum(_total['total_chq'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['total_lc'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['TOTAL'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['30 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['30-60 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['60-90 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['90-120 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['120-150 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['150-180 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['6-12 Months'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+                                          <td> <span t-esc="sum(_total['Above Year'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>
+
+                                      </tr>
 
                                 </tbody>
 

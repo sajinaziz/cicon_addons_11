@@ -1,11 +1,12 @@
 from odoo import api, models
 import decimal
+from collections import defaultdict
 
 _res_openerp_data = []
 _res_sun_data = []
 _res_sun_data_no_partner = []
-_sun_codes =[]
-
+_sun_codes = []
+_valid_datas = []
 
 class CiconDebtorsReport(models.AbstractModel):
     _name = 'report.cicon_credit.report_cicon_debtors_report_template'
@@ -38,6 +39,7 @@ class CiconDebtorsReport(models.AbstractModel):
     def _get_report_data(self, param=None):
         self._res_sun_data = self._get_all_sun_data(param)
         self._res_openerp_data = self._get_all_partners_from_openerp()
+        self._valid_datas = []
 
     def _get_partners(self, _report_opt=''):
         _partners=[]
@@ -82,7 +84,17 @@ class CiconDebtorsReport(models.AbstractModel):
             _res.append(_check)
         if not _checks and partner_id == 0:
             _res = self._res_sun_data_no_partner
+        self._valid_datas.extend(_res)
         return _res
+
+    def _get_grand_total(self):
+        _key_total = ['total_chq', 'total_lc',  'TOTAL', '30 Days', '30-60 Days', '60-90 Days', '90-120 Days', '120-150 Days', '150-180 Days', '6-12 Months', 'Above Year']
+        _d_total = defaultdict(list)
+        for _rec in self._valid_datas:
+            for k, v in _rec.items():
+                if k in _key_total:
+                    _d_total[k].append(v)
+        return _d_total
 
     def _clean_up_sun_decimal(self, _sun_data):
         if _sun_data:
@@ -93,12 +105,13 @@ class CiconDebtorsReport(models.AbstractModel):
     @api.multi
     def get_report_values(self, docids, data=None):
         _filter =''
+
         if data.get('form') and data['form'].get('start_date'):
             _filter = ",@Fromdt='" + data['form'].get('start_date') + "' ,@Todt='" + data['form'].get('end_date') + "'"
         self._get_report_data(_filter)
-        print(data)
         return {
             'data': data,
             'get_partners': self._get_partners,
             'get_check_details': self._get_report_check_data_partner_with_sun,
+            'get_total': self._get_grand_total
         }
