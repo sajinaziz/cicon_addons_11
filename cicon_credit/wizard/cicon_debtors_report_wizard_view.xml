@@ -17,7 +17,7 @@
                        <!--<field name="partner_ids"  />-->
                     </group>
                     <group>
-                        <field name="openerp_partner_id" options="{'no_create': 'True', 'no_open': True }" />
+                        <!--<field name="openerp_partner_id" options="{'no_create': 'True', 'no_open': True }" />-->
                     </group>
                   <footer>
                         <button name="show_report" string="Show Report" type="object"  class="oe_highlight"/>
