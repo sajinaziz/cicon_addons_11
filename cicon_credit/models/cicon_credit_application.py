@@ -62,8 +62,14 @@ class CiconCustomerCreditApplication(models.Model):
                               ('reject', 'Rejected'), ('cancel', 'Cancelled')], string='State', default='new', track_visibility='onchange')
 
 
+class OpenErpPartner(models.Model):
+        _name = 'openerp.partner'
+        _table = 'openerp_partner'
+        _auto = False
 
-
+        id = fields.Integer('Partner Id', readonly=True)
+        name = fields.Char('Partner Name', readonly=True)
+        customer = fields.Boolean('Customer', readonly=True)
 
 
 

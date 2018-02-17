@@ -13,18 +13,18 @@ class CiconDebtorsReportWizard(models.TransientModel):
                                      default='invoice_date', string="Report Period")
     start_date = fields.Date('From')
     end_date = fields.Date('To')
+    openerp_partner_id = fields.Many2one('openerp.partner', string="Customer", domain="[('customer','=', True)]")
 
     @api.multi
     def show_report(self):
         _company = self.env.user.company_id
-        data = {}
+        data = {'form': {'start_date': '', 'end_date': '', 'report_option': ''}}
         if self.start_date and self.end_date:
             data.update(form={})
             start_date = datetime.strptime(self.start_date, '%Y-%m-%d').strftime('%Y%m%d')
             end_date = datetime.strptime(self.end_date, '%Y-%m-%d').strftime('%Y%m%d')
             data['form'].update(start_date=start_date)
             data['form'].update(end_date=end_date)
-            data['form'].update(report_option=self.report_option)
-
+        data['form'].update(report_option=self.report_option)
         return self.env.ref('cicon_credit.action_cicon_debtors_report').report_action(_company,data=data)
 

@@ -93,9 +93,10 @@ class CiconDebtorsReport(models.AbstractModel):
     @api.multi
     def get_report_values(self, docids, data=None):
         _filter =''
-        if data.get('form'):
+        if data.get('form') and data['form'].get('start_date'):
             _filter = ",@Fromdt='" + data['form'].get('start_date') + "' ,@Todt='" + data['form'].get('end_date') + "'"
         self._get_report_data(_filter)
+        print(data)
         return {
             'data': data,
             'get_partners': self._get_partners,
