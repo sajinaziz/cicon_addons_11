@@ -8,13 +8,14 @@
                     <div class="page">
                         <div>
                             <table class="table table-bordered">
+                                <caption class="text-center"> <h1>  Aging Report as of <span t-esc="time.strftime('%d-%b-%Y')"/> </h1>  </caption>
                                 <thead>
                                     <tr>
                                         <th colspan="3">Descriptions</th>
-                                        <th rowspan="2"> Total Receivable </th>
+                                        <th rowspan="2"> UnCovered Amount </th>
                                         <th rowspan="2"> Covered By PDC </th>
                                         <th rowspan="2"> Covered By LC </th>
-                                        <th rowspan="2"> Net Amount </th>
+                                        <th rowspan="2"> Net Receivable </th>
                                         <th rowspan="2"> 30 Days</th>
                                         <th rowspan="2"> 60 Days </th>
                                         <th rowspan="2"> 90 Days </th>
@@ -52,11 +53,14 @@
                                                    <!--<td>  <span t-esc="ch.get('ACCNT_NAME',False)"/> </td>-->
                                                     <td>  <span t-esc="ch.get('project_name', '')"/>  </td>
                                                     <!--<td>  -  </td>-->
-                                                    <td class="text-right">
-                                                         <t t-if="ch.get('TOTAL',0) != 0">
-                                                            <span t-esc="ch.get('TOTAL',0)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
-                                                         </t>
-                                                     </td>
+
+                                                      <td class="text-right">
+
+                                                        <span t-esc="ch.get('TOTAL',0) - (ch.get('total_chq',0) + ch.get('total_lc',0))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
+
+                                                    </td>
+
+
                                                     <td class="text-right">
                                                          <t t-if="ch.get('total_chq',0) != 0">
                                                             <span t-esc="ch.get('total_chq',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
@@ -69,10 +73,12 @@
                                                     </td>
 
                                                     <td class="text-right">
+                                                         <t t-if="ch.get('TOTAL',0) != 0">
+                                                            <span t-esc="ch.get('TOTAL',0)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                                         </t>
+                                                     </td>
 
-                                                        <span t-esc="ch.get('TOTAL',0) - (ch.get('total_chq',0) + ch.get('total_lc',0))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
 
-                                                    </td>
                                                     <td class="text-right">
                                                          <t t-if="ch.get('30 Days',0) != 0">
                                                             <span t-esc="ch.get('30 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />
