@@ -10,5 +10,17 @@
             name="cicon_credit.report_cicon_debtors_report_template"
             print_report_name="'Debtors-Report_%s'%(object.name)"
         />
+
+          <report
+            id="action_cicon_debtors_report_12months"
+            string="Debtors Report (12 Months)"
+            model="cicon.debtors.report.wizard"
+            report_type="qweb-pdf"
+            file="cicon_credit.report_cicon_debtors_report_template_12months"
+            name="cicon_credit.report_cicon_debtors_report_template_12months"
+            print_report_name="'Debtors-Report_%s'%(object.report_option)"
+
+        />
+
     </data>
 </odoo>

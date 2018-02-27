@@ -21,6 +21,7 @@
                     </group>
                   <footer>
                         <button name="show_report" string="Show Report" type="object"  class="oe_highlight"/>
+                      <button name="export_excel" string="Export to Excel" type="object"  class="oe_highlight"/>
                         or
                         <button string="Cancel" special="cancel" class="oe_link"/>
                    </footer>
@@ -35,6 +36,72 @@
             <field name="target">new</field>
         </record>
 
-      <menuitem parent="cicon_credit_root_menu" sequence="20" id="cicon_menu_debtors_report_wizard" action="action_debtors_report_form"/>
+    <!--
+    New tree design for Dynamic Treeview (Pivot)
+    -->
+     <record id="cicon_debtors_report_wizard_tree" model="ir.ui.view">
+            <field name="name">cicon.debtors.report.wizard.tree</field>
+            <field name="model">cicon.debtors.report.wizard</field>
+            <field name="arch" type="xml">
+                <tree string="Report Tree">
+                    <field name="report_option"/>
+                    <field name="start_date"/>
+                </tree>
+            </field>
+     </record>
+
+
+    <!--
+    New Pivot View for Dynamic Treeview (Pivot)
+    -->
+    <record id="cicon_debtors_report_wizard_pivot" model="ir.ui.view">
+            <field name="name">cicon.debtors.report.wizard.pivot</field>
+            <field name="model">cicon.debtors.report.wizard</field>
+            <field name="arch" type="xml">
+                <pivot string="Report Pivot">
+                    <field name="report_option" type="row"/>
+                    <field name="start_date" type="col"/>
+                </pivot>
+            </field>
+     </record>
+
+
+
+       <record id="cicon_debtors_report_wizard_form_current_view" model="ir.ui.view">
+            <field name="name">cicon.debtors.report.wizard.view.form</field>
+            <field name="model">cicon.debtors.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Wizard">
+                    <sheet>
+                        <group>
+                            <field name="report_option"/>
+                            <field name="report_period" widget="radio"/>
+                        </group>
+                        <group col="4">
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+       </record>
+
+
+
+     <!--
+    New action for Dynamic Treeview (Pivot)
+    -->
+     <record id="action_debtors_report_tree" model="ir.actions.act_window">
+            <field name="name" >Report Tree</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="res_model">cicon.debtors.report.wizard</field>
+     </record>
+
+
+     <menuitem parent="cicon_credit_root_menu" sequence="20" id="cicon_menu_debtors_report_wizard" action="action_debtors_report_form"/>
+    <!--
+    New Menu for Dynamic Treeview (Pivot)
+    -->
+    <!--<menuitem parent="cicon_credit_root_menu" sequence="30" id="cicon_menu_debtors_report_tree" action="action_debtors_report_tree"/>-->
 
 </odoo>

@@ -155,4 +155,170 @@
         </t>
     </template>
 
+
+    <template id="report_cicon_debtors_report_template_12months">
+        <t t-call="web.html_container">
+
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div>
+                            <!--<table class="table table-bordered">-->
+                                <!--<caption class="text-center"> <h1>  Aging Report as of <span t-esc="time.strftime('%d-%b-%Y')"/> </h1>  </caption>-->
+                                <!--<thead>-->
+                                    <!--<tr>-->
+                                        <!--<th colspan="3">Descriptions</th>-->
+                                        <!--<th rowspan="2"> UnCovered Amount </th>-->
+                                        <!--<th rowspan="2"> Covered By PDC </th>-->
+                                        <!--<th rowspan="2"> Covered By LC </th>-->
+                                        <!--<th rowspan="2"> Net Receivable </th>-->
+                                        <!--<th rowspan="2"> 30 Days</th>-->
+                                        <!--<th rowspan="2"> 60 Days </th>-->
+                                        <!--<th rowspan="2"> 90 Days </th>-->
+                                        <!--<th rowspan="2"> 120 Days </th>-->
+                                        <!--<th rowspan="2"> 150 Days </th>-->
+                                        <!--<th rowspan="2"> 180 Days </th>-->
+                                        <!--<th rowspan="2"> 6-12 Months </th>-->
+                                        <!--<th rowspan="2"> Above </th>-->
+
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<th> Customer  </th>-->
+                                        <!--<th> Account Code </th>-->
+                                        <!--&lt;!&ndash;<th> Account Name </th>&ndash;&gt;-->
+                                        <!--<th> Project </th>-->
+                                        <!--&lt;!&ndash;<th> Database </th>&ndash;&gt;-->
+
+
+                                    <!--</tr>-->
+                                <!--</thead>-->
+                                <!--<tbody>-->
+                                       <!--<t t-foreach="get_partners(data['form'].get('report_option',''))" t-as="p">-->
+                                           <!--<t t-set="_checks" t-value="get_check_details(p[0])"/>-->
+                                           <!--<t t-set="_ch_count" t-value="len(_checks)" />-->
+                                           <!--<t t-foreach="_checks" t-as="ch">-->
+                                                <!--<tr style="page-break-inside: avoid;" t-att-class="'active' if ch_odd == true else ''" >-->
+                                                  <!--<t t-if="ch_index == 0 and p[0] > 0">-->
+                                                    <!--<td t-att-rowspan="_ch_count"> <span t-esc="p[1]"/> </td>-->
+                                                  <!--</t>-->
+                                                  <!--<t t-elif="p[0] == 0">-->
+                                                      <!--<td class="text-warning">  <span t-esc="ch.get('ACCNT_NAME')" /> </td>-->
+                                                  <!--</t>-->
+
+                                                   <!--<td>  <span t-esc="ch.get('ACCNT_CODE',False) or ch.get('account_no')"/> </td>-->
+                                                   <!--&lt;!&ndash;<td>  <span t-esc="ch.get('ACCNT_NAME',False)"/> </td>&ndash;&gt;-->
+                                                    <!--<td>  <span t-esc="ch.get('project_name', '')"/>  </td>-->
+                                                    <!--&lt;!&ndash;<td>  -  </td>&ndash;&gt;-->
+
+                                                      <!--<td class="text-right">-->
+
+                                                        <!--<span t-esc="ch.get('TOTAL',0) - (ch.get('total_chq',0) + ch.get('total_lc',0))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+
+                                                    <!--</td>-->
+
+
+                                                    <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('total_chq',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('total_chq',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                    <!--</td>-->
+                                                    <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('total_lc',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('total_lc',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                    <!--</td>-->
+
+                                                    <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('TOTAL',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('TOTAL',0)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>-->
+                                                         <!--</t>-->
+                                                     <!--</td>-->
+
+
+                                                    <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('30 Days',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('30 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                     <!--</td>-->
+                                                     <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('30-60 Days',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('30-60 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                    <!--</td>-->
+                                                     <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('60-90 Days',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('60-90 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                     <!--</td>-->
+                                                     <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('90-120 Days',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('90-120 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                     <!--</td>-->
+                                                     <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('120-150 Days',0) != 0">-->
+                                                         <!--<span t-esc="ch.get('120-150 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                     <!--</td>-->
+                                                     <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('150-180 Days',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('150-180 Days',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                     <!--</td>-->
+                                                     <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('6-12 Months',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('6-12 Months',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                     <!--</td>-->
+                                                     <!--<td class="text-right">-->
+                                                         <!--<t t-if="ch.get('Above Year',0) != 0">-->
+                                                            <!--<span t-esc="ch.get('Above Year',False)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />-->
+                                                         <!--</t>-->
+                                                     <!--</td>-->
+
+                                                    <!--</tr>-->
+                                           <!--</t>-->
+                                       <!--</t>-->
+                                      <!--<tr class="success">-->
+                                          <!--<t t-set="_total" t-value="get_total()"/>-->
+                                          <!--<td class="text-center" colspan="3"> Grand Total </td>-->
+                                          <!--<td> <span t-esc="sum(_total['TOTAL']) - (sum(_total['total_chq']) + sum(_total['total_lc']))" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />   </td>-->
+                                          <!--<td> <span t-esc="sum(_total['total_chq'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['total_lc'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['TOTAL'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['30 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['30-60 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['60-90 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['90-120 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['120-150 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['150-180 Days'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['6-12 Months'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+                                          <!--<td> <span t-esc="sum(_total['Above Year'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" />  </td>-->
+
+                                      <!--</tr>-->
+
+                                <!--</tbody>-->
+
+
+                            <!--</table>-->
+
+                            <div>
+
+                                Hello
+
+                                <t t-foreach="docs" t-as="o">
+                                    <span t-field="o.report_option" />
+                                </t>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+            </t>
+        </t>
+    </template>
+
 </odoo>

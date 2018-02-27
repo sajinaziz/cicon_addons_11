@@ -115,3 +115,19 @@ class CiconDebtorsReport(models.AbstractModel):
             'get_check_details': self._get_report_check_data_partner_with_sun,
             'get_total': self._get_grand_total
         }
+
+    def _get_key_columns(self):
+        _keys = ['name', 'ACCNT_CODE', 'ACCNT_NAME', 'project_name',  'total_chq', 'total_lc',  'TOTAL', '30 Days', '30-60 Days', '60-90 Days', '90-120 Days', '120-150 Days', '150-180 Days', '6-12 Months', 'Above Year']
+        return _keys
+
+    def get_report_data_export(self, data):
+        _filter = ''
+        _res = []
+        if data.get('start_date') and data.get('end_date'):
+            _filter = ",@Fromdt='" + data.get('start_date') + "' ,@Todt='" + data.get('end_date') + "'"
+        self._get_report_data(_filter)
+        _partners = self._get_partners(data.get('report_option'))
+        for _partner in _partners:
+            _res.extend(self._get_report_check_data_partner_with_sun(_partner[0]))
+        return _res
+
