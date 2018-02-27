@@ -117,7 +117,7 @@ class CiconDebtorsReport(models.AbstractModel):
         }
 
     def _get_key_columns(self):
-        _keys = ['name', 'ACCNT_CODE', 'ACCNT_NAME', 'project_name',  'total_chq', 'total_lc',  'TOTAL', '30 Days', '30-60 Days', '60-90 Days', '90-120 Days', '120-150 Days', '150-180 Days', '6-12 Months', 'Above Year']
+        _keys = ['name', 'ACCNT_CODE', 'ACCNT_NAME', 'project_name', 'Un Covered Amount'  'total_chq', 'total_lc',  'TOTAL', '30 Days', '30-60 Days', '60-90 Days', '90-120 Days', '120-150 Days', '150-180 Days', '6-12 Months', 'Above Year']
         return _keys
 
     def get_report_data_export(self, data):
