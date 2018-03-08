@@ -19,7 +19,7 @@
                         </group>
                         <group colspan="4" col="4" attrs="{'invisible':[('inbound_check_payment','=',False)]}">
                            <field name="cheque_date" />
-                           <field name="check_number_inbound" />
+                           <field name="check_number_inbound" attrs="{'required':[('inbound_check_payment','=',True)]}" />
                            <field name="deposit_date"/>
                            <field name="rv_number"/>
                            <field name="amount"/>
