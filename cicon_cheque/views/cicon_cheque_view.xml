@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_account_payment_form_extn" model="ir.ui.view">
+            <field name="name">account.payment.form</field>
+            <field name="model">account.payment</field>
+             <field name="inherit_id" ref="account.view_account_payment_form" />
+            <field name="arch" type="xml">
+                  <xpath expr="//field[@name='journal_id']" position="attributes">
+                    <attribute name="domain">[('company_id','=',company_id)]</attribute>
+                  </xpath>
+                <field name="journal_id" position="before">
+                    <field name="company_id"/>
+                </field>
+                <xpath expr="//form/sheet/group" position="after">
+                    <group>
+                        <group>
+                            <field name="inbound_check_payment"/>
+                        </group>
+                        <group colspan="4" col="4" attrs="{'invisible':[('inbound_check_payment','=',False)]}">
+                           <field name="cheque_date" />
+                           <field name="check_number_inbound" />
+                           <field name="deposit_date"/>
+                           <field name="rv_number"/>
+                           <field name="amount"/>
+                           <field name="voucher_number"/>
+                           <field name="received_date"/>
+                        </group>
+                        <group>
+                            <field name="note" />
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+         </record>
+    </data>
+</odoo>
