@@ -15,4 +15,4 @@ class AccountPayment(models.Model):
     voucher_number = fields.Char('Collection Voucher No.')
     received_date = fields.Date('Received Date')
     note = fields.Text('Notes')
-    state = fields.Selection(selection_add=[('bounce', 'Bounce')])
+    state = fields.Selection(selection_add=[('deposit', 'Submitted'), ('reject', 'Bounce'), ('posted', 'Posted')])

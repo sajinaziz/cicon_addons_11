@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+
+         <record id="account_payment_method_check_in" model="account.payment.method">
+            <field name="name">Checks</field>
+            <field name="code">check_in</field>
+            <field name="payment_type">inbound</field>
+        </record>
+
+
         <record id="view_account_payment_form_extn" model="ir.ui.view">
             <field name="name">account.payment.form</field>
             <field name="model">account.payment</field>
@@ -12,26 +20,29 @@
                 <field name="journal_id" position="before">
                     <field name="company_id"/>
                 </field>
+                 <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,deposit</attribute>
+                 </xpath>
                 <xpath expr="//form/sheet/group" position="after">
                     <group>
-                        <group>
-                            <field name="inbound_check_payment"/>
-                        </group>
-                        <group colspan="4" col="4" attrs="{'invisible':[('inbound_check_payment','=',False)]}">
-                           <field name="cheque_date"  attrs="{'required':[('inbound_check_payment','=',True)]}" />
-                           <field name="check_number_inbound" attrs="{'required':[('inbound_check_payment','=',True)]}" />
+                        <group colspan="4" col="4" attrs="{'invisible':[('payment_method_code','!=','check_in')]}">
+                           <field name="cheque_date"  attrs="{'required':[('payment_method_code','=','check_in')]}" />
+                           <field name="check_number_inbound" attrs="{'required':[('payment_method_code','=','check_in')]}" />
                            <field name="deposit_date"/>
                            <field name="rv_number"/>
-                           <field name="amount"/>
                            <field name="voucher_number"/>
                            <field name="received_date"/>
                         </group>
-                        <group>
-                            <field name="note" />
-                        </group>
                     </group>
+                     <group colspan="4">
+                            <field name="note" />
+                     </group>
                 </xpath>
             </field>
          </record>
+
+
+
+
     </data>
 </odoo>
