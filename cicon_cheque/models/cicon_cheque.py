@@ -4,7 +4,6 @@ from odoo import models, fields, api
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
-    inbound_check_payment = fields.Boolean('Cheque Payment', default=True)
     cheque_date = fields.Date('Cheque Date')
     check_number_inbound = fields.Char('Cheque Number', size=32,
                                        help="Cheque Number")
