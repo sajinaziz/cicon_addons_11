@@ -16,6 +16,8 @@ class AccountPayment(models.Model):
     received_date = fields.Date('Received Date')
     note = fields.Text('Notes')
     state = fields.Selection(selection_add=[('deposit', 'Submitted'), ('reject', 'Bounce'), ('posted', 'Posted')])
+    partner_bank_id = fields.Many2one('res.partner.bank', string="Partner Bank",
+                                      domain="[('partner_id', '=', partner_id)]")
 
     @api.onchange('amount', 'currency_id')
     def _onchange_amount(self):
@@ -32,3 +34,13 @@ class AccountPayment(models.Model):
             return {'domain': {'journal_id': _domain}}
 
 
+class ResPartnerBank(models.Model):
+    _inherit = 'res.partner.bank'
+    _rec_name = 'display_name'
+
+    @api.multi
+    def display_name(self):
+        for _rec in self:
+            _rec.display_name = _rec.bank_name + ' ' + _rec.acc_number
+
+    display_name = fields.Char(compute=display_name)

@@ -53,6 +53,7 @@
                            <field name="rv_number"/>
                            <field name="voucher_number"/>
                            <field name="received_date"/>
+                           <field name="partner_bank_id"/>
                         </group>
                     </group>
                      <group colspan="4">
