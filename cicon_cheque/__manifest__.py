@@ -7,7 +7,9 @@
     'depends': ['base', 'account'],
     'description': """CICON Cheque Management.""",
     'data': [
-     'views/cicon_cheque_view.xml'
+     'views/cicon_cheque_view.xml',
+     'report/cicon_cheque_report.xml',
+     'report/cicon_cheque_report_template.xml',
     ],
     'demo': [],
     'installable': True,
