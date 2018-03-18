@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <record model="ir.module.category" id="module_cicon_job_site">
+            <field name="name">CICON Job Site</field>
+            <field name="description">Helps you to manage Job Sites.</field>
+            <field name="sequence">7</field>
+        </record>
+
+        <!--<record id="group_job_site_user" model="res.groups">-->
+            <!--<field name="name">Job Site User</field>-->
+            <!--<field name="category_id" ref="module_cicon_job_site"/>-->
+        <!--</record>-->
+
+         <!--<record id="group_tech_approval" model="res.groups">-->
+            <!--<field name="name">Technical / Approval </field>-->
+            <!--<field name="implied_ids" eval="[(4, ref('group_tech_user'))]"/>-->
+            <!--<field name="category_id" ref="module_cicon_tech"/>-->
+        <!--</record>-->
+
+        <!--<record id="group_job_site_admin" model="res.groups">-->
+            <!--<field name="name">Job Site Admin </field>-->
+              <!--<field name="implied_ids" eval="[(4, ref('group_job_site_user'))]"/>-->
+              <!--<field name="category_id" ref="module_cicon_job_site"/>-->
+        <!--</record>-->
+    </data>
+</odoo>

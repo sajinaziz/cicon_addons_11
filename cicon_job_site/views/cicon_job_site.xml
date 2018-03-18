@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="cicon_job_site_tree_view">
+            <field name="name">cicon.job.site.tree</field>
+            <field name="model">cicon.job.site</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Manage Projects">
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cicon_job_site_form_view" model="ir.ui.view">
+            <field name="name">cicon.job.site.form</field>
+            <field name="model">cicon.job.site</field>
+            <field name="arch" type="xml">
+                <form string="Project Details" >
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-toggle-on" confirm="Confirm Activate/Deactivate ?" groups="base.group_no_one">
+                                <field name="active" widget="boolean_button" options="{'terminology': 'active'}"/>
+                            </button>
+                        </div>
+
+                       <group >
+                            <field name="partner_id" options="{'no_create':True,'no_open': True}" ain="[('customer','=', True)]" />
+                            <field name="name"  placeholder="Project Name" />
+                            <field name="consultant_id"  options="{'no_create':True,'no_open': True}"/>
+                            <field name="client_id"  options="{'no_create':True,'no_open': True}"/>/>
+                            <field name="company_id" options="{'no_create':True,'no_open': True}" />
+                        </group>
+                        <group col="4">
+                            <field name="po_box" />
+                            <field name="telephone" />
+                            <field name="fax" />
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                        <group >
+                            <field name="archive" readonly="True"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+         </record>
+
+
+        <record id="action_server_archive_job_site" model="ir.actions.server">
+            <field name="name">Archive/Unarchive</field>
+            <field name="condition">True</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_cicon_job_site" />
+            <field name="state">code</field>
+            <field name="code">
+                if env.context.get('active_ids'):
+                    model.browse(context['active_ids']).toggle_archive()</field>
+        </record>
+
+            <record id="ir_values_cicon_archive_job_site" model="ir.values">
+            <field name="name">action_cicon_archive_job_site</field>
+            <field name="action_id" ref="action_server_archive_job_site" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_archive_job_site'))"/>
+            <field name="key">action</field>
+            <field name="model_id" ref="model_cicon_job_site" />
+            <field name="model">cicon.job.site</field>
+            <field name="key2">client_action_multi</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="cicon_jobsite_search_view">
+			<field name="name">cicon.job.site.search</field>
+			<field name="model">cicon.job.site</field>
+			<field name="arch" type="xml" >
+				<search string="Projects">
+                     <field name="name"/>
+                    <field name="partner_id" widget="selection"/>
+                    <field name="consultant_id" widget="selection"/>
+                    <field name="client_id" widget="selection"/>
+				</search>
+			</field>
+		</record>
+
+         <record id="res_partner_extn" model="ir.ui.view">
+                <field name="name">res.partner.extn</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.view_partner_form"/>
+                 <field name="arch" type="xml">
+                     <field name="ref" position="after">
+                         <field name="is_consultant"/>
+                         <field name="is_client"/>
+                     </field>
+                 </field>
+        </record>
+
+
+        <!--<record model="ir.actions.act_window" id="action_jobsite_tree_view">-->
+            <!--<field name="name">Manage Customer Projects</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">cicon.job.site</field>-->
+            <!--&lt;!&ndash; <field name="domain">[('field_name','condition',criteria)]</field>&ndash;&gt;-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+            <!--&lt;!&ndash;<field name="view_id" ref="cic_job_site_tree_view"/>&ndash;&gt;-->
+        <!--</record>-->
+
+   </data>
+</odoo>
