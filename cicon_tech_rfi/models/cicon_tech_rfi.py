@@ -72,7 +72,7 @@ class CiconTechRfi(models.Model):
         self.ensure_one()
         if self.state == 'draft':
             self.write({'state': 'pending'})
-        return self.env['report'].get_action(self, 'cicon_tech_rfi.report_rfi_template')
+        return self.env.ref('cicon_tech_rfi.action_cicon_tech_rfi').report_action(self)
 
     @api.multi
     def pending_rfi(self):

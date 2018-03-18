@@ -3,12 +3,13 @@
     <data>
 
         <report
-            id="report_tech_rfi_qweb"
+            id="action_cicon_tech_rfi"
             string="RFI"
             model="cicon.tech.rfi"
             report_type="qweb-pdf"
-            file="cicon_tech_rfi.tech_rfi_print_view"
+            file="cicon_tech_rfi.report_rfi_template"
             name="cicon_tech_rfi.report_rfi_template"
+            print_report_name="'%s'%(object.name)"
          />
 
     </data>

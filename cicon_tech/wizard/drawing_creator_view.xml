@@ -16,22 +16,22 @@
                         <field name="padding_zero"/>
 
                     </group>
-                    <footer>
+                    <!--<footer>-->
                         <!--<button name="drawing_generate" string="Generate" type="object" class="oe_highlight" /> -->
                         <!--<button string="Cancel" class="oe_link" special="cancel" />-->
-                    </footer>
+                    <!--</footer>-->
                 </form>
             </field>
         </record>
 
-        <record id="action_drawing_creator" model="ir.actions.act_window">
-            <field name="name">Drawing Creator</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">tech.drawing.creator</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
-        </record>
+        <!--<record id="action_drawing_creator" model="ir.actions.act_window">-->
+            <!--<field name="name">Drawing Creator</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">tech.drawing.creator</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">form</field>-->
+            <!--<field name="target">new</field>-->
+        <!--</record>-->
 
     </data>
 </odoo>

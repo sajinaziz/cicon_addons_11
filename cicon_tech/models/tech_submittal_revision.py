@@ -326,7 +326,8 @@ class SubmittalRevision(models.Model):
         """
         self.ensure_one()
         self.write({'state': 'submitted'})
-        return self.env['report'].get_action(self, 'cicon_tech.report_submittal_template')
+        return self.env.ref('cicon_tech.action_cicon_tech_submittal_sheet').report_action(self)
+        # return self.env['report'].get_action(self, 'cicon_tech.report_submittal_template')
 
     @api.multi
     def submittal_revision(self):
