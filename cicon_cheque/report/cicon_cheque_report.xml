@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="action_cicon_cheque_cheque_receipt"
+            string="Cheque Receipt"
+            model="account.payment"
+            report_type="qweb-pdf"
+            file="cicon_cheque.report_cicon_cheque_receipt_template"
+            name="cicon_cheque.report_cicon_cheque_receipt_template"
+            print_report_name="'Cheque Receipt-%s'%(object.name)"
+        />
+
+
+           <report
+            id="action_cicon_bank_deposit_slip"
+            string="Bank Deposit Slip"
+            model="account.payment"
+            report_type="qweb-pdf"
+            file="cicon_cheque.report_cicon_bank_deposit_slip_template"
+            name="cicon_cheque.report_cicon_bank_deposit_slip_template"
+            print_report_name="'Deposit Slip-%s'%(object.name)"
+        />
+
+
+
+    </data>
+</odoo>

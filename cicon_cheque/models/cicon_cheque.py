@@ -4,7 +4,7 @@ from odoo import models, fields, api
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
-    inbound_check_payment = fields.Boolean('Cheque Payment', default=True)
+    cicon_cheque = fields.Boolean(default=False,string="CICON Cheque")
     cheque_date = fields.Date('Cheque Date')
     check_number_inbound = fields.Char('Cheque Number', size=32,
                                        help="Cheque Number")
@@ -16,3 +16,31 @@ class AccountPayment(models.Model):
     received_date = fields.Date('Received Date')
     note = fields.Text('Notes')
     state = fields.Selection(selection_add=[('deposit', 'Submitted'), ('reject', 'Bounce'), ('posted', 'Posted')])
+    partner_bank_id = fields.Many2one('res.partner.bank', string="Partner Bank",
+                                      domain="[('partner_id', '=', partner_id)]")
+
+    @api.onchange('amount', 'currency_id')
+    def _onchange_amount(self):
+        _res = super(AccountPayment,self)._onchange_amount()
+        if not self.cicon_cheque:
+            return _res
+        else:
+            _chq_ref = self.env.ref('cicon_cheque.account_payment_method_check_in')
+            _domain = [('type', '=', 'bank'), ('company_id', '=', self.env.user.company_id.id),
+                       ('inbound_payment_method_ids', 'in', [_chq_ref.id])]
+            _journals = self.env['account.journal'].search(_domain)
+            if _journals:
+                self.journal_id = _journals[0]
+            return {'domain': {'journal_id': _domain}}
+
+
+class ResPartnerBank(models.Model):
+    _inherit = 'res.partner.bank'
+    _rec_name = 'display_name'
+
+    @api.multi
+    def display_name(self):
+        for _rec in self:
+            _rec.display_name = _rec.bank_name + ' ' + _rec.acc_number
+
+    display_name = fields.Char(compute=display_name)
