@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="report_tech_rfi_qweb"
+            string="RFI"
+            model="cicon.tech.rfi"
+            report_type="qweb-pdf"
+            file="cicon_tech_rfi.tech_rfi_print_view"
+            name="cicon_tech_rfi.report_rfi_template"
+         />
+
+    </data>
+</odoo>

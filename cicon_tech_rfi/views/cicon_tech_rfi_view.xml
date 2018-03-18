@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+            <record id="cicon_teh_rfi_form_view" model="ir.ui.view">
+                <field name="name">cicon.tech.rfi.form.view</field>
+                <field name="model">cicon.tech.rfi</field>
+                <field name="arch" type="xml">
+                    <form string="RFI">
+                        <header>
+                            <button name="cancel_rfi" states="draft,pending"  confirm="Confirm RFI 'Cancel' ?" icon="fa-times" string="Cancel" type="object" />
+                            <button name="print_rfi" states="draft,pending,done" icon="fa-print" string="Print" type="object"  class="oe_highlight" />
+                            <button name="pending_rfi" states="draft,done,cancel" string="Pending" icon="fa-hourglass-start"  type="object" class="oe_highlight" />
+                            <button name="done_rfi" states="pending" string="Replied" type="object" icon="fa-check"  class="oe_highlight" />
+                            <field name="state" widget="statusbar" statusbar_visible="draft,pending,done"/>
+                        </header>
+                        <sheet>
+                            <group>
+                                <field name="id" invisible="1"/>
+                                <field name="partner_id" options="{'no_create':True,'no_open': True}" attrs="{'readonly':[('id','!=',False)]}"/>
+                                <field name="job_site_id" options="{'no_create':True,'no_open': True}" attrs="{'readonly':[('id','!=',False)]}"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="name" readonly="1"/>
+                                    <field name="element" placeholder="eg:- Building C - Column/Wall" />
+                                    <field name="level" placeholder="eg:- Ground Floor" />
+                                    <field name="consultant_id"  options="{'no_create':True,'no_open': True}"/>
+                                </group>
+                                <group>
+                                    <field name="rfi_count_on_job_site" invisible="1" />
+                                    <field name="rfi_date"/>
+                                    <field name="site_contact_ids" options="{'no_create':True,'no_open': True}" domain="[('job_site_id','=',job_site_id)]" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="subject"/>
+                                <field name="description"/>
+                            </group>
+                            <group col="4">
+                                <field name="attachment_count"/>
+                                <field name="response_last_date"/>
+                                <field name="created_by" options="{'no_create':True,'no_open': True}"/>
+                                <field name="coordinator_id" options="{'no_create':True,'no_open': True}"/>
+                                <field name="company_id" invisible="1" options="{'no_create':True,'no_open': True}"/>
+                            </group>
+                            <group string="Contractor Response">
+                                <field name="contractor_subject"/>
+                                <field name="contractor_remarks"/>
+                            </group>
+
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </field>
+            </record>
+
+
+
+            <record id="cicon_teh_rfi_tree_view" model="ir.ui.view">
+                <field name="name">cicon.tech.rfi.tree.view</field>
+                <field name="model">cicon.tech.rfi</field>
+                <field name="arch" type="xml">
+                    <tree string="RFI">
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="job_site_id"/>
+                        <field name="rfi_date"/>
+                        <field name="element"/>
+                        <field name="level"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </record>
+
+
+         <record id="tech_rfi_search_form" model="ir.ui.view">
+            <field name="name">cicon.tech.rfi.search.form</field>
+            <field name="model">cicon.tech.rfi</field>
+            <field name="arch" type="xml">
+                <search string="Submittal Document">
+                    <field name="name"/>
+                    <field name="partner_id" widget="selection"/>
+                    <field name="job_site_id" widget="selection"/>
+
+                    <filter name="current_month" string="This Month" domain="[('rfi_date','&gt;=',time.strftime('%%Y-%%m-01'))]" help="This Month" icon="terp-project"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_cicon_tech_rfi" model="ir.actions.act_window" >
+            <field name="name" >RFI </field>
+            <field name="res_model">cicon.tech.rfi</field>
+        </record>
+
+
+
+
+        <menuitem  parent="cicon_tech.tech_menu_submittal" id="tech_menu_tech_rfi"
+                  action="action_cicon_tech_rfi" sequence="30" />
+
+
+
+    </data>
+</odoo>

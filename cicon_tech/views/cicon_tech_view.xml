@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--<data>-->
+        <!--<template id="assets_pdf" name="CICON Tech assets" inherit_id="report.assets_pdf">-->
+            <!--<xpath expr="." position="inside">-->
+                <!--<link rel="stylesheet" href="/cicon_tech/static/src/css/cicon_tech.css"/>-->
+            <!--</xpath>-->
+        <!--</template>-->
+    <!--</data>-->
+</odoo>

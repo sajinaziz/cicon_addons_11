@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record model="ir.actions.act_window" id="action_project_contact">
+            <field name="name">Manage Project Contacts</field>
+            <field name="res_model">tech.project.contact</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_documents">
+            <field name="name">Manage Documents</field>
+            <field name="res_model">tech.submittal.revision.document</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_document_revisions">
+            <field name="name">Manage Documents Revisions</field>
+            <field name="res_model">tech.submittal.document.revision</field>
+        </record>
+
+
+         <record model="ir.actions.act_window" id="action_delivery_details">
+            <field name="name">Manage Delivery Details</field>
+            <field name="res_model">tech.delivery.details</field>
+        </record>
+
+         <record model="ir.actions.act_window" id="action_submittals">
+            <field name="name">Submittal</field>
+            <field name="res_model">tech.submittal</field>
+        </record>
+
+         <record model="ir.actions.act_window" id="action_revision">
+            <field name="name">Revisions</field>
+            <field name="res_model">tech.submittal.revision</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_revision_reason">
+            <field name="name">Revision Reason</field>
+            <field name="res_model">tech.submittal.revision.reason</field>
+        </record>
+
+
+        <menuitem id="submittal_config_menu" sequence="90" name="Configuration" parent="tech_menu_submittal"  groups="base.group_no_one" />
+        <menuitem id="project_contact_menu" sequence="10" name="Project Contact" parent="submittal_config_menu" action="action_project_contact"/>
+        <menuitem id="submittal_menu" name="Submittals" parent="submittal_config_menu" action="action_submittals"  sequence="20"/>
+        <menuitem id="revision_menu" name="Revisions" parent="submittal_config_menu" action="action_revision"  sequence="30"/>
+        <menuitem id="revision_documents_menu" name="Documents" parent="submittal_config_menu" action="action_documents"  sequence="40"/>
+        <menuitem id="documents_revision_menu" name="Document Revision" parent="submittal_config_menu" action="action_document_revisions"  sequence="50"/>
+        <menuitem id="revision_delivery_menu" name="Delivery" parent="submittal_config_menu" action="action_delivery_details"  sequence="60"/>
+        <menuitem id="revision_reason_menu"  parent="submittal_config_menu" action="action_revision_reason"  sequence="70"/>
+
+
+
+
+   </data>
+</odoo>

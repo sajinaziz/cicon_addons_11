@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+ <record id="tech_submittal_view_kanban" model="ir.ui.view" >
+        <field name="name">tech.submittal.kanban</field>
+        <field name="model">tech.submittal</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard">
+                <field name="id"/>
+                <field name="company_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary"><field name="name"/></div>
+                                    <div class="o_secondary"><field name="company_id"/></div>
+                                </div>
+
+                            </div>
+                            <div class="container o_kanban_card_content o_visible">
+                                <div class="row">
+                                    <div class="col-xs-6 o_kanban_primary_left">
+                                        <button class="btn btn-primary" name="%(action_tech_submittal_revision_form)d" type="action">Submittal</button>
+                                    </div>
+                                    <div class="col-xs-6 o_kanban_primary_right">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+      <record id="submittal_action" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">tech.submittal</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban</field>
+        </record>
+
+   <!--<menuitem-->
+        <!--action="submittal_action"-->
+        <!--id="menu_tech_submittal_dashboard"-->
+        <!--parent="tech_menu_submittal"-->
+        <!--sequence="1"/>-->
+
+   </data>
+</odoo>

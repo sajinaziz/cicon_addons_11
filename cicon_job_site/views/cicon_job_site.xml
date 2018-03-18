@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-
-        <record model="ir.ui.view" id="cicon_job_site_tree_view">
+          <record model="ir.ui.view" id="cicon_job_site_tree_view">
             <field name="name">cicon.job.site.tree</field>
             <field name="model">cicon.job.site</field>
             <field name="type">tree</field>
@@ -64,7 +62,7 @@
                     model.browse(context['active_ids']).toggle_archive()</field>
         </record>
 
-            <record id="ir_values_cicon_archive_job_site" model="ir.values">
+       <record id="ir_values_cicon_archive_job_site" model="ir.actions.server">
             <field name="name">action_cicon_archive_job_site</field>
             <field name="action_id" ref="action_server_archive_job_site" />
             <field name="value" eval="'ir.actions.server,' + str(ref('action_server_archive_job_site'))"/>
@@ -110,6 +108,4 @@
             <!--<field name="view_mode">tree,form</field>-->
             <!--&lt;!&ndash;<field name="view_id" ref="cic_job_site_tree_view"/>&ndash;&gt;-->
         <!--</record>-->
-
-   </data>
 </odoo>
