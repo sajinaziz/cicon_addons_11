@@ -9,6 +9,9 @@
             <field name="logo" position="after">
                  <field name="logo2"  widget="image" class="oe_right"/>
             </field>
+            <field name="phone" position="after">
+                <field name="fax" />
+            </field>
         </field>
         </record>
 
