@@ -12,7 +12,7 @@ class ProjectContact(models.Model):
     @api.depends('name', 'salutation')
     def _compute_display_name(self):
         """To show Name with Salutation on field 'display_name'"""
-        self.display_name = (self.salutation or '') + ' ' + unicode(self.name)
+        self.display_name = (self.salutation or '') + ' ' + str(self.name)
 
     display_name = fields.Char(string='Name', compute=_compute_display_name, store=False)
     name = fields.Char('Name', size=250, required=True, help="Contact Full Name")
