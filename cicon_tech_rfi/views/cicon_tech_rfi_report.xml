@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <report
+            id="action_cicon_tech_rfi_report"
+            string="RFI"
+            model="cicon.tech.rfi"
+            report_type="qweb-pdf"
+            file="cicon_tech_rfi.report_rfi_template"
+            name="cicon_tech_rfi.report_rfi_template"
+            print_report_name="'%s'%(object.name)"
+         />
+    </data>
+</odoo>

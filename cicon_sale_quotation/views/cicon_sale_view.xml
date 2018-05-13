@@ -60,8 +60,22 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <field name="partner_shipping_id" position="after">
-                    <field name="cicon_template_id" />
+                    <field name="cicon_template_ids" widget="many2many_tags" />
                 </field>
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Conditions">
+                        <field name="sale_condition_ids">
+                            <tree>
+                                <field name="description"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="description"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
             </field>
     </record>
 
